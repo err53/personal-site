@@ -1,11 +1,12 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Card from "../components/Card.astro";
 import Footer from "../components/Footer.astro";
 ---
 
 <Layout title="Jason Huang">
-  <main class="mx-10">
-    <div class="mt-12 space-y-4">
+  <main class="mx-auto max-w-4xl space-y-8 px-10">
+    <div class="mt-8 h-60 space-y-4">
       <h1 class="text-5xl">Jason Huang</h1>
       <ul class="text-xl">
         <li>Full-Stack Developer</li>
@@ -13,11 +14,30 @@ import Footer from "../components/Footer.astro";
         <li>Open-knowledge Advocate</li>
       </ul>
     </div>
-    <p class="my-10 bg-yellow-200 p-4 text-2xl">
+    <!-- <p class="my-10 bg-yellow-200 p-4 text-2xl">
       This site is under construction!
-    </p>
+    </p> -->
     <div>
-      <h2 class="mt-5 text-3xl">Projects</h2>
+      <h2 class="text-3xl">Projects</h2>
+      <div class="grid gap-4 py-3 md:grid-cols-3">
+        <Card
+          title="Personal Site"
+          description="You're looking at it right now!"
+          href="https://github.com/err53/personal-site"
+        />
+
+        <Card
+          title="Open Source Cheat Sheets"
+          description="A collection of community-built, freely modifiable course cheat sheets"
+          href="https://github.com/mac-egirls/oscs"
+        />
+
+        <Card
+          title="McMaster CS Wiki"
+          description="A repository of course knowledge, notes, and resources"
+          href="https://wiki.egirls.dev"
+        />
+      </div>
     </div>
   </main>
   <footer class="text-center">

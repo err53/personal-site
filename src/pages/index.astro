@@ -2,6 +2,11 @@
 import Layout from "../layouts/Layout.astro";
 import Card from "../components/Card.astro";
 import Footer from "../components/Footer.astro";
+
+import dh_portal from "~/assets/dh_portal.png";
+import salesbop from "~/assets/salesbop.png";
+import cs_wiki from "~/assets/cs_wiki.png";
+import oscs from "~/assets/oscs.png";
 ---
 
 <Layout title="Jason Huang">
@@ -19,7 +24,7 @@ import Footer from "../components/Footer.astro";
     </p> -->
     <div>
       <h2 class="text-3xl font-semibold">Projects</h2>
-      <div class="grid gap-4 py-3 md:grid-cols-3 md:grid-rows-[masonry]">
+      <div class="grid gap-4 py-3 md:grid-cols-2 md:grid-rows-[masonry]">
         <Card
           title="Personal Site"
           description="You're looking at it right now!"
@@ -30,24 +35,28 @@ import Footer from "../components/Footer.astro";
           title="DeltaHacks Portal"
           description="A hackathon registration and management system"
           href="https://github.com/deltahacks/portal"
+          imgSrc={dh_portal}
         />
 
         <Card
           title="SalesBop"
           description="An up-and-coming AI sales coaching app"
           href="https://www.salesbop.io"
+          imgSrc={salesbop}
         />
 
         <Card
           title="McMaster CS Wiki"
           description="A repository of course knowledge, notes, and resources"
           href="https://wiki.egirls.dev"
+          imgSrc={cs_wiki}
         />
 
         <Card
           title="Open Source Cheat Sheets"
           description="A collection of community-built, freely modifiable course cheat sheets"
           href="https://github.com/mac-egirls/oscs"
+          imgSrc={oscs}
         />
       </div>
     </div>

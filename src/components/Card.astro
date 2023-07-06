@@ -12,13 +12,17 @@ const { title, description, href, imgSrc }: Props = Astro.props;
 
 <a href={href} target="_blank" rel="noreferrer noopener" class="group h-full">
   <div
-    class="border shadow-md group-hover:bg-slate-50 group-active:bg-slate-100 group-active:shadow-none"
+    class="flex h-full flex-col border shadow-md group-hover:bg-slate-50 group-active:bg-slate-100 group-active:shadow-none"
   >
     <h3 class="mx-6 mt-6 text-2xl">{title}</h3>
     <p class="mx-6 mb-6">{description}</p>
     {
       imgSrc && (
-        <Image src={imgSrc} alt={title} class="group-hover:opacity-95" />
+        <Image
+          src={imgSrc}
+          alt={title}
+          class="mt-auto group-hover:opacity-95"
+        />
       )
     }
   </div>

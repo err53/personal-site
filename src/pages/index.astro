@@ -19,7 +19,7 @@ import Footer from "../components/Footer.astro";
     </p> -->
     <div>
       <h2 class="text-3xl font-semibold">Projects</h2>
-      <div class="grid gap-4 py-3 md:grid-cols-3">
+      <div class="grid gap-4 py-3 md:grid-cols-3 md:grid-rows-[masonry]">
         <Card
           title="Personal Site"
           description="You're looking at it right now!"
@@ -27,15 +27,27 @@ import Footer from "../components/Footer.astro";
         />
 
         <Card
-          title="Open Source Cheat Sheets"
-          description="A collection of community-built, freely modifiable course cheat sheets"
-          href="https://github.com/mac-egirls/oscs"
+          title="DeltaHacks Portal"
+          description="A hackathon registration and management system"
+          href="https://github.com/deltahacks/portal"
+        />
+
+        <Card
+          title="SalesBop"
+          description="An up-and-coming AI sales coaching app"
+          href="https://www.salesbop.io"
         />
 
         <Card
           title="McMaster CS Wiki"
           description="A repository of course knowledge, notes, and resources"
           href="https://wiki.egirls.dev"
+        />
+
+        <Card
+          title="Open Source Cheat Sheets"
+          description="A collection of community-built, freely modifiable course cheat sheets"
+          href="https://github.com/mac-egirls/oscs"
         />
       </div>
     </div>

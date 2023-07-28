@@ -18,11 +18,13 @@ const { title, description, href, imgSrc }: Props = Astro.props;
     <p class="mx-6 mb-6">{description}</p>
     {
       imgSrc && (
-        <Image
-          src={imgSrc}
-          alt={title}
-          class="mt-auto group-hover:opacity-95"
-        />
+      <Image
+        src={imgSrc}
+        alt={title}
+        quality="mid"
+        class="mt-auto group-hover:opacity-95"
+      />
+        
       )
     }
   </div>

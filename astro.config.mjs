@@ -9,7 +9,7 @@ export default defineConfig({
   experimental: {
     assets: true,
   },
-  output: "server",
+  output: "static",
   adapter: vercel({
     analytics: true,
     imagesConfig: {

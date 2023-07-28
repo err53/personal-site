@@ -34,6 +34,7 @@ const imgs = await Promise.all(
       imgSrc && (
         <img
           alt={title}
+          src={imgSrc.src}
           srcset={imgs
             .map((img) => {
               if (img) {
@@ -41,6 +42,7 @@ const imgs = await Promise.all(
               }
             })
             .reduce((prev, cur) => `${prev}, \n${cur}`)}
+          sizes="(min-width: 896px) 398px, (min-width: 768px) 32.2vw, 100vw"
           width={imgSrc.width}
           height={imgSrc.height}
           loading={loading ? loading : "lazy"}

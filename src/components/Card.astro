@@ -4,10 +4,11 @@ export interface Props {
   title: string;
   description: string;
   href: string;
+  loading?: "eager" | "lazy";
   imgSrc?: ImageMetadata;
 }
 
-const { title, description, href, imgSrc }: Props = Astro.props;
+const { title, description, href, imgSrc, loading }: Props = Astro.props;
 ---
 
 <a href={href} target="_blank" rel="noreferrer noopener" class="group h-full">
@@ -20,9 +21,9 @@ const { title, description, href, imgSrc }: Props = Astro.props;
       imgSrc && (
         <Image
           src={imgSrc}
-          sizes="(min-width: 768px) 50vw, 96vw"
           alt={title}
-          quality="mid"
+          loading={loading}
+          width={1400}
           class="mt-auto group-hover:opacity-95"
         />
       )

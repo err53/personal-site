@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import { getImage } from "astro:assets";
 export interface Props {
   title: string;
   description: string;
@@ -9,6 +9,19 @@ export interface Props {
 }
 
 const { title, description, href, imgSrc, loading }: Props = Astro.props;
+
+const widths = [398, 796, 1360];
+
+const imgs = await Promise.all(
+  widths.map(async (width) => {
+    if (imgSrc) {
+      return {
+        width: width,
+        src: await getImage({ src: imgSrc, width: width }),
+      };
+    }
+  })
+);
 ---
 
 <a href={href} target="_blank" rel="noreferrer noopener" class="group h-full">
@@ -19,11 +32,18 @@ const { title, description, href, imgSrc, loading }: Props = Astro.props;
     <p class="mx-6 mb-6">{description}</p>
     {
       imgSrc && (
-        <Image
-          src={imgSrc}
+        <img
           alt={title}
+          srcset={imgs
+            .map((img) => {
+              if (img) {
+                return `${img.src.src} ${img.width}w`;
+              }
+            })
+            .reduce((prev, cur) => `${prev}, \n${cur}`)}
+          width={imgSrc.width}
+          height={imgSrc.height}
           loading={loading}
-          width={1400}
           class="mt-auto group-hover:opacity-95"
         />
       )

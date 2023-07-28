@@ -12,16 +12,16 @@ const { title, description, href, imgSrc, loading }: Props = Astro.props;
 
 const widths = [398, 796, 1360];
 
-const imgs = await Promise.all(
-  widths.map(async (width) => {
-    if (imgSrc) {
+const imgs =
+  imgSrc &&
+  (await Promise.all(
+    widths.map(async (width) => {
       return {
         width: width,
         src: await getImage({ src: imgSrc, width: width }),
       };
-    }
-  })
-);
+    })
+  ));
 ---
 
 <a href={href} target="_blank" rel="noreferrer noopener" class="group h-full">
@@ -31,21 +31,17 @@ const imgs = await Promise.all(
     <h3 class="mx-6 mt-6 text-2xl">{title}</h3>
     <p class="mx-6 mb-6">{description}</p>
     {
-      imgSrc && (
+      imgSrc && imgs && (
         <img
-          alt={title}
           src={imgSrc.src}
-          srcset={imgs
-            .map((img) => {
-              if (img) {
-                return `${img.src.src} ${img.width}w`;
-              }
-            })
-            .reduce((prev, cur) => `${prev}, \n${cur}`)}
-          sizes="(min-width: 896px) 398px, (min-width: 768px) 40vw, 100vw"
+          alt={title}
           width={imgSrc.width}
           height={imgSrc.height}
-          loading={loading ? loading : "lazy"}
+          srcset={imgs
+            .map((img) => `${img.src.src} ${img.width}w`)
+            .reduce((prev, cur) => `${prev}, ${cur}`)}
+          sizes="(min-width: 896px) 398px, (min-width: 768px) 40vw, 100vw"
+          loading={loading || "lazy"}
           class="mt-auto group-hover:opacity-95"
         />
       )

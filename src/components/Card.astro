@@ -43,7 +43,7 @@ const imgs = await Promise.all(
             .reduce((prev, cur) => `${prev}, \n${cur}`)}
           width={imgSrc.width}
           height={imgSrc.height}
-          loading={loading}
+          loading={loading ? loading : "lazy"}
           class="mt-auto group-hover:opacity-95"
         />
       )

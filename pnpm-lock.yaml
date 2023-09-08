@@ -32,9 +32,6 @@ dependencies:
   react-dom:
     specifier: ^18.0.0
     version: 18.2.0(react@18.2.0)
-  react-tiny-crossfade:
-    specifier: ^2.2.0
-    version: 2.2.0(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)
   tailwindcss:
     specifier: ^3.3.2
     version: 3.3.2
@@ -3407,14 +3404,6 @@ packages:
       sisteransi: 1.0.5
     dev: false
 
-  /prop-types@15.8.1:
-    resolution: {integrity: sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==}
-    dependencies:
-      loose-envify: 1.4.0
-      object-assign: 4.1.1
-      react-is: 16.13.1
-    dev: false
-
   /property-information@6.2.0:
     resolution: {integrity: sha512-kma4U7AFCTwpqq5twzC1YVIDXSqg6qQK6JN0smOw8fgRy1OkMi0CYSzFmsy6dnqSenamAtj0CyXMUJ1Mf6oROg==}
     dev: false
@@ -3460,38 +3449,9 @@ packages:
       scheduler: 0.23.0
     dev: false
 
-  /react-is@16.13.1:
-    resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
-    dev: false
-
   /react-refresh@0.14.0:
     resolution: {integrity: sha512-wViHqhAd8OHeLS/IRMJjTSDHF3U9eWi62F/MledQGPdJGDhodXJ9PBLNGr6WWL7qlH12Mt3TyTpbS+hGXMjCzQ==}
     engines: {node: '>=0.10.0'}
-    dev: false
-
-  /react-tiny-crossfade@2.2.0(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-VzBaPJB1KnVJZdtdJvvcFN2RHEukVhbYIG9hWx6HRKFJhAWpu563eGlgxXytR3QyucJCfTQXGLX8c3ZD7E4OtQ==}
-    peerDependencies:
-      prop-types: ^15.6.2
-      react: ^16.7.0 || ^17.0.0 || ^18.0.0
-      react-dom: ^16.7.0 || ^17.0.0 || ^18.0.0
-    dependencies:
-      prop-types: 15.8.1
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-      react-tiny-transition: 2.5.0(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)
-    dev: false
-
-  /react-tiny-transition@2.5.0(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-d/UlY9PhgyLzbbmsjpNpSUzUEc2uDyjmJMJe18Rx2S57GlUxJaCZ5zBveswPg+FWR0YaP+bE5B/wl8av1rvHvw==}
-    peerDependencies:
-      prop-types: ^15.6.0
-      react: ^16.7.0 || ^17.0.0 || ^18.0.0
-      react-dom: ^16.7.0 || ^17.0.0 || ^18.0.0
-    dependencies:
-      prop-types: 15.8.1
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /react@18.2.0:

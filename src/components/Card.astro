@@ -40,7 +40,7 @@ const imgs =
           srcset={imgs
             .map((img) => `${img.src.src} ${img.width}w`)
             .reduce((prev, cur) => `${prev}, ${cur}`)}
-          sizes="(min-width: 896px) 398px, (min-width: 768px) 40vw, 100vw"
+            sizes="(min-width: 980px) 398px, (min-width: 780px) calc(32.22vw + 89px), (min-width: 640px) calc(100vw - 82px), calc(100vw - 42px)"
           loading={loading || "lazy"}
           class="mt-auto group-hover:opacity-95"
         />

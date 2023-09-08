@@ -17,11 +17,13 @@ export const CurrentlyPlaying = () => {
   }
 
   return (
-    <div className="flex h-full flex-row border shadow-md group-hover:bg-slate-50 group-active:bg-slate-100 group-active:shadow-none">
-      <img src={lastFM.song.art} className="my-auto lg:w-20" />
-      <p className="px-4 my-auto">
-        Listening to <i>{lastFM.song.name}</i> by <i>{lastFM.song.artist}</i>
-      </p>
-    </div>
+    <a href={lastFM.song.url}>
+      <div className="flex h-full flex-row border shadow-md group-hover:bg-slate-50 group-active:bg-slate-100 group-active:shadow-none">
+        <img src={lastFM.song.art} className="my-auto lg:w-20" />
+        <p className="px-4 my-auto">
+          Listening to <i>{lastFM.song.name}</i> by <i>{lastFM.song.artist}</i>
+        </p>
+      </div>
+    </a>
   );
 };

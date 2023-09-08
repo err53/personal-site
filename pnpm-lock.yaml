@@ -14,6 +14,9 @@ dependencies:
   '@astrojs/vercel':
     specifier: ^4.0.4
     version: 4.0.4(astro@3.0.10)
+  '@formkit/auto-animate':
+    specifier: ^0.8.0
+    version: 0.8.0
   '@types/react':
     specifier: ^18.0.21
     version: 18.2.21
@@ -832,6 +835,10 @@ packages:
     requiresBuild: true
     dev: false
     optional: true
+
+  /@formkit/auto-animate@0.8.0:
+    resolution: {integrity: sha512-G8f7489ka0mWyi+1IEZT+xgIwcpWtRMmE2x+IrVoQ+KM1cP6VDj/TbujZjwxdb0P8w8b16/qBfViRmydbYHwMw==}
+    dev: false
 
   /@jridgewell/gen-mapping@0.3.3:
     resolution: {integrity: sha512-HLhSWOLRi875zjjMG/r+Nv0oCW8umGb0BgEhyX3dDX3egwZtB8PqLnjz3yedt8R5StBrzcg4aBpnh8UA9D1BoQ==}

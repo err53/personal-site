@@ -15,7 +15,7 @@ export const CurrentlyPlaying = () => {
     <a href="https://www.last.fm/user/err53">
       <div
         ref={parent}
-        className="flex h-full flex-row border shadow-md group-hover:bg-slate-50 group-active:bg-slate-100 group-active:shadow-none"
+        className="flex h-full flex-row border shadow-md hover:bg-slate-50 active:bg-slate-100 active:shadow-none"
       >
         {lastFM.status == "playing" && (
           <img

@@ -18,7 +18,7 @@ export const CurrentlyPlaying = () => {
         className="flex h-full flex-row border shadow-md group-hover:bg-slate-50 group-active:bg-slate-100 group-active:shadow-none"
       >
         {lastFM.status == "playing" && (
-          <img src={lastFM.song.art} className="my-auto lg:w-20" />
+          <img src={lastFM.song.art} className="my-auto lg:w-20 animate-pulse-slow" />
         )}
         {lastFM.status == "playing" ? (
           <p className="px-4 py-2 my-auto">

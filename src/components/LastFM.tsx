@@ -6,13 +6,13 @@ export const CurrentlyPlaying = () => {
     "err53",
     import.meta.env.PUBLIC_LASTFM_API_KEY,
     undefined,
-    "medium"
+    "medium",
   );
 
   const [parent] = useAutoAnimate();
 
   return (
-    <a href={lastFM.status == "playing" ? lastFM.song.url : undefined}>
+    <a href="https://www.last.fm/user/err53">
       <div
         ref={parent}
         className="flex h-full flex-row border shadow-md group-hover:bg-slate-50 group-active:bg-slate-100 group-active:shadow-none"
@@ -20,16 +20,16 @@ export const CurrentlyPlaying = () => {
         {lastFM.status == "playing" && (
           <img
             src={lastFM.song.art}
-            className="my-auto lg:w-20 animate-pulse-slow"
+            className="my-auto animate-pulse-slow lg:w-20"
           />
         )}
         {lastFM.status == "playing" ? (
-          <p className="px-4 py-2 my-auto">
+          <p className="my-auto px-4 py-2">
             Listening to <i>{lastFM.song.name}</i> by{" "}
             <i>{lastFM.song.artist}</i>
           </p>
         ) : (
-          <p className="px-4 py-2 my-auto">Not listening to anything...</p>
+          <p className="my-auto px-4 py-2">Not listening to anything...</p>
         )}
       </div>
     </a>

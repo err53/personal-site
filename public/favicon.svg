@@ -21,20 +21,32 @@
      inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
-     inkscape:zoom="4.1506047"
-     inkscape:cx="185.87653"
-     inkscape:cy="135.28149"
-     inkscape:window-width="2560"
-     inkscape:window-height="1387"
-     inkscape:window-x="0"
-     inkscape:window-y="25"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
+     inkscape:zoom="2.0543081"
+     inkscape:cx="141.89692"
+     inkscape:cy="102.95437"
+     inkscape:window-width="1432"
+     inkscape:window-height="836"
+     inkscape:window-x="6"
+     inkscape:window-y="30"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer2" />
   <defs
      id="defs1">
     <style
        id="style1">.cls-1,.cls-2{fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;}.cls-1{stroke-width:6px;}.cls-2{stroke-width:10px;}</style>
   </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="bg">
+    <rect
+       style="fill:#f9f9f9;stroke-width:27.0648;stroke-linecap:round;stroke-linejoin:bevel;paint-order:stroke markers fill"
+       id="rect1"
+       width="306.18579"
+       height="224.89323"
+       x="-3.4074736"
+       y="-4.3810368" />
+  </g>
   <g
      id="layer1"
      transform="translate(5,5)">

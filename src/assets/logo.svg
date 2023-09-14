@@ -4,7 +4,7 @@
    data-name="Layer 1"
    viewBox="0 0 47.999999 47.999999"
    version="1.1"
-   sodipodi:docname="favicon.svg"
+   sodipodi:docname="favicon_raw.svg"
    inkscape:version="1.3 (0e150ed, 2023-07-21)"
    width="48"
    height="48"
@@ -21,35 +21,42 @@
      inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
-     inkscape:zoom="6.1385774"
-     inkscape:cx="25.087246"
-     inkscape:cy="28.263878"
-     inkscape:window-width="1432"
-     inkscape:window-height="836"
-     inkscape:window-x="6"
-     inkscape:window-y="30"
+     inkscape:zoom="26.666231"
+     inkscape:cx="25.500417"
+     inkscape:cy="23.23163"
+     inkscape:window-width="1440"
+     inkscape:window-height="900"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
      inkscape:window-maximized="0"
-     inkscape:current-layer="Layer_1" />
+     inkscape:current-layer="Layer_1"
+     showgrid="true"
+     showguides="true">
+    <inkscape:grid
+       id="grid1"
+       units="px"
+       originx="0"
+       originy="0"
+       spacingx="0.99999998"
+       spacingy="0.99999998"
+       empcolor="#0099e5"
+       empopacity="0.30196078"
+       color="#0099e5"
+       opacity="0.14901961"
+       empspacing="5"
+       dotted="false"
+       gridanglex="30"
+       gridanglez="30"
+       visible="true" />
+  </sodipodi:namedview>
   <defs
      id="defs1">
     <style
        id="style1">.cls-1,.cls-2{fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;}.cls-1{stroke-width:6px;}.cls-2{stroke-width:10px;}</style>
   </defs>
   <g
-     inkscape:groupmode="layer"
-     id="layer2"
-     inkscape:label="bg">
-    <rect
-       style="fill:#f9f9f9;stroke-width:5.77285;stroke-linecap:round;stroke-linejoin:bevel;paint-order:stroke markers fill"
-       id="rect1"
-       width="55.006332"
-       height="56.95348"
-       x="-3.5031662"
-       y="-4.4767399" />
-  </g>
-  <g
      id="layer1"
-     transform="matrix(0.15554493,0,0,0.15554493,6.3334742,7.8313136)">
+     transform="matrix(0.13669837,0,0,0.13669837,7.774005,9.8619703)">
     <path
        id="path1736-6-5"
        class="cls-1"

@@ -2,12 +2,7 @@ import { useLastFM } from "use-last-fm";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 export const CurrentlyPlaying = () => {
-  const lastFM = useLastFM(
-    "err53",
-    import.meta.env.PUBLIC_LASTFM_API_KEY,
-    undefined,
-    "medium",
-  );
+  const lastFM = useLastFM("err53", import.meta.env.PUBLIC_LASTFM_API_KEY);
 
   const [parent] = useAutoAnimate();
 
@@ -20,6 +15,8 @@ export const CurrentlyPlaying = () => {
         {lastFM.status == "playing" && (
           <img
             src={lastFM.song.art}
+            width={64}
+            height={64}
             key={lastFM.song.art}
             className="my-auto animate-pulse-slow lg:w-20"
           />

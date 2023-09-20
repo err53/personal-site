@@ -20,16 +20,19 @@ export const CurrentlyPlaying = () => {
         {lastFM.status == "playing" && (
           <img
             src={lastFM.song.art}
+            key={lastFM.song.art}
             className="my-auto animate-pulse-slow lg:w-20"
           />
         )}
         {lastFM.status == "playing" ? (
-          <p className="my-auto px-4 py-2">
+          <p className="my-auto px-4 py-2" key={lastFM.song.url}>
             Listening to <i>{lastFM.song.name}</i> by{" "}
             <i>{lastFM.song.artist}</i>
           </p>
         ) : (
-          <p className="my-auto px-4 py-2">Not listening to anything...</p>
+          <p className="my-auto px-4 py-2" key="not-listening">
+            Not listening to anything...
+          </p>
         )}
       </div>
     </a>

@@ -5,16 +5,27 @@ jobs:
     name: Lighthouse
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js 18.18.0
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Use Node.js 18
         uses: actions/setup-node@v3
         with:
-          node-version: 18.18.0
+          node-version: 18
+
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        with:
+          version: latest
+
       - name: pnpm install, build
         run: |
           pnpm install
           pnpm run build
+
       - name: run Lighthouse CI
         run: |
           pnpm install -g @lhci/cli@0.12.x
           lhci autorun
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}

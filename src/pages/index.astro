@@ -8,6 +8,7 @@ import { CurrentlyPlaying } from "../components/LastFM";
 import { Icon } from "astro-icon";
 
 import personal_site from "../assets/images/personal_site.png";
+import dash_banner from "../assets/images/dash-banner.png";
 import dh_portal from "../assets/images/dh_portal.png";
 import salesbop from "../assets/images/salesbop.png";
 import cs_wiki from "../assets/images/cs_wiki.png";
@@ -72,11 +73,18 @@ import oscs from "../assets/images/oscs.png";
           />
 
           <Card
+            title="Dash"
+            description="A personalizable new-tab dashboard"
+            href="https://github.com/Krish120003/dash"
+            imgSrc={dash_banner}
+            loading="eager"
+          />
+
+          <Card
             title="DeltaHacks Portal"
             description="A hackathon registration and management system"
             href="https://github.com/deltahacks/portal"
             imgSrc={dh_portal}
-            loading="eager"
           />
 
           <Card

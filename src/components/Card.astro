@@ -1,50 +1,16 @@
 ---
-import { getImage } from "astro:assets";
 export interface Props {
-  title: string;
-  description: string;
+  aria_label?: string;
   href: string;
-  loading?: "eager" | "lazy";
-  imgSrc?: ImageMetadata;
 }
 
-const { title, description, href, imgSrc, loading }: Props = Astro.props;
-
-const widths = [398, 796, 1360];
-
-const imgs =
-  imgSrc &&
-  (await Promise.all(
-    widths.map(async (width) => {
-      return {
-        width: width,
-        src: await getImage({ src: imgSrc, width: width }),
-      };
-    })
-  ));
+const { aria_label, href }: Props = Astro.props;
 ---
 
-<a href={href} class="group h-full">
-  <div
-    class="flex h-full flex-col border shadow-md group-hover:bg-slate-50 group-active:bg-slate-100 group-active:shadow-none"
-  >
-    <h3 class="mx-6 mt-6 text-2xl">{title}</h3>
-    <p class="mx-6 mb-6">{description}</p>
-    {
-      imgSrc && imgs && (
-        <img
-          src={imgSrc.src}
-          alt={title}
-          width={imgSrc.width}
-          height={imgSrc.height}
-          srcset={imgs
-            .map((img) => `${img.src.src} ${img.width}w`)
-            .reduce((prev, cur) => `${prev}, ${cur}`)}
-            sizes="(min-width: 980px) 398px, (min-width: 780px) calc(32.22vw + 89px), (min-width: 640px) calc(100vw - 82px), calc(100vw - 42px)"
-          loading={loading || "lazy"}
-          class="mt-auto group-hover:opacity-95"
-        />
-      )
-    }
-  </div>
+<a
+  aria-label={aria_label}
+  href={href}
+  class="hover:bg-accent hover:text-accent-foreground flex h-full flex-col justify-between border shadow-md active:shadow-none"
+>
+  <slot />
 </a>

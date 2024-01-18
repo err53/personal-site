@@ -1,6 +1,4 @@
 ---
-import type { Icon } from "astro-icon";
-
 export interface Props {
   title: string;
   href: string;
@@ -19,7 +17,7 @@ const { title, href }: Props = Astro.props;
   <div
     class="flex h-16 w-16 flex-col border p-2 shadow-md group-hover:bg-slate-50 group-active:bg-slate-100 group-active:shadow-none"
   >
-    <div class="m-auto w-3/4">
+    <div class="m-auto">
       <slot />
     </div>
   </div>

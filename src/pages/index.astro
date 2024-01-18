@@ -5,7 +5,7 @@ import Footer from "../components/Footer.astro";
 import Social from "../components/Social.astro";
 import { CurrentlyPlaying } from "../components/LastFM";
 
-import { Icon } from "astro-iconify";
+import { Icon } from "astro-icon/components";
 
 import personal_site from "../assets/images/personal_site.png";
 import dash_banner from "../assets/images/dash-banner.png";
@@ -33,22 +33,22 @@ import oscs from "../assets/images/oscs.png";
         <h2 class="text-3xl font-semibold md:text-right">Socials</h2>
         <div class="flex flex-wrap gap-2 pt-3 md:justify-end">
           <Social title="Twitter" href="https://twitter.com/err_53">
-            <Icon name="fa6-brands:x-twitter" />
+            <Icon name="fa6-brands:x-twitter" size={40} />
           </Social>
           <Social
             title="LinkedIn"
             href="https://www.linkedin.com/in/jasonhuang03/"
           >
-            <Icon name="fa6-brands:linkedin-in" />
+            <Icon name="fa6-brands:linkedin-in" size={40}/>
           </Social>
           <Social title="Instagram" href="https://www.instagram.com/the.err53/">
-            <Icon name="fa6-brands:instagram" />
+            <Icon name="fa6-brands:instagram" size={40}/>
           </Social>
           <Social title="Github" href="https://github.com/err53">
-            <Icon name="fa6-brands:github" />
+            <Icon name="fa6-brands:github" size={40}/>
           </Social>
           <Social title="Medium" href="https://err53.medium.com/">
-            <Icon name="fa6-brands:medium" />
+            <Icon name="fa6-brands:medium" size={40}/>
           </Social>
         </div>
       </div>

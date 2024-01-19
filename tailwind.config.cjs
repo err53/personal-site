@@ -2,6 +2,13 @@
 module.exports = {
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   theme: {
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
+      },
+    },
     extend: {
       colors: {
         border: "hsl(var(--border))",
@@ -41,6 +48,7 @@ module.exports = {
 
       animation: {
         "pulse-slow": "pulse-light 5s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        "spin-slow": "spin 5s linear infinite",
       },
       keyframes: {
         "pulse-light": {

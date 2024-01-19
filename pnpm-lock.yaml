@@ -11,9 +11,6 @@ dependencies:
   '@astrojs/tailwind':
     specifier: ^5.1.0
     version: 5.1.0(astro@4.2.1)(tailwindcss@3.3.3)
-  '@formkit/auto-animate':
-    specifier: ^0.8.0
-    version: 0.8.0
   '@types/react':
     specifier: ^18.2.21
     version: 18.2.21
@@ -35,9 +32,6 @@ dependencies:
   tailwindcss:
     specifier: ^3.3.3
     version: 3.3.3
-  use-last-fm:
-    specifier: ^0.6.1
-    version: 0.6.1(react@18.2.0)
 
 devDependencies:
   '@iconify-json/fa6-brands':
@@ -628,10 +622,6 @@ packages:
     requiresBuild: true
     dev: false
     optional: true
-
-  /@formkit/auto-animate@0.8.0:
-    resolution: {integrity: sha512-G8f7489ka0mWyi+1IEZT+xgIwcpWtRMmE2x+IrVoQ+KM1cP6VDj/TbujZjwxdb0P8w8b16/qBfViRmydbYHwMw==}
-    dev: false
 
   /@iconify-json/fa6-brands@1.1.18:
     resolution: {integrity: sha512-vmeJP06Xbj0XbVGiBHg0q8H3M894d4bGXKCmiHt6JqUdpiGcIV7r96N+BOU4ZS1+hvpV57fTfXlFPiUfxAIfkg==}
@@ -1602,11 +1592,6 @@ packages:
     resolution: {integrity: sha512-eS8dRJOckyo9maw9Tu5O5RUi/4inFLrnoLkBe3cPfDMx3WZioXtmOew4TXQaxq7Rhl4xjDtR7c6x8nNTxOvbFw==}
     engines: {node: '>=16.0.0'}
     dev: true
-
-  /dequal@2.0.2:
-    resolution: {integrity: sha512-q9K8BlJVxK7hQYqa6XISGmBZbtQQWVXSrRrWreHC94rMt1QL/Impruc+7p2CYSYuVIUr+YCt6hjrs1kkdJRTug==}
-    engines: {node: '>=6'}
-    dev: false
 
   /dequal@2.0.3:
     resolution: {integrity: sha512-0je+qPKHEMohvfRTCEo3CrPG6cAzAYgmzKyxRiYSSDkS6eGJdyVJm7WaYA5ECaAD9wLB2T4EEeymA5aFVcYXCA==}
@@ -3940,15 +3925,6 @@ packages:
       picocolors: 1.0.0
     dev: false
 
-  /swr@0.4.2(react@18.2.0):
-    resolution: {integrity: sha512-SKGxcAfyijj/lE5ja5zVMDqJNudASH3WZPRUakDVOePTM18FnsXgugndjl9BSRwj+jokFCulMDe7F2pQL+VhEw==}
-    peerDependencies:
-      react: ^16.11.0 || ^17.0.0
-    dependencies:
-      dequal: 2.0.2
-      react: 18.2.0
-    dev: false
-
   /tailwindcss@3.3.3:
     resolution: {integrity: sha512-A0KgSkef7eE4Mf+nKJ83i75TMyq8HqY3qmFIJSWy8bNt0v1lG7jUcpGpoTFxAwYcWOphcTBLPPJg+bDfhDf52w==}
     engines: {node: '>=14.0.0'}
@@ -4211,16 +4187,6 @@ packages:
       browserslist: 4.22.2
       escalade: 3.1.1
       picocolors: 1.0.0
-    dev: false
-
-  /use-last-fm@0.6.1(react@18.2.0):
-    resolution: {integrity: sha512-mbLB9NpNFC2mDpvUgylkRvjWAITjVO3j2IPgtSrdanWBEXRsjMyPaEaDUsS5rJ0wSpvYAPyOQ9XxCUve6vKqpQ==}
-    engines: {node: '>=10'}
-    peerDependencies:
-      react: '>=17'
-    dependencies:
-      react: 18.2.0
-      swr: 0.4.2(react@18.2.0)
     dev: false
 
   /util-deprecate@1.0.2:

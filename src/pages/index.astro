@@ -4,7 +4,7 @@ import Card from "../components/Card.astro";
 import CardHeader from "../components/CardHeader.astro";
 import Footer from "../components/Footer.astro";
 import Button from "../components/Button.astro";
-import { CurrentlyPlaying } from "../components/LastFM";
+import { LastFM } from "../components/react/LastFM";
 
 import { Icon } from "astro-icon/components";
 
@@ -17,13 +17,16 @@ import oscs from "../assets/images/oscs.png";
 
 import { Image } from "astro:assets";
 
-const projectWidths = [398, 796, 1360];
+// const projectWidths = undefined;
+// const projectSizes = undefined;
+
+const projectWidths = [256, 658, 1040, 1316];
 const projectSizes =
-  "(min-width: 980px) 398px, (min-width: 780px) calc(32.22vw + 89px), (min-width: 640px) calc(100vw - 82px), calc(100vw - 42px)";
+  "(min-width: 1480px) 658px, (min-width: 780px) 45.59vw, calc(100vw - 66px)";
 ---
 
 <Layout title="Jason Huang">
-  <main class="mx-auto max-w-4xl space-y-8 px-5 sm:px-10">
+  <main class="container">
     <div class="grid grid-cols-1 items-baseline gap-4 md:grid-cols-2">
       <!-- Hero -->
       <div class="mt-8 space-y-4">
@@ -159,10 +162,10 @@ const projectSizes =
       </div>
 
       <!-- LastFM -->
-      <div class="col-span-full">
+      <div class="">
         <h2 class="text-3xl font-semibold">LastFM</h2>
         <div class="py-4">
-          <CurrentlyPlaying client:visible />
+          <LastFM user="err53" client:visible />
         </div>
       </div>
     </div>

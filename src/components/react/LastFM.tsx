@@ -127,6 +127,7 @@ export const LastFM = ({ user }) => {
   return (
     <a
       href="https://www.last.fm/user/err53"
+      aria-label="Last.fm Profile"
       className="flex h-full flex-row gap-2 border p-2 shadow-md hover:bg-accent hover:text-accent-foreground active:shadow-none"
     >
       {lastFM.status === "success" ? (

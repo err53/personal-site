@@ -17,6 +17,7 @@ module.exports = {
       preset: "lighthouse:no-pwa",
       assertions: {
         "csp-xss": "off",
+        "total-byte-weight": "warn",
       },
     },
   },

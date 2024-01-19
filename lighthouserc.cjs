@@ -9,17 +9,12 @@ module.exports = {
       },
     },
     upload: {
-      target: "temporary-public-storage",
+      target: "lhci",
+      serverBaseUrl: "https://lhci.huang.ovh/",
+      token: "bd6846df-18bf-4e63-8253-43d6dffa50e6",
     },
     assert: {
       preset: "lighthouse:no-pwa",
-      assertions: {
-        // currently broken when running headless, so skip assertion
-        // see: https://github.com/GoogleChrome/lighthouse/issues/14784
-        "bf-cache": "off",
-        // don't think it's possible to properly evaluate csp either
-        "csp-xss": ["off"],
-      },
     },
   },
 };

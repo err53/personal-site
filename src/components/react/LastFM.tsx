@@ -112,54 +112,55 @@ export const LastFM = ({ user }) => {
       className="flex h-full flex-row gap-2 border p-2 shadow-md hover:bg-accent hover:text-accent-foreground active:shadow-none"
     >
       {lastFM.status === "success" ? (
+        // loaded
         lastFM.data.recenttracks.track[0]?.["@attr"]?.nowplaying ? (
-          // currently playing music
-          <>
-            <img
-              src={
-                lastFM.data.recenttracks.track[0].image.find(
-                  (i) => i.size === imageSize.medium,
-                )["#text"]
-              }
-              width={64}
-              height={64}
-              className={"animate-spin-slow h-16 w-16 rounded-full"}
-            />
-            <p className="my-auto">
-              Listening to:
-              <br />
-              <i>{lastFM.data.recenttracks.track[0].name}</i> by{" "}
-              <i>{lastFM.data.recenttracks.track[0].artist["#text"]}</i>
-            </p>
-          </>
+          <img
+            src={
+              lastFM.data.recenttracks.track[0].image.find(
+                (i) => i.size === imageSize.medium,
+              )["#text"]
+            }
+            width={64}
+            height={64}
+            className={"animate-spin-slow h-16 w-16 rounded-full"}
+          />
         ) : (
-          <>
-            <img
-              src={
-                lastFM.data.recenttracks.track[0].image.find(
-                  (i) => i.size === imageSize.medium,
-                )["#text"]
-              }
-              width={64}
-              height={64}
-              className={`h-16 w-16 rounded-full`}
-            />
-            <p className="my-auto">
-              Last listened to:
-              <br />
-              <i>{lastFM.data.recenttracks.track[0].name}</i> by{" "}
-              <i>{lastFM.data.recenttracks.track[0].artist["#text"]}</i>
-            </p>
-          </>
+          <img
+            src={
+              lastFM.data.recenttracks.track[0].image.find(
+                (i) => i.size === imageSize.medium,
+              )["#text"]
+            }
+            width={64}
+            height={64}
+            className={`h-16 w-16 rounded-full`}
+          />
         )
       ) : (
-        <>
-          <div className="h-16 w-16 rounded-full bg-slate-200" />
-          <div className="my-auto flex flex-col gap-3">
-            <div className="h-3 w-36 rounded bg-slate-200" />
-            <div className="h-3 w-44 rounded bg-slate-200" />
-          </div>
-        </>
+        <div className="h-16 w-16 animate-pulse rounded-full bg-slate-200" />
+      )}
+      {lastFM.status === "success" ? (
+        // loaded
+        lastFM.data.recenttracks.track[0]?.["@attr"]?.nowplaying ? (
+          <p className="my-auto">
+            Listening to:
+            <br />
+            <i>{lastFM.data.recenttracks.track[0].name}</i> by{" "}
+            <i>{lastFM.data.recenttracks.track[0].artist["#text"]}</i>
+          </p>
+        ) : (
+          <p className="my-auto">
+            Last listened to:
+            <br />
+            <i>{lastFM.data.recenttracks.track[0].name}</i> by{" "}
+            <i>{lastFM.data.recenttracks.track[0].artist["#text"]}</i>
+          </p>
+        )
+      ) : (
+        <div className="my-auto flex animate-pulse flex-col gap-3">
+          <div className="h-3 w-28 rounded bg-slate-200" />
+          <div className="h-3 w-60 rounded bg-slate-200" />
+        </div>
       )}
     </a>
   );

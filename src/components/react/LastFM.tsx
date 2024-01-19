@@ -83,7 +83,6 @@ export const LastFM = ({ user }) => {
   useEffect(
     () => {
       const initialFetch = async () => {
-        console.log("fetching initial lastfm data");
         const data = await fetch(
           `https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${user}&api_key=${
             import.meta.env.PUBLIC_LASTFM_API_KEY
@@ -102,7 +101,6 @@ export const LastFM = ({ user }) => {
       // setup continuous data refetching
       const interval = setInterval(
         async () => {
-          console.log("fetching lastfm data");
           const data = await fetch(
             `https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${user}&api_key=${
               import.meta.env.PUBLIC_LASTFM_API_KEY

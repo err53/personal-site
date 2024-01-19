@@ -2,11 +2,6 @@ module.exports = {
   ci: {
     collect: {
       numberOfRuns: 5,
-      settings: {
-        throttling: {
-          cpuSlowdownMultiplier: 2.5,
-        },
-      },
     },
     upload: {
       target: "lhci",

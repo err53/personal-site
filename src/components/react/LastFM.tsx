@@ -53,23 +53,6 @@ type UserGetRecentTracksError = {
   error: number;
 };
 
-const getLastFMImage = (lastFM: { data: UserGetRecentTracks }) => {
-  let src = lastFM.data.recenttracks.track[0].image.find(
-    (i) => i.size === imageSize.medium,
-  )["#text"];
-  if (!src) {
-    src = lastFM.data.recenttracks.track[0].image.find(
-      (i) => i.size === imageSize.large,
-    )["#text"];
-  }
-  if (!src) {
-    src = lastFM.data.recenttracks.track[0].image.find(
-      (i) => i.size === imageSize.extralarge,
-    )["#text"];
-  }
-  return src;
-};
-
 export const LastFM = ({ user }) => {
   const [lastFM, setLastFM] = useState<
     | {
@@ -133,7 +116,11 @@ export const LastFM = ({ user }) => {
           // currently playing music
           <>
             <img
-              src={getLastFMImage(lastFM)}
+              src={
+                lastFM.data.recenttracks.track[0].image.find(
+                  (i) => i.size === imageSize.medium,
+                )["#text"]
+              }
               width={64}
               height={64}
               className={"animate-spin-slow h-16 w-16 rounded-full"}
@@ -148,7 +135,11 @@ export const LastFM = ({ user }) => {
         ) : (
           <>
             <img
-              src={getLastFMImage(lastFM)}
+              src={
+                lastFM.data.recenttracks.track[0].image.find(
+                  (i) => i.size === imageSize.medium,
+                )["#text"]
+              }
               width={64}
               height={64}
               className={`h-16 w-16 rounded-full`}

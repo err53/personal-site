@@ -117,7 +117,7 @@ export const LastFM = ({ user }) => {
           <img
             src={
               lastFM.data.recenttracks.track[0].image.find(
-                (i) => i.size === imageSize.medium,
+                (i) => i.size === imageSize.large,
               )["#text"]
             }
             width={64}
@@ -128,7 +128,7 @@ export const LastFM = ({ user }) => {
           <img
             src={
               lastFM.data.recenttracks.track[0].image.find(
-                (i) => i.size === imageSize.medium,
+                (i) => i.size === imageSize.large,
               )["#text"]
             }
             width={64}

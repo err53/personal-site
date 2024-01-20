@@ -48,7 +48,7 @@ module.exports = {
 
       animation: {
         "pulse-slow": "pulse-light 5s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-        "spin-slow": "spin 5s linear infinite",
+        "spin-slow": "spin 2s linear infinite",
       },
       keyframes: {
         "pulse-light": {

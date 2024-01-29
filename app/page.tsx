@@ -6,6 +6,8 @@ import {
 import LastFM from "./components/LastFM";
 import getLatestTrack from "./lib/getLatestTrack";
 
+export const runtime = "edge";
+
 export default async function Home() {
   const queryClient = new QueryClient();
   const user = "err53";

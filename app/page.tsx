@@ -16,7 +16,7 @@ export default async function Home() {
 
   return (
     <main className="">
-      Hello World!
+      Hello World! Vercel plz deploy...
       <HydrationBoundary state={dehydrate(queryClient)}>
         <LastFM user={user} />
       </HydrationBoundary>

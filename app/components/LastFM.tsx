@@ -130,9 +130,10 @@ export default function LastFM(props: { user: string }) {
             height={64}
             className={"animate-spin-slow h-16 w-16 rounded-full"}
           />
+          {data}
         </>
       ) : (
-        <>asdfljlkj</>
+        <>{data}</>
       )}
     </a>
   );

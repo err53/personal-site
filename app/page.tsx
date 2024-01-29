@@ -3,7 +3,8 @@ import {
   HydrationBoundary,
   QueryClient,
 } from "@tanstack/react-query";
-import LastFM, { getrecenttracksQuery } from "./components/LastFM";
+import LastFM from "./components/LastFM";
+import getLatestTrack from "./lib/getLatestTrack";
 
 export default async function Home() {
   const queryClient = new QueryClient();
@@ -11,7 +12,7 @@ export default async function Home() {
 
   await queryClient.prefetchQuery({
     queryKey: ["user.getrecenttracks", user, "&limit=1"],
-    queryFn: getrecenttracksQuery,
+    queryFn: getLatestTrack,
   });
 
   return (

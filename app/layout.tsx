@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import Providers from "./providers";
+
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 export const metadata: Metadata = {
   title: "Jason Huang",
@@ -13,7 +16,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Providers>
+          {children}
+          <ReactQueryDevtools />
+        </Providers>
+      </body>
     </html>
   );
 }

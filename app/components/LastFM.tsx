@@ -90,7 +90,7 @@ export default function LastFM(props: { user: string }) {
         scrobbles: data.recenttracks["@attr"].total,
         name: track.name,
         album: track.album["#text"],
-        artist: track.artist,
+        artist: track.artist["#text"],
         url: track.url,
         images: track.image.reduce(
           (prev, cur) => ({
@@ -129,12 +129,29 @@ export default function LastFM(props: { user: string }) {
             alt={`Album art for ${data.album}`}
             width={64}
             height={64}
-            className={"animate-spin-slow h-16 w-16 rounded-full"}
+            className="animate-spin-slow h-16 w-16 rounded-full"
           />
-          {JSON.stringify(data, null, 2)}
+          <p className="my-auto">
+            Listening to:
+            <br />
+            <i>{data.name}</i> by <i>{data.artist}</i>
+          </p>
         </>
       ) : (
-        <>{JSON.stringify(data, null, 2)}</>
+        <>
+          <Image
+            src={data.images.large}
+            alt={`Album art for ${data.album}`}
+            width={64}
+            height={64}
+            className="h-16 w-16 rounded-full"
+          />
+          <p className="my-auto">
+            Last listened to:
+            <br />
+            <i>{data.name}</i> by <i>{data.artist}</i>
+          </p>
+        </>
       )}
     </a>
   );

@@ -28,7 +28,7 @@ const trackSchema = z.object({
 const nowPlayingTrackSchema = trackSchema.merge(
   z.object({
     "@attr": z.object({
-      nowplaying: z.literal(true),
+      nowplaying: z.coerce.boolean(),
     }),
   })
 );
@@ -71,6 +71,7 @@ export const getrecenttracksQuery = async ({
     throw new Error("Network response was not ok");
   }
   const data = await response.json();
+  console.log(data);
   return getrecenttracksSchema.parse(data);
 };
 

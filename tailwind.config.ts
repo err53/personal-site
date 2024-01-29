@@ -11,7 +11,7 @@ const config: Config = {
     extend: {
       animation: {
         "pulse-slow": "pulse-light 5s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-        "spin-slow": "spin 1.8s linear infinite",
+        "spin-record": "spin 1.8s linear infinite",
       },
       keyframes: {
         "pulse-light": {

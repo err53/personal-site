@@ -59,7 +59,7 @@ export default function LastFM(props: { user: string }) {
             alt={`Album art for ${data.album}`}
             width={64}
             height={64}
-            className="animate-spin-slow h-16 w-16 rounded-full"
+            className="animate-spin-record h-16 w-16 rounded-full"
           />
           <p className="my-auto">
             Listening to:

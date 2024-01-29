@@ -131,10 +131,10 @@ export default function LastFM(props: { user: string }) {
             height={64}
             className={"animate-spin-slow h-16 w-16 rounded-full"}
           />
-          {data}
+          {JSON.stringify(data, null, 2)}
         </>
       ) : (
-        <>{data}</>
+        <>{JSON.stringify(data, null, 2)}</>
       )}
     </a>
   );

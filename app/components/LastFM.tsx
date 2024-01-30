@@ -3,6 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import getLatestTrack from "../lib/getLatestTrack";
+import { FaCircleExclamation } from "react-icons/fa6";
 
 export default function LastFM(props: { user: string }) {
   const { user } = props;
@@ -39,11 +40,34 @@ export default function LastFM(props: { user: string }) {
   });
 
   if (isPending) {
-    return <span>Loading...</span>;
+    return (
+      <a
+        href={`https://www.last.fm/user/${user}`}
+        aria-label="Last.fm Profile"
+        className="hover:bg-accent hover:text-accent-foreground flex h-full flex-row gap-2 border p-2 shadow-md active:shadow-none"
+      >
+        <div className="h-16 w-16 animate-pulse rounded-full bg-slate-200" />
+        <div className="my-auto flex animate-pulse flex-col gap-3">
+          <div className="h-3 w-28 rounded bg-slate-200" />
+          <div className="h-3 w-60 rounded bg-slate-200" />
+        </div>
+      </a>
+    );
   }
 
   if (isError) {
-    return <span>Error: {error.message}</span>;
+    return (
+      <a
+        href={`https://www.last.fm/user/${user}`}
+        aria-label="Last.fm Profile"
+        className="hover:bg-accent hover:text-accent-foreground flex h-full flex-row gap-2 border p-2 shadow-md active:shadow-none"
+      >
+        <FaCircleExclamation className="h-16 w-16 rounded-full bg-slate-200" />
+        <div className="my-auto flex flex-col gap-3">
+          Error: {error.message}
+        </div>
+      </a>
+    );
   }
 
   return (

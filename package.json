@@ -6,7 +6,6 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "serve:lhci": "NODE_ENV=production npm run start",
     "lint": "next lint"
   },
   "dependencies": {

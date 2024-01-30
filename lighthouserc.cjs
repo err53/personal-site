@@ -1,5 +1,8 @@
 module.exports = {
   ci: {
+    collect: {
+      startServerCommand: "NODE_ENV=production npm run start",
+    },
     upload: {
       target: "lhci",
       serverBaseUrl: "https://lhci.huang.ovh/",

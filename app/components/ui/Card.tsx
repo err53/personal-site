@@ -1,5 +1,5 @@
 export const Card: React.FC<{
-  label: string;
+  label?: string;
   href: string;
   children: React.ReactNode;
 }> = ({ label, href, children }) => (

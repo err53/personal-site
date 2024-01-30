@@ -5,6 +5,10 @@ import {
 } from "@tanstack/react-query";
 import LastFM from "./components/LastFM";
 import getLatestTrack from "./lib/getLatestTrack";
+import { Hero } from "./components/Hero";
+import { Socials } from "./components/Socials";
+import { Resume } from "./components/Resume";
+import { Projects } from "./components/Projects";
 
 export const runtime = "edge";
 
@@ -18,8 +22,11 @@ export default async function Home() {
   });
 
   return (
-    <main className="">
-      Hello World! Vercel plz deploy...
+    <main className="container grid grid-cols-1 items-baseline gap-4 md:grid-cols-2">
+      <Hero />
+      <Socials />
+      <Resume />
+      <Projects />
       <HydrationBoundary state={dehydrate(queryClient)}>
         <LastFM user={user} />
       </HydrationBoundary>

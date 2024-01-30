@@ -26,7 +26,7 @@ export default function LastFM(props: { user: string }) {
             ...prev,
             [cur.size]: cur["#text"],
           }),
-          {},
+          {}
         ) as {
           small: string;
           medium: string;

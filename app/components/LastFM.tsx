@@ -5,7 +5,16 @@ import Image from "next/image";
 import getLatestTrack from "../lib/getLatestTrack";
 import { FaCircleExclamation } from "react-icons/fa6";
 
-export default function LastFM(props: { user: string }) {
+export const LastFM = () => {
+  return (
+    <div className="space-y-4">
+      <h2 className="text-3xl font-semibold">LastFM</h2>
+      <LastFMCard user="err53" />
+    </div>
+  );
+};
+
+const LastFMCard = (props: { user: string }) => {
   const { user } = props;
   const { isPending, isError, data, error } = useQuery({
     queryKey: ["user.getrecenttracks", user, "&limit=1"],
@@ -109,4 +118,4 @@ export default function LastFM(props: { user: string }) {
       )}
     </a>
   );
-}
+};

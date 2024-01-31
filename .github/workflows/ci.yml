@@ -1,8 +1,13 @@
 name: CI
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
 on: [push]
+
 jobs:
-  lhci:
-    name: Lighthouse
+  ci:
+    name: CI
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -14,24 +19,44 @@ jobs:
         if: github.event_name == 'pull_request' || github.event_name == 'pull_request_target'
         run: git fetch --depth=1 origin +refs/heads/${{github.base_ref}}:refs/remotes/origin/${{github.base_ref}}
 
-      - name: Use Node.js 18
-        uses: actions/setup-node@v3
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
         with:
-          node-version: 18
+          version: 8
 
-      - uses: pnpm/action-setup@v2
-        name: Install pnpm
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          version: latest
-          run_install: true
+          node-version: "20"
+          cache: "pnpm"
 
-      - name: pnpm build
-        run: pnpm run build
+      - name: Install dependencies
+        run: pnpm install
 
-      - name: run Lighthouse CI
+      - name: Run tests
+        run: pnpm run lint
+        # todo: add tests
+
+      - name: Install Vercel CLI
+        run: pnpm install --global vercel@latest
+
+      - name: Deploy to Vercel Preview
+        run: |
+          DEPLOY_URL=$(vercel)
+          echo "::set-output name=url::$DEPLOY_URL"
+        id: vercel-preview
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+      - name: Lighthouse CI
         run: |
           pnpm install -g @lhci/cli@0.13.x
-          lhci autorun
+          lhci autorun --url=#{{ steps.vercel-preview.outputs.url }}
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
-          NEXT_PUBLIC_LASTFM_API_KEY: ${{ secrets.NEXT_PUBLIC_LASTFM_API_KEY }}
+
+      - name: Deploy to Vercel Production if main branch
+        if: github.ref == 'refs/heads/main'
+        run: vercel --prod
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}

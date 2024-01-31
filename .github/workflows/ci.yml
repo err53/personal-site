@@ -49,7 +49,7 @@ jobs:
       - name: Lighthouse CI
         run: |
           pnpm install -g @lhci/cli@0.13.x
-          lhci autorun --url=${{ steps.vercel-preview.outputs.url }}
+          lhci autorun --collect.url=${{ steps.vercel-preview.outputs.url }}
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
 

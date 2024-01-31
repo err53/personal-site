@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import "./globals.css";
 import Providers from "./providers";
 
@@ -21,11 +20,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Script
-        defer
-        src="https://static.cloudflareinsights.com/beacon.min.js"
-        data-cf-beacon='{"token": "7909bf427b24443f8d47746dce69ad72"}'
-      />
       <body>
         <Providers>
           {children}

@@ -24,8 +24,12 @@ export default function RootLayout({
       <body>
         <Providers>
           <Script
-            src="/stats/script.js"
-            data-website-id="94db1cb1-74f4-4a40-ad6c-962362670409"
+            src={
+              process.env.NODE_ENV === "production"
+                ? "/stats/script.js"
+                : "https://us.umami.is/script.js"
+            }
+            data-website-id="71441ea6-e810-4e9f-b10a-386892d7b509"
           />
           {children}
           <ReactQueryDevtools />

@@ -2,7 +2,7 @@ module.exports = {
   ci: {
     collect: {
       url: ["http://localhost:3000"],
-      startServerCommand: "NODE_ENV=production pnpm run start",
+      startServerCommand: "NODE_ENV=test pnpm run start",
     },
     upload: {
       target: "lhci",

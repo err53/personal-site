@@ -1,8 +1,13 @@
 name: CI
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
 on: [push]
+
 jobs:
-  lhci:
-    name: Lighthouse
+  test:
+    name: Test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -14,23 +19,70 @@ jobs:
         if: github.event_name == 'pull_request' || github.event_name == 'pull_request_target'
         run: git fetch --depth=1 origin +refs/heads/${{github.base_ref}}:refs/remotes/origin/${{github.base_ref}}
 
-      - name: Use Node.js 18
-        uses: actions/setup-node@v3
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
         with:
-          node-version: 18
+          version: 8
 
-      - uses: pnpm/action-setup@v2
-        name: Install pnpm
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          version: latest
-          run_install: true
+          node-version: "20"
+          cache: "pnpm"
 
-      - name: pnpm build
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Install Vercel CLI
+        run: pnpm install --global vercel@latest
+
+      - name: Pull Vercel Environment Information
+        run: vercel env pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Run tests
+        run: pnpm run lint
+        # TODO: add proper tests
+
+      - name: Build
         run: pnpm run build
 
-      - name: run Lighthouse CI
+      - name: Lighthouse CI
         run: |
           pnpm install -g @lhci/cli@0.13.x
           lhci autorun
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+
+      - name: Deploy to Vercel Preview
+        run: |
+          DEPLOY_URL=$(vercel --token=${{ secrets.VERCEL_TOKEN }})
+          echo "url=$DEPLOY_URL" >> $GITHUB_OUTPUT
+        id: vercel-preview
+
+        # TODO: run tests on preview if needed
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+
+      - name: Install Vercel CLI
+        run: pnpm install --global vercel@latest
+
+      - name: Deploy to Vercel Production
+        run: vercel --prod --token=${{ secrets.VERCEL_TOKEN }}

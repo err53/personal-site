@@ -14,10 +14,7 @@ export const Projects = () => (
   <div className="col-span-full">
     <h2 className="text-3xl font-semibold">Projects</h2>
     <div className="grid grid-cols-1 gap-4 py-3 md:grid-cols-2">
-      <Card
-        label="Personal Site Github Repo"
-        href="https://github.com/err53/personal-site"
-      >
+      <Card href="https://github.com/err53/personal-site">
         <CardHeader>
           <h3 className="text-2xl">Personal Site</h3>
           <p>You&apos;re looking at it right now!</p>
@@ -35,7 +32,7 @@ export const Projects = () => (
         />
       </Card>
 
-      <Card label="Dash Github" href="https://github.com/Krish120003/dash">
+      <Card href="https://github.com/Krish120003/dash">
         <CardHeader>
           <h3 className="text-2xl">Dash</h3>
           <p>A personalizable new-tab dashboard</p>
@@ -53,10 +50,7 @@ export const Projects = () => (
         />
       </Card>
 
-      <Card
-        label="DeltaHacks Portal Github"
-        href="https://github.com/deltahacks/portal"
-      >
+      <Card href="https://github.com/deltahacks/portal">
         <CardHeader>
           <h3 className="text-2xl">DeltaHacks Portal</h3>
           <p>A hackathon registration and management system</p>
@@ -72,7 +66,7 @@ export const Projects = () => (
         />
       </Card>
 
-      <Card label="Salesbop Landing Page" href="https://www.salesbop.io">
+      <Card href="https://www.salesbop.io">
         <CardHeader>
           <h3 className="text-2xl">SalesBop</h3>
           <p>An up-and-coming AI sales coaching app</p>
@@ -88,7 +82,7 @@ export const Projects = () => (
         />
       </Card>
 
-      <Card label="E-girls Wiki" href="https://wiki.egirls.dev">
+      <Card href="https://wiki.egirls.dev">
         <CardHeader>
           <h3 className="text-2xl">McMaster CS Wiki</h3>
           <p>A repository of course knowledge, notes, and resources</p>
@@ -104,7 +98,7 @@ export const Projects = () => (
         />
       </Card>
 
-      <Card label="OSCS Landing Page" href="https://github.com/mac-egirls/oscs">
+      <Card href="https://github.com/mac-egirls/oscs">
         <CardHeader>
           <h3 className="text-2xl">Open Source Cheat Sheets</h3>
           <p>

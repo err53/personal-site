@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "./globals.css";
 import Providers from "./providers";
 
@@ -22,6 +23,10 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Providers>
+          <Script
+            src="/stats/script.js"
+            data-website-id="94db1cb1-74f4-4a40-ad6c-962362670409"
+          />
           {children}
           <ReactQueryDevtools />
           <Footer />

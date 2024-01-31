@@ -53,10 +53,19 @@ jobs:
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
 
+      - name: Deploy to Vercel Preview
+        run: |
+          DEPLOY_URL=$(vercel --token=${{ secrets.VERCEL_TOKEN }})
+          echo "url=$DEPLOY_URL" >> $GITHUB_OUTPUT
+        id: vercel-preview
+
+        # TODO: run tests on preview if needed
+
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
     needs: test
+    if: github.ref == 'refs/heads/main'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -75,15 +84,5 @@ jobs:
       - name: Install Vercel CLI
         run: pnpm install --global vercel@latest
 
-      - name: Deploy to Vercel Preview if not main
-        if: github.ref != 'refs/heads/main'
-        run: |
-          DEPLOY_URL=$(vercel --token=${{ secrets.VERCEL_TOKEN }})
-          echo "url=$DEPLOY_URL" >> $GITHUB_OUTPUT
-        id: vercel-preview
-
-        # TODO: run tests on preview if needed
-
-      - name: Deploy to Vercel Production if main
-        if: github.ref == 'refs/heads/main'
+      - name: Deploy to Vercel Production
         run: vercel --prod --token=${{ secrets.VERCEL_TOKEN }}

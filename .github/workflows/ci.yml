@@ -6,8 +6,8 @@ env:
 on: [push]
 
 jobs:
-  ci:
-    name: CI
+  test:
+    name: Test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -35,24 +35,49 @@ jobs:
 
       - name: Run tests
         run: pnpm run lint
-        # todo: add tests
+        # TODO: add proper tests
+
+      - name: Build
+        run: pnpm run build
+
+      - name: Lighthouse CI
+        run: |
+          pnpm install -g @lhci/cli@0.13.x
+          lhci autorun
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
 
       - name: Install Vercel CLI
         run: pnpm install --global vercel@latest
 
-      - name: Deploy to Vercel Preview
+      - name: Deploy to Vercel Preview if PR
+        if: github.event_name == 'pull_request' || github.event_name == 'pull_request_target'
         run: |
           DEPLOY_URL=$(vercel --token=${{ secrets.VERCEL_TOKEN }})
           echo "url=$DEPLOY_URL" >> $GITHUB_OUTPUT
         id: vercel-preview
 
-      - name: Lighthouse CI
-        run: |
-          pnpm install -g @lhci/cli@0.13.x
-          lhci autorun --collect.url=${{ steps.vercel-preview.outputs.url }}
-        env:
-          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+        # TODO: run tests on preview if needed
 
-      - name: Deploy to Vercel Production if main branch
+      - name: Deploy to Vercel Production if main
         if: github.ref == 'refs/heads/main'
         run: vercel --prod --token=${{ secrets.VERCEL_TOKEN }}

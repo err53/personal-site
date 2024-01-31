@@ -45,8 +45,6 @@ jobs:
 
       - name: Build
         run: pnpm run build
-        env:
-          NODE_ENV: "test"
 
       - name: Lighthouse CI
         run: |

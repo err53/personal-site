@@ -23,14 +23,12 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Providers>
-          <Script
-            src={
-              process.env.NODE_ENV === "production"
-                ? "/stats/script.js"
-                : "https://us.umami.is/script.js"
-            }
-            data-website-id="71441ea6-e810-4e9f-b10a-386892d7b509"
-          />
+          {process.env.VERCEL_ENV === "production" ?? (
+            <Script
+              src="/stats/script.js"
+              data-website-id="71441ea6-e810-4e9f-b10a-386892d7b509"
+            />
+          )}
           {children}
           <ReactQueryDevtools />
           <Footer />

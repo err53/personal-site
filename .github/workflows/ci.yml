@@ -42,11 +42,9 @@ jobs:
 
       - name: Deploy to Vercel Preview
         run: |
-          DEPLOY_URL=$(vercel)
+          DEPLOY_URL=$(vercel --token=${{ secrets.VERCEL_TOKEN }})
           echo "::set-output name=url::$DEPLOY_URL"
         id: vercel-preview
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
 
       - name: Lighthouse CI
         run: |
@@ -57,6 +55,4 @@ jobs:
 
       - name: Deploy to Vercel Production if main branch
         if: github.ref == 'refs/heads/main'
-        run: vercel --prod
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: vercel --prod --token=${{ secrets.VERCEL_TOKEN }}

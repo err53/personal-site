@@ -43,13 +43,13 @@ jobs:
       - name: Deploy to Vercel Preview
         run: |
           DEPLOY_URL=$(vercel --token=${{ secrets.VERCEL_TOKEN }})
-          echo "::set-output name=url::$DEPLOY_URL"
+          echo "url=$DEPLOY_URL" >> $GITHUB_OUTPUT
         id: vercel-preview
 
       - name: Lighthouse CI
         run: |
           pnpm install -g @lhci/cli@0.13.x
-          lhci autorun --url=#{{ steps.vercel-preview.outputs.url }}
+          lhci autorun --url=${{ steps.vercel-preview.outputs.url }}
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
 

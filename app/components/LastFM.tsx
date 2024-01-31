@@ -49,7 +49,6 @@ const LastFMCard: React.FC<{ user: string }> = ({ user }) => {
     return (
       <a
         href={`https://www.last.fm/user/${user}`}
-        aria-label="Last.fm Profile"
         className="hover:bg-accent hover:text-accent-foreground flex h-full flex-row gap-2 border p-2 shadow-md active:shadow-none"
       >
         <div className="h-16 w-16 animate-pulse rounded-full bg-slate-200" />
@@ -79,7 +78,6 @@ const LastFMCard: React.FC<{ user: string }> = ({ user }) => {
   return (
     <a
       href={`https://www.last.fm/user/${user}`}
-      aria-label="Last.fm Profile"
       className="hover:bg-accent hover:text-accent-foreground flex h-full flex-row gap-2 border p-2 shadow-md active:shadow-none"
     >
       {data.nowPlaying ? (

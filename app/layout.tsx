@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import "./globals.css";
 import Providers from "./providers";
 
@@ -23,12 +22,6 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Providers>
-          {process.env.VERCEL_ENV === "production" ?? (
-            <Script
-              src="/stats/script.js"
-              data-website-id="71441ea6-e810-4e9f-b10a-386892d7b509"
-            />
-          )}
           {children}
           <ReactQueryDevtools />
           <Footer />

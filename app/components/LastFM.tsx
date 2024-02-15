@@ -33,7 +33,7 @@ const LastFMCard: React.FC<{ user: string }> = ({ user }) => {
             ...prev,
             [cur.size]: cur["#text"],
           }),
-          {}
+          {},
         ) as {
           small: string;
           medium: string;
@@ -83,11 +83,12 @@ const LastFMCard: React.FC<{ user: string }> = ({ user }) => {
       {data.nowPlaying ? (
         <>
           <Image
-            src={data.images.large}
+            src={data.images.medium}
             alt={`Album art for ${data.album}`}
             width={64}
             height={64}
             className="animate-spin-record h-16 w-16 rounded-full"
+            unoptimized
           />
           <p className="my-auto">
             Listening to:

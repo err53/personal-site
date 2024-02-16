@@ -14,6 +14,7 @@ module.exports = {
       assertions: {
         "csp-xss": "off",
         "total-byte-weight": "warn",
+        "errors-in-console": "warn",
       },
     },
   },

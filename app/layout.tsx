@@ -3,6 +3,7 @@ import "./globals.css";
 import Providers from "./providers";
 
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { Analytics } from "@vercel/analytics/react";
 import { Footer } from "./components/Footer";
 
 export const metadata: Metadata = {
@@ -26,6 +27,7 @@ export default function RootLayout({
           <ReactQueryDevtools />
           <Footer />
         </Providers>
+        <Analytics />
       </body>
     </html>
   );

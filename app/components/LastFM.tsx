@@ -104,6 +104,7 @@ const LastFMCard: React.FC<{ user: string }> = ({ user }) => {
             width={64}
             height={64}
             className="h-16 w-16 rounded-full"
+            unoptimized
           />
           <p className="my-auto">
             Last listened to:

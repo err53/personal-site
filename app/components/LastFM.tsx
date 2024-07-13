@@ -11,6 +11,7 @@ import {
 } from "framer-motion";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import "./lastfm.css";
 
 export const LastFM: React.FC<{ user: string }> = ({ user }) => (
@@ -145,19 +146,24 @@ const LastFMCard: React.FC<{ user: string }> = ({ user }) => {
       href={`https://www.last.fm/user/${user}`}
       className="flex h-full flex-row gap-2 border p-2 shadow-md transition-all duration-300 hover:bg-accent hover:text-accent-foreground active:shadow-none"
     >
-      <motion.div ref={scope} style={{ rotate }}>
+      <motion.div
+        ref={scope}
+        style={{ rotate, flex: "none", alignSelf: "center" }}
+      >
         <SwitchTransition>
           <CSSTransition
             key={data.images.large}
             timeout={300}
-            classNames="record-image"
+            classNames="fade"
+            className="h-16 w-16 rounded-full"
           >
-            <img
+            <Image
               src={data.images.large}
               alt={`Album art for ${data.album}`}
               width={64}
               height={64}
               className={"h-16 w-16 rounded-full"}
+              unoptimized
             />
           </CSSTransition>
         </SwitchTransition>

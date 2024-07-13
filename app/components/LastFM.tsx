@@ -1,10 +1,17 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import Image from "next/image";
 import getLatestTrack from "../lib/getLatestTrack";
 import { FaCircleExclamation } from "react-icons/fa6";
-import classNames from "classnames";
+import {
+  motion,
+  AnimationScope,
+  useAnimate,
+  useMotionValue,
+} from "framer-motion";
+import { CSSTransition, SwitchTransition } from "react-transition-group";
+import { useEffect, useState } from "react";
+import "./lastfm.css";
 
 export const LastFM: React.FC<{ user: string }> = ({ user }) => (
   <div className="space-y-4">
@@ -14,6 +21,10 @@ export const LastFM: React.FC<{ user: string }> = ({ user }) => (
 );
 
 const LastFMCard: React.FC<{ user: string }> = ({ user }) => {
+  const [scope, animate] = useAnimate();
+  const rotate = useMotionValue(0);
+  const [prevImage, setPrevImage] = useState<string>();
+
   const { isPending, isError, data, error } = useQuery({
     queryKey: ["user.getrecenttracks", user, "&limit=1"],
     queryFn: getLatestTrack,
@@ -45,6 +56,59 @@ const LastFMCard: React.FC<{ user: string }> = ({ user }) => {
     },
     refetchInterval: 5000,
   });
+
+  useEffect(() => {
+    if (data && data.images.large !== prevImage) {
+      setPrevImage(data.images.large);
+    }
+  });
+
+  const recordAnimation = async (
+    s: AnimationScope<any>,
+    nowPlaying: boolean,
+  ) => {
+    if (nowPlaying) {
+      rotate.set(-360);
+      await animate(
+        s.current,
+        {
+          rotate: 0,
+        },
+        {
+          ease: "easeIn",
+          duration: 3,
+        },
+      );
+      rotate.set(-360 * 2);
+      await animate(
+        s.current,
+        {
+          rotate: -360,
+        },
+        {
+          ease: "linear",
+          duration: 1.8,
+          repeat: Infinity,
+        },
+      );
+    } else {
+      animate(
+        s.current,
+        { rotate: 0 },
+        {
+          type: "spring",
+          duration: 10,
+          bounce: 0,
+        },
+      );
+    }
+  };
+
+  useEffect(() => {
+    if (data) {
+      void recordAnimation(scope, data?.nowPlaying);
+    }
+  }, [data]);
 
   if (isPending) {
     return (
@@ -81,17 +145,23 @@ const LastFMCard: React.FC<{ user: string }> = ({ user }) => {
       href={`https://www.last.fm/user/${user}`}
       className="flex h-full flex-row gap-2 border p-2 shadow-md transition-all duration-300 hover:bg-accent hover:text-accent-foreground active:shadow-none"
     >
-      <Image
-        src={data.images.large}
-        alt={`Album art for ${data.album}`}
-        width={64}
-        height={64}
-        className={classNames(
-          "h-16 w-16 rounded-full transition-all duration-300 ease-in-out",
-          data.nowPlaying && "animate-spin-record",
-        )}
-        unoptimized
-      />
+      <motion.div ref={scope} style={{ rotate }}>
+        <SwitchTransition>
+          <CSSTransition
+            key={data.images.large}
+            timeout={300}
+            classNames="record-image"
+          >
+            <img
+              src={data.images.large}
+              alt={`Album art for ${data.album}`}
+              width={64}
+              height={64}
+              className={"h-16 w-16 rounded-full"}
+            />
+          </CSSTransition>
+        </SwitchTransition>
+      </motion.div>
       {data.nowPlaying ? (
         <>
           <p className="my-auto">

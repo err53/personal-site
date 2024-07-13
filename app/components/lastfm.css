@@ -1,0 +1,15 @@
+.record-image-enter {
+  opacity: 0;
+}
+.record-image-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.record-image-exit {
+  opacity: 1;
+}
+.record-image-exit-active {
+  opacity: 0;
+  transition: opacity 500ms ease-in;
+}

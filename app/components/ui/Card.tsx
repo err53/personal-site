@@ -1,12 +1,18 @@
+import classNames from "classnames";
+
 export const Card: React.FC<{
   label?: string;
   href: string;
+  className?: string;
   children: React.ReactNode;
-}> = ({ label, href, children }) => (
+}> = ({ label, href, className, children }) => (
   <a
     aria-label={label}
     href={href}
-    className="hover:bg-accent hover:text-accent-foreground flex h-full flex-col justify-between border shadow-md active:shadow-none"
+    className={classNames(
+      "flex h-full flex-col justify-between border shadow-md transition-all duration-300 hover:bg-accent hover:text-accent-foreground active:shadow-none",
+      className,
+    )}
   >
     {children}
   </a>

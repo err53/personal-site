@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import getLatestTrack from "../lib/getLatestTrack";
 import { FaCircleExclamation } from "react-icons/fa6";
+import classNames from "classnames";
 
 export const LastFM: React.FC<{ user: string }> = ({ user }) => (
   <div className="space-y-4">
@@ -49,7 +50,7 @@ const LastFMCard: React.FC<{ user: string }> = ({ user }) => {
     return (
       <a
         href={`https://www.last.fm/user/${user}`}
-        className="hover:bg-accent hover:text-accent-foreground flex h-full flex-row gap-2 border p-2 shadow-md active:shadow-none"
+        className="flex h-full flex-row gap-2 border p-2 shadow-md transition-all duration-300 hover:bg-accent hover:text-accent-foreground active:shadow-none"
       >
         <div className="h-16 w-16 animate-pulse rounded-full bg-slate-200" />
         <div className="my-auto flex animate-pulse flex-col gap-3">
@@ -65,7 +66,7 @@ const LastFMCard: React.FC<{ user: string }> = ({ user }) => {
       <a
         href={`https://www.last.fm/user/${user}`}
         aria-label="Last.fm Profile"
-        className="hover:bg-accent hover:text-accent-foreground flex h-full flex-row gap-2 border p-2 shadow-md active:shadow-none"
+        className="flex h-full flex-row gap-2 border p-2 shadow-md transition-all duration-300 hover:bg-accent hover:text-accent-foreground active:shadow-none"
       >
         <FaCircleExclamation className="h-16 w-16 rounded-full bg-slate-200" />
         <div className="my-auto flex flex-col gap-3">
@@ -78,18 +79,21 @@ const LastFMCard: React.FC<{ user: string }> = ({ user }) => {
   return (
     <a
       href={`https://www.last.fm/user/${user}`}
-      className="hover:bg-accent hover:text-accent-foreground flex h-full flex-row gap-2 border p-2 shadow-md active:shadow-none"
+      className="flex h-full flex-row gap-2 border p-2 shadow-md transition-all duration-300 hover:bg-accent hover:text-accent-foreground active:shadow-none"
     >
+      <Image
+        src={data.images.large}
+        alt={`Album art for ${data.album}`}
+        width={64}
+        height={64}
+        className={classNames(
+          "h-16 w-16 rounded-full transition-all duration-300 ease-in-out",
+          data.nowPlaying && "animate-spin-record",
+        )}
+        unoptimized
+      />
       {data.nowPlaying ? (
         <>
-          <Image
-            src={data.images.medium}
-            alt={`Album art for ${data.album}`}
-            width={64}
-            height={64}
-            className="animate-spin-record h-16 w-16 rounded-full"
-            unoptimized
-          />
           <p className="my-auto">
             Listening to:
             <br />
@@ -98,14 +102,6 @@ const LastFMCard: React.FC<{ user: string }> = ({ user }) => {
         </>
       ) : (
         <>
-          <Image
-            src={data.images.large}
-            alt={`Album art for ${data.album}`}
-            width={64}
-            height={64}
-            className="h-16 w-16 rounded-full"
-            unoptimized
-          />
           <p className="my-auto">
             Last listened to:
             <br />

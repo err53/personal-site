@@ -6,8 +6,10 @@ export const Button: React.FC<{
   <a
     aria-label={label}
     href={href}
-    className="hover:bg-accent hover:text-accent-foreground border p-3 shadow-md active:shadow-none"
+    className={
+      "border p-3 shadow-md transition-all duration-300 hover:bg-accent hover:text-accent-foreground active:shadow-none"
+    }
   >
-    <div>{children}</div>
+    {children}
   </a>
 );

@@ -15,8 +15,8 @@ import Image from "next/image";
 import "./lastfm.css";
 
 export const LastFM: React.FC<{ user: string }> = ({ user }) => (
-  <div className="space-y-4">
-    <h2 className="text-3xl font-semibold">LastFM</h2>
+  <div>
+    <h2 className="pb-3 text-3xl font-semibold">LastFM</h2>
     <LastFMCard user={user} />
   </div>
 );

@@ -9,8 +9,8 @@ import {
 
 export const Socials = () => (
   <div className="md:justify-self-end">
-    <h2 className="text-3xl font-semibold md:text-right">Socials</h2>
-    <div className="flex flex-wrap gap-2 pt-3 md:justify-end">
+    <h2 className="pb-3 text-3xl font-semibold md:text-right">Socials</h2>
+    <div className="flex flex-wrap gap-2 md:justify-end">
       <Button label="Twitter" href="https://twitter.com/err_53">
         <FaXTwitter className="size-10" />
       </Button>

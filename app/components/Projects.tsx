@@ -12,8 +12,8 @@ const projectSizes = "(min-width: 640px) 50vw, 100vw";
 
 export const Projects = () => (
   <div className="col-span-full">
-    <h2 className="text-3xl font-semibold">Projects</h2>
-    <div className="grid grid-cols-1 gap-4 py-3 md:grid-cols-2">
+    <h2 className="pb-3 text-3xl font-semibold">Projects</h2>
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
       <Card href="https://github.com/err53/personal-site">
         <CardHeader>
           <h3 className="text-2xl">Personal Site</h3>

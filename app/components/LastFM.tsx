@@ -8,8 +8,8 @@ import {
   AnimationScope,
   useAnimate,
   useMotionValue,
+  useWillChange,
 } from "framer-motion";
-import { CSSTransition, SwitchTransition } from "react-transition-group";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import "./lastfm.css";
@@ -24,7 +24,7 @@ export const LastFM: React.FC<{ user: string }> = ({ user }) => (
 const LastFMCard: React.FC<{ user: string }> = ({ user }) => {
   const [scope, animate] = useAnimate();
   const rotate = useMotionValue(0);
-  const [prevImage, setPrevImage] = useState<string>();
+  const willChange = useWillChange();
 
   const { isPending, isError, data, error } = useQuery({
     queryKey: ["user.getrecenttracks", user, "&limit=1"],
@@ -58,49 +58,28 @@ const LastFMCard: React.FC<{ user: string }> = ({ user }) => {
     refetchInterval: 5000,
   });
 
-  useEffect(() => {
-    if (data && data.images.large !== prevImage) {
-      setPrevImage(data.images.large);
-    }
-  });
-
   const recordAnimation = async (
     s: AnimationScope<any>,
     nowPlaying: boolean,
   ) => {
     if (nowPlaying) {
+      // spin up the record
+      rotate.set(-360);
+      await animate(s.current, { rotate: 0 }, { ease: "easeIn", duration: 3 });
+
+      // continue spinning the record
       rotate.set(-360);
       await animate(
         s.current,
-        {
-          rotate: 0,
-        },
-        {
-          ease: "easeIn",
-          duration: 3,
-        },
-      );
-      rotate.set(-360 * 2);
-      await animate(
-        s.current,
-        {
-          rotate: -360,
-        },
-        {
-          ease: "linear",
-          duration: 1.8,
-          repeat: Infinity,
-        },
+        { rotate: 0 },
+        { ease: "linear", duration: 1.8, repeat: Infinity },
       );
     } else {
+      // spin down the record
       animate(
         s.current,
         { rotate: 0 },
-        {
-          type: "spring",
-          duration: 10,
-          bounce: 0,
-        },
+        { type: "spring", duration: 7, bounce: 0 },
       );
     }
   };
@@ -115,6 +94,7 @@ const LastFMCard: React.FC<{ user: string }> = ({ user }) => {
     return (
       <a
         href={`https://www.last.fm/user/${user}`}
+        aria-label="Last.fm Profile"
         className="flex h-full flex-row gap-2 border p-2 shadow-md transition-all duration-300 hover:bg-accent hover:text-accent-foreground active:shadow-none"
       >
         <div className="h-16 w-16 animate-pulse rounded-full bg-slate-200" />
@@ -144,29 +124,21 @@ const LastFMCard: React.FC<{ user: string }> = ({ user }) => {
   return (
     <a
       href={`https://www.last.fm/user/${user}`}
+      aria-label="Last.fm Profile"
       className="flex h-full flex-row gap-2 border p-2 shadow-md transition-all duration-300 hover:bg-accent hover:text-accent-foreground active:shadow-none"
     >
       <motion.div
         ref={scope}
-        style={{ rotate, flex: "none", alignSelf: "center" }}
+        style={{ willChange, rotate, flex: "none", alignSelf: "center" }}
       >
-        <SwitchTransition>
-          <CSSTransition
-            key={data.images.large}
-            timeout={300}
-            classNames="fade"
-            className="h-16 w-16 rounded-full"
-          >
-            <Image
-              src={data.images.large}
-              alt={`Album art for ${data.album}`}
-              width={64}
-              height={64}
-              className={"h-16 w-16 rounded-full"}
-              unoptimized
-            />
-          </CSSTransition>
-        </SwitchTransition>
+        <Image
+          src={data.images.large}
+          alt={`Album art for ${data.album}`}
+          width={64}
+          height={64}
+          className={"h-16 w-16 rounded-full"}
+          unoptimized
+        />
       </motion.div>
       {data.nowPlaying ? (
         <>

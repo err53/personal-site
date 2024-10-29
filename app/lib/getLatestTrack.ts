@@ -56,6 +56,10 @@ export default async function getLatestTrack({
 }: {
   queryKey: string[];
 }) {
+  if (!process.env.NEXT_PUBLIC_LASTFM_API_KEY) {
+    throw new Error("NEXT_PUBLIC_LASTFM_API_KEY is not set");
+  }
+
   const [_, user, params] = queryKey;
   const response = await fetch(
     "https://ws.audioscrobbler.com/2.0/?format=json&method=user.getrecenttracks" +

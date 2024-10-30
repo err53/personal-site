@@ -6,6 +6,8 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Footer } from "./components/Footer";
+import PostHogPageView from "./components/PostHogPageView";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Jason Huang",
@@ -22,15 +24,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
-        <Providers>
+      <Providers>
+        <body>
+          <Suspense fallback={null}>
+            <PostHogPageView />
+          </Suspense>
           {children}
           <ReactQueryDevtools />
           <Footer />
-        </Providers>
-        <Analytics />
-        <SpeedInsights />
-      </body>
+          <Analytics />
+          <SpeedInsights />
+        </body>
+      </Providers>
     </html>
   );
 }

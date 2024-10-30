@@ -82,10 +82,15 @@ export const Projects = () => (
         />
       </Card>
 
-      <Card href="https://wiki.egirls.dev">
+      <Card href="https://beta.wiki.egirls.dev/s/public">
         <CardHeader>
           <h3 className="text-2xl">McMaster CS Wiki</h3>
-          <p>A repository of course knowledge, notes, and resources</p>
+          <p>
+            A repository of course knowledge, notes, and resources.
+            <br />
+            Currently in the middle of a migration off of Wiki.JS, so things
+            might be a little broken...
+          </p>
         </CardHeader>
         <Image
           src={cs_wiki}

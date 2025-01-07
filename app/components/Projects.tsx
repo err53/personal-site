@@ -69,7 +69,7 @@ export const Projects = () => (
       <Card href="https://www.salesbop.io">
         <CardHeader>
           <h3 className="text-2xl">SalesBop</h3>
-          <p>An up-and-coming AI sales coaching app</p>
+          <p>A comprehensive, customizable sales coaching platform with natural language feedback</p>
         </CardHeader>
         <Image
           src={salesbop}

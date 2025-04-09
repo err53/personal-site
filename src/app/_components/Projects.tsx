@@ -30,6 +30,7 @@ export const Projects = () => (
           }}
           loading="eager"
           priority
+          placeholder="blur"
         />
       </Card>
 
@@ -46,8 +47,7 @@ export const Projects = () => (
             width: "100%",
             height: "auto",
           }}
-          loading="eager"
-          priority
+          loading="lazy"
         />
       </Card>
 
@@ -64,6 +64,7 @@ export const Projects = () => (
             width: "100%",
             height: "auto",
           }}
+          loading="lazy"
         />
       </Card>
 
@@ -83,6 +84,7 @@ export const Projects = () => (
             width: "100%",
             height: "auto",
           }}
+          loading="lazy"
         />
       </Card>
 
@@ -99,6 +101,7 @@ export const Projects = () => (
             width: "100%",
             height: "auto",
           }}
+          loading="lazy"
         />
       </Card>
 
@@ -120,6 +123,7 @@ export const Projects = () => (
             width: "100%",
             height: "auto",
           }}
+          loading="lazy"
         />
       </Card>
 
@@ -139,6 +143,7 @@ export const Projects = () => (
             width: "100%",
             height: "auto",
           }}
+          loading="lazy"
         />
       </Card>
     </div>

@@ -28,7 +28,6 @@ export const Projects = () => (
             width: "100%",
             height: "auto",
           }}
-          loading="eager"
           priority
           quality={50}
         />
@@ -47,7 +46,6 @@ export const Projects = () => (
             width: "100%",
             height: "auto",
           }}
-          loading="lazy"
           quality={50}
         />
       </Card>
@@ -65,7 +63,6 @@ export const Projects = () => (
             width: "100%",
             height: "auto",
           }}
-          loading="lazy"
           quality={50}
         />
       </Card>
@@ -86,7 +83,6 @@ export const Projects = () => (
             width: "100%",
             height: "auto",
           }}
-          loading="lazy"
           quality={50}
         />
       </Card>
@@ -104,7 +100,6 @@ export const Projects = () => (
             width: "100%",
             height: "auto",
           }}
-          loading="lazy"
           quality={50}
         />
       </Card>
@@ -127,7 +122,6 @@ export const Projects = () => (
             width: "100%",
             height: "auto",
           }}
-          loading="lazy"
           quality={50}
         />
       </Card>
@@ -148,7 +142,6 @@ export const Projects = () => (
             width: "100%",
             height: "auto",
           }}
-          loading="lazy"
           quality={50}
         />
       </Card>

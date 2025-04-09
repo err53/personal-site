@@ -13,7 +13,7 @@
     "classnames": "^2.5.1",
     "framer-motion": "12.0.0-alpha.0",
     "next": "15.0.2",
-    "posthog-js": "^1.234.9",
+    "posthog-js": "^1.235.0",
     "react": "19.0.0-rc-02c0e824-20241028",
     "react-dom": "19.0.0-rc-02c0e824-20241028",
     "react-icons": "^5.5.0",

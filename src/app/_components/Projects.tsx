@@ -1,13 +1,13 @@
 import Image from "next/image";
 import { Card, CardHeader } from "./ui/Card";
 
-import personal_site from "@/app/assets/personal_site.png";
-import dash_banner from "@/app/assets/dash_banner.png";
-import dh_portal from "@/app/assets/dh_portal.png";
-import salesbop from "@/app/assets/salesbop.png";
-import cs_wiki from "@/app/assets/cs_wiki.png";
-import oscs from "@/app/assets/oscs.png";
-import meetingbot from "@/app/assets/meetingbot.png";
+import personal_site from "~/app/_assets/personal_site.png";
+import dash_banner from "~/app/_assets/dash_banner.png";
+import dh_portal from "~/app/_assets/dh_portal.png";
+import salesbop from "~/app/_assets/salesbop.png";
+import cs_wiki from "~/app/_assets/cs_wiki.png";
+import oscs from "~/app/_assets/oscs.png";
+import meetingbot from "~/app/_assets/meetingbot.png";
 
 const projectSizes = "(min-width: 640px) 50vw, 100vw";
 

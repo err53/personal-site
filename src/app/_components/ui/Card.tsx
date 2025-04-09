@@ -10,7 +10,7 @@ export const Card: React.FC<{
     aria-label={label}
     href={href}
     className={classNames(
-      "flex h-full flex-col justify-between border shadow-md transition-all duration-300 hover:bg-accent hover:text-accent-foreground active:shadow-none",
+      "hover:bg-accent hover:text-accent-foreground flex h-full flex-col justify-between border shadow-md transition-all duration-300 active:shadow-none",
       className,
     )}
   >

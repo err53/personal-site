@@ -1,10 +1,11 @@
+import "~/styles/globals.css";
+
 import type { Metadata } from "next";
-import "./globals.css";
 import Providers from "./providers";
 
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { Footer } from "./components/Footer";
-import PostHogPageView from "./components/PostHogPageView";
+import { Footer } from "./_components/Footer";
+import PostHogPageView from "./_components/PostHogPageView";
 import { Suspense } from "react";
 
 export const metadata: Metadata = {

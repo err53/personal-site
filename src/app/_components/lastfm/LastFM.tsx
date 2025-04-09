@@ -1,6 +1,5 @@
 "use client";
 
-import { FaCircleExclamation } from "react-icons/fa6";
 import {
   motion,
   type AnimationScope,
@@ -11,59 +10,18 @@ import {
 import { useEffect, useCallback } from "react";
 import Image from "next/image";
 import { api } from "~/trpc/react";
-import type { FallbackProps } from "react-error-boundary";
 
-const user = "err53";
+import { LastFMLoading } from "./LastFMLoading";
+import { LastFMError } from "./LastFMError";
 
-export const LastFMLoading = () => (
-  <div>
-    <h2 className="pb-3 text-3xl font-semibold">LastFM</h2>
-    <a
-      href={`https://www.last.fm/user/${user}`}
-      aria-label="Last.fm Profile"
-      className="hover:bg-accent hover:text-accent-foreground flex h-full flex-row gap-2 border p-2 shadow-md transition-all duration-300 active:shadow-none"
-    >
-      <div className="h-16 w-16 animate-pulse rounded-full bg-slate-200" />
-      <div className="my-auto flex animate-pulse flex-col gap-3">
-        <div className="h-3 w-28 rounded bg-slate-200" />
-        <div className="h-3 w-60 rounded bg-slate-200" />
-      </div>
-    </a>
-  </div>
-);
-
-export const LastFMError = ({ error }: FallbackProps) => {
-  let message = "Unknown error";
-  if (error instanceof Error) {
-    message = error.message;
-  } else if (typeof error === "string") {
-    message = error;
-  } else if (typeof error === "object" && error !== null) {
-    message = JSON.stringify(error);
-  }
-
-  return (
-    <div>
-      <h2 className="pb-3 text-3xl font-semibold">LastFM</h2>
-      <a
-        href={`https://www.last.fm/user/${user}`}
-        aria-label="Last.fm Profile"
-        className="hover:bg-accent hover:text-accent-foreground flex h-full flex-row gap-2 border p-2 shadow-md transition-all duration-300 active:shadow-none"
-      >
-        <FaCircleExclamation className="h-16 w-16 rounded-full bg-slate-200" />
-        <div className="my-auto flex flex-col gap-3">Error: {message}</div>
-      </a>
-    </div>
-  );
-};
-
-export const LastFM = () => {
-  const [data] = api.lastfm.getLatestTrack.useSuspenseQuery(
-    { user },
-    {
-      refetchInterval: 1 * 1000, // 5s
-    },
-  );
+export const LastFM = ({ user }: { user: string }) => {
+  const { data, isLoading, isError, error } =
+    api.lastfm.getLatestTrack.useQuery(
+      { user },
+      {
+        refetchInterval: 1 * 1000, // 5s
+      },
+    );
   const [scope, animate] = useAnimate();
   const rotate = useMotionValue(0);
   const willChange = useWillChange();
@@ -105,12 +63,23 @@ export const LastFM = () => {
     }
   }, [data, recordAnimation, scope]);
 
+  if (isLoading) {
+    return <LastFMLoading user={user} />;
+  }
+
+  if (isError) {
+    return <LastFMError user={user} message={error.message} />;
+  }
+
+  if (!data) {
+    return <LastFMError user={user} message="No data" />;
+  }
+
   // Get album image
-  const albumImage =
-    data?.image.find((img) => img.size === "large")?.["#text"] ?? "";
+  const albumImage = data.image.find((img) => img.size === "large")?.["#text"];
   // Get track and artist
-  const trackName = data?.name;
-  const artistName = data?.artist["#text"];
+  const trackName = data.name;
+  const artistName = data.artist["#text"];
 
   // Check if track is now playing
   const isNowPlaying = data && "@attr" in data && data["@attr"].nowplaying;
@@ -128,7 +97,7 @@ export const LastFM = () => {
           style={{ willChange, rotate, flex: "none", alignSelf: "center" }}
         >
           <Image
-            src={albumImage}
+            src={albumImage ?? ""}
             alt={`Album art for ${data?.album?.["#text"] ?? "album"}`}
             width={64}
             height={64}

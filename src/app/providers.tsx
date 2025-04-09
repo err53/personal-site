@@ -3,29 +3,14 @@
 
 // We can not useState or useRef in a server component, which is why we are
 // extracting this part out into it's own file with 'use client' on top
-import { useState, useEffect } from "react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-
 import posthog from "posthog-js";
-import { PostHogProvider } from "posthog-js/react";
+import { PostHogProvider as PHProvider } from "posthog-js/react";
+import { useEffect } from "react";
+import PostHogPageView from "./_components/utils/PostHogPageView";
+
 import { env } from "~/env";
 
-import { TRPCReactProvider } from "~/trpc/react";
-
-export default function Providers({ children }: { children: React.ReactNode }) {
-  const [queryClient] = useState(
-    () =>
-      new QueryClient({
-        defaultOptions: {
-          queries: {
-            // With SSR, we usually want to set some default staleTime
-            // above 0 to avoid refetching immediately on the client
-            staleTime: 60 * 1000,
-          },
-        },
-      }),
-  );
-
+export function PostHogProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     posthog.init(env.NEXT_PUBLIC_POSTHOG_KEY ?? "", {
       api_host: "/ingest",
@@ -37,12 +22,9 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <TRPCReactProvider>
-      <PostHogProvider client={posthog}>
-        <QueryClientProvider client={queryClient}>
-          {children}
-        </QueryClientProvider>
-      </PostHogProvider>
-    </TRPCReactProvider>
+    <PHProvider client={posthog}>
+      <PostHogPageView />
+      {children}
+    </PHProvider>
   );
 }

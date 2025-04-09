@@ -1,12 +1,11 @@
 import "~/styles/globals.css";
 
 import type { Metadata } from "next";
-import Providers from "./providers";
 
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Footer } from "./_components/Footer";
-import PostHogPageView from "./_components/PostHogPageView";
-import { Suspense } from "react";
+
+import { PostHogProvider } from "./providers";
+import { TRPCReactProvider } from "~/trpc/react";
 
 export const metadata: Metadata = {
   title: "Jason Huang",
@@ -23,16 +22,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Providers>
-        <body>
-          <Suspense fallback={null}>
-            <PostHogPageView />
-          </Suspense>
-          {children}
-          <ReactQueryDevtools />
-          <Footer />
-        </body>
-      </Providers>
+      <body>
+        <TRPCReactProvider>
+          <PostHogProvider>
+            {children}
+            <Footer />
+          </PostHogProvider>
+        </TRPCReactProvider>
+      </body>
     </html>
   );
 }

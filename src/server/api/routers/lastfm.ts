@@ -59,7 +59,9 @@ export const lastfmRouter = createTRPCRouter({
     .input(z.object({ user: z.string() }))
     .query(async ({ input }) => {
       const response = await fetch(
-        "https://ws.audioscrobbler.com/2.0/?format=json&method=user.getrecenttracks" +
+        "https://ws.audioscrobbler.com/2.0/?" +
+          "format=json" +
+          "&method=user.getrecenttracks" +
           `&user=${input.user}` +
           `&api_key=${env.LASTFM_API_KEY}` +
           "&limit=1",
@@ -70,10 +72,6 @@ export const lastfmRouter = createTRPCRouter({
           },
         },
       );
-
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
 
       const data: unknown = await response.json();
       return getRecentTracksSchema.parse(data).recenttracks.track[0];

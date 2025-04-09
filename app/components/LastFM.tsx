@@ -10,7 +10,7 @@ import {
   useMotionValue,
   useWillChange,
 } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import "./lastfm.css";
 
@@ -58,37 +58,41 @@ const LastFMCard: React.FC<{ user: string }> = ({ user }) => {
     refetchInterval: 5000,
   });
 
-  const recordAnimation = async (
-    s: AnimationScope<any>,
-    nowPlaying: boolean,
-  ) => {
-    if (nowPlaying) {
-      // spin up the record
-      rotate.set(-360);
-      await animate(s.current, { rotate: 0 }, { ease: "easeIn", duration: 3 });
+  const recordAnimation = useCallback(
+    async (s: AnimationScope<any>, nowPlaying: boolean) => {
+      if (nowPlaying) {
+        // spin up the record
+        rotate.set(-360);
+        await animate(
+          s.current,
+          { rotate: 0 },
+          { ease: "easeIn", duration: 3 },
+        );
 
-      // continue spinning the record
-      rotate.set(-360);
-      await animate(
-        s.current,
-        { rotate: 0 },
-        { ease: "linear", duration: 1.8, repeat: Infinity },
-      );
-    } else {
-      // spin down the record
-      animate(
-        s.current,
-        { rotate: 0 },
-        { type: "spring", duration: 7, bounce: 0 },
-      );
-    }
-  };
+        // continue spinning the record
+        rotate.set(-360);
+        await animate(
+          s.current,
+          { rotate: 0 },
+          { ease: "linear", duration: 1.8, repeat: Infinity },
+        );
+      } else {
+        // spin down the record
+        animate(
+          s.current,
+          { rotate: 0 },
+          { type: "spring", duration: 7, bounce: 0 },
+        );
+      }
+    },
+    [animate, rotate],
+  );
 
   useEffect(() => {
     if (data) {
       void recordAnimation(scope, data?.nowPlaying);
     }
-  }, [data]);
+  }, [data, recordAnimation, scope]);
 
   if (isPending) {
     return (

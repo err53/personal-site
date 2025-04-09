@@ -3,7 +3,6 @@ import "./globals.css";
 import Providers from "./providers";
 
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { Analytics } from "@vercel/analytics/react";
 import { Footer } from "./components/Footer";
 import PostHogPageView from "./components/PostHogPageView";
 import { Suspense } from "react";
@@ -31,8 +30,7 @@ export default function RootLayout({
           {children}
           <ReactQueryDevtools />
           <Footer />
-          <Analytics />
-        </body>
+                  </body>
       </Providers>
     </html>
   );

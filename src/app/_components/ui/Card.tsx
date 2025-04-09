@@ -5,7 +5,8 @@ export const Card: React.FC<{
   href: string;
   className?: string;
   children: React.ReactNode;
-}> = ({ label, href, className, children }) => (
+  onClick?: () => void;
+}> = ({ label, href, className, children, onClick }) => (
   <a
     aria-label={label}
     href={href}
@@ -13,6 +14,7 @@ export const Card: React.FC<{
       "hover:bg-accent hover:text-accent-foreground flex h-full flex-col justify-between border shadow-md transition-all duration-300 active:shadow-none",
       className,
     )}
+    onClick={onClick}
   >
     {children}
   </a>

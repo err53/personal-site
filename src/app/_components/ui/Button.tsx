@@ -2,13 +2,15 @@ export const Button: React.FC<{
   label: string;
   href: string;
   children: React.ReactNode;
-}> = ({ label, href, children }) => (
+  onClick?: () => void;
+}> = ({ label, href, children, onClick }) => (
   <a
     aria-label={label}
     href={href}
     className={
-      "border p-3 shadow-md transition-all duration-300 hover:bg-accent hover:text-accent-foreground active:shadow-none"
+      "hover:bg-accent hover:text-accent-foreground border p-3 shadow-md transition-all duration-300 active:shadow-none"
     }
+    onClick={onClick}
   >
     {children}
   </a>

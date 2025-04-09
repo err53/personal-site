@@ -99,8 +99,6 @@ export const Projects = () => (
             width: "100%",
             height: "auto",
           }}
-          loading="eager"
-          priority
         />
       </Card>
 

@@ -76,7 +76,22 @@ export const LastFM = ({ user }: { user: string }) => {
   }
 
   // Get album image
-  const albumImage = data.image.find((img) => img.size === "large")?.["#text"];
+  const imageSizes = {
+    small: data.image.find((img) => img.size === "small")?.["#text"],
+    medium: data.image.find((img) => img.size === "medium")?.["#text"],
+    large: data.image.find((img) => img.size === "large")?.["#text"],
+    extraLarge: data.image.find((img) => img.size === "extralarge")?.["#text"],
+  };
+
+  console.log(imageSizes);
+
+  const srcImage =
+    imageSizes.extraLarge ??
+    imageSizes.large ??
+    imageSizes.medium ??
+    imageSizes.small ??
+    "";
+
   // Get track and artist
   const trackName = data.name;
   const artistName = data.artist["#text"];
@@ -97,7 +112,7 @@ export const LastFM = ({ user }: { user: string }) => {
           style={{ willChange, rotate, flex: "none", alignSelf: "center" }}
         >
           <Image
-            src={albumImage ?? ""}
+            src={srcImage}
             alt={`Album art for ${data?.album?.["#text"] ?? "album"}`}
             width={64}
             height={64}

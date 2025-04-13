@@ -1,3 +1,4 @@
+import { hash } from "crypto";
 import { z } from "zod";
 import { env } from "~/env";
 
@@ -77,7 +78,9 @@ export const lastfmRouter = createTRPCRouter({
       return getRecentTracksSchema.parse(data).recenttracks.track[0];
     }),
   subscribeToLatestTrack: publicProcedure
-    .input(z.object({ user: z.string() }))
+    .input(
+      z.object({ user: z.string(), currentTrackHash: z.string().optional() }),
+    )
     .subscription(async function* ({ input }) {
       // Keep subscription alive indefinitely
       while (true) {
@@ -96,7 +99,15 @@ export const lastfmRouter = createTRPCRouter({
         const data: unknown = await response.json();
         const track = getRecentTracksSchema.parse(data).recenttracks.track[0];
 
-        yield track;
+        const trackHash = hash("sha256", JSON.stringify(track));
+        console.log(trackHash, input.currentTrackHash);
+
+        if (trackHash !== input.currentTrackHash) {
+          yield {
+            track,
+            trackHash,
+          };
+        }
 
         // Wait for 1 second before next update
         await new Promise((resolve) => setTimeout(resolve, 1000));

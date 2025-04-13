@@ -8,7 +8,6 @@ import {
   useWillChange,
 } from "framer-motion";
 import { useEffect, useCallback } from "react";
-import Image from "next/image";
 import { api } from "~/trpc/react";
 
 import { LastFMLoading } from "./LastFMLoading";
@@ -111,13 +110,13 @@ export const LastFM = ({ user }: { user: string }) => {
           ref={scope}
           style={{ willChange, rotate, flex: "none", alignSelf: "center" }}
         >
-          <Image
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             src={srcImage}
             alt={`Album art for ${data?.album?.["#text"] ?? "album"}`}
             width={64}
             height={64}
             className={"h-16 w-16 rounded-full"}
-            unoptimized
           />
         </motion.div>
         {isNowPlaying ? (

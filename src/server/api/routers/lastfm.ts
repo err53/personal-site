@@ -2,6 +2,7 @@ import { createHash } from "crypto";
 import { z } from "zod";
 import { env } from "~/env";
 
+import { tracked } from "@trpc/server";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 
 const baseTrackSchema = z.object({
@@ -78,41 +79,60 @@ export const lastfmRouter = createTRPCRouter({
       return getRecentTracksSchema.parse(data).recenttracks.track[0];
     }),
   subscribeToLatestTrack: publicProcedure
-    .input(
-      z.object({ user: z.string(), currentTrackHash: z.string().optional() }),
-    )
+    .input(z.object({ user: z.string(), lastEventId: z.string().nullish() }))
     .subscription(async function* ({ input }) {
-      // Keep subscription alive indefinitely
-      while (true) {
-        const response = await fetch(
-          "https://ws.audioscrobbler.com/2.0/?" +
-            "format=json" +
-            "&method=user.getrecenttracks" +
-            `&user=${input.user}` +
-            `&api_key=${env.LASTFM_API_KEY}` +
-            "&limit=1",
-          {
-            cache: "no-store", // Disable caching for real-time updates
-          },
-        );
+      const POLL_INTERVAL_MS = 1000;
+      const API_URL = "https://ws.audioscrobbler.com/2.0/";
 
-        const data: unknown = await response.json();
-        const track = getRecentTracksSchema.parse(data).recenttracks.track[0];
+      try {
+        // Keep subscription alive indefinitely
+        while (true) {
+          try {
+            // Construct the Last.fm API request URL with query parameters
+            const params = new URLSearchParams({
+              format: "json",
+              method: "user.getrecenttracks",
+              user: input.user,
+              api_key: env.LASTFM_API_KEY,
+              limit: "1",
+            });
 
-        const trackHash = createHash("sha256")
-          .update(JSON.stringify(track))
-          .digest("hex");
-        console.log(trackHash, input.currentTrackHash);
+            const response = await fetch(`${API_URL}?${params}`, {
+              cache: "no-store", // Disable caching for real-time updates
+              headers: {
+                "User-Agent": "trpc-lastfm-subscription",
+              },
+            });
 
-        if (trackHash !== input.currentTrackHash) {
-          yield {
-            track,
-            trackHash,
-          };
+            if (!response.ok) {
+              throw new Error(
+                `Last.fm API error: ${response.status} ${response.statusText}`,
+              );
+            }
+
+            const data: unknown = await response.json();
+            const track =
+              getRecentTracksSchema.parse(data).recenttracks.track[0];
+
+            // Generate a hash of the track data to detect changes
+            const trackHash = createHash("sha256")
+              .update(JSON.stringify(track))
+              .digest("hex");
+
+            // Only yield if the track has changed
+            if (trackHash !== input.lastEventId) {
+              yield tracked(trackHash, track);
+            }
+          } catch (error) {
+            console.error("Error fetching Last.fm data:", error);
+            // Don't yield on error, just continue polling
+          }
+
+          // Wait before next poll
+          await new Promise((resolve) => setTimeout(resolve, POLL_INTERVAL_MS));
         }
-
-        // Wait for 1 second before next update
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+      } finally {
+        console.log(`Last.fm subscription for user ${input.user} ended`);
       }
     }),
 });

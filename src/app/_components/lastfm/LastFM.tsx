@@ -7,7 +7,7 @@ import {
   useMotionValue,
   useWillChange,
 } from "framer-motion";
-import { useEffect, useCallback, useState } from "react";
+import { useEffect, useCallback } from "react";
 import Image from "next/image";
 import { api } from "~/trpc/react";
 
@@ -15,23 +15,15 @@ import { LastFMLoading } from "./LastFMLoading";
 import { LastFMError } from "./LastFMError";
 
 export const LastFM = ({ user }: { user: string }) => {
-  const [currentTrackHash, setCurrentTrackHash] = useState<string | undefined>(
-    undefined,
-  );
-
-  const { data: result, status } =
-    api.lastfm.subscribeToLatestTrack.useSubscription(
-      { user, currentTrackHash },
-      {
-        enabled: true,
-      },
-    );
+  const { data: trackedData, status } =
+    api.lastfm.subscribeToLatestTrack.useSubscription({
+      user,
+    });
   const [scope, animate] = useAnimate();
   const rotate = useMotionValue(0);
   const willChange = useWillChange();
 
-  const data = result?.track;
-  const trackHash = result?.trackHash;
+  const data = trackedData?.data;
 
   const recordAnimation = useCallback(
     async (s: AnimationScope<unknown>, isNowPlaying: boolean) => {
@@ -67,9 +59,8 @@ export const LastFM = ({ user }: { user: string }) => {
     if (data) {
       const isNowPlaying = "@attr" in data && data["@attr"]?.nowplaying;
       void recordAnimation(scope, Boolean(isNowPlaying));
-      setCurrentTrackHash(trackHash);
     }
-  }, [data, trackHash, recordAnimation, scope]);
+  }, [data, recordAnimation, scope]);
 
   if (status === "connecting") {
     return <LastFMLoading user={user} />;

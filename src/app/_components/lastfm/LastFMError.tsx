@@ -1,6 +1,6 @@
 import { FaCircleExclamation } from "react-icons/fa6";
 
-export const LastFMError = async ({
+export const LastFMError = ({
   user,
   message,
 }: {

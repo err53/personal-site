@@ -1,4 +1,4 @@
-import { hash } from "crypto";
+import { createHash } from "crypto";
 import { z } from "zod";
 import { env } from "~/env";
 
@@ -99,7 +99,9 @@ export const lastfmRouter = createTRPCRouter({
         const data: unknown = await response.json();
         const track = getRecentTracksSchema.parse(data).recenttracks.track[0];
 
-        const trackHash = hash("sha256", JSON.stringify(track));
+        const trackHash = createHash("sha256")
+          .update(JSON.stringify(track))
+          .digest("hex");
         console.log(trackHash, input.currentTrackHash);
 
         if (trackHash !== input.currentTrackHash) {

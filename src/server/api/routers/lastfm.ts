@@ -5,7 +5,7 @@ import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 
 const baseTrackSchema = z.object({
   artist: z.object({
-    mbid: z.string(),
+    mbid: z.string().optional(),
     "#text": z.string(),
   }),
   streamable: z.string(),
@@ -15,9 +15,9 @@ const baseTrackSchema = z.object({
       "#text": z.string().url(),
     }),
   ),
-  mbid: z.string(),
+  mbid: z.string().optional(),
   album: z.object({
-    mbid: z.string(),
+    mbid: z.string().optional(),
     "#text": z.string(),
   }),
   name: z.string(),

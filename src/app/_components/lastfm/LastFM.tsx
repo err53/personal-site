@@ -15,13 +15,12 @@ import { LastFMLoading } from "./LastFMLoading";
 import { LastFMError } from "./LastFMError";
 
 export const LastFM = ({ user }: { user: string }) => {
-  const { data, isLoading, isError, error } =
-    api.lastfm.getLatestTrack.useQuery(
-      { user },
-      {
-        refetchInterval: 1 * 1000, // 5s
-      },
-    );
+  const { data, status } = api.lastfm.subscribeToLatestTrack.useSubscription(
+    { user },
+    {
+      enabled: true,
+    },
+  );
   const [scope, animate] = useAnimate();
   const rotate = useMotionValue(0);
   const willChange = useWillChange();
@@ -63,12 +62,12 @@ export const LastFM = ({ user }: { user: string }) => {
     }
   }, [data, recordAnimation, scope]);
 
-  if (isLoading) {
+  if (status === "connecting") {
     return <LastFMLoading user={user} />;
   }
 
-  if (isError) {
-    return <LastFMError user={user} message={error.message} />;
+  if (status === "error") {
+    return <LastFMError user={user} message="Failed to connect to Last.fm" />;
   }
 
   if (!data) {
@@ -95,7 +94,7 @@ export const LastFM = ({ user }: { user: string }) => {
   const artistName = data.artist["#text"];
 
   // Check if track is now playing
-  const isNowPlaying = data && "@attr" in data && data["@attr"].nowplaying;
+  const isNowPlaying = "@attr" in data && data["@attr"].nowplaying;
 
   return (
     <div>
@@ -111,7 +110,7 @@ export const LastFM = ({ user }: { user: string }) => {
         >
           <Image
             src={srcImage}
-            alt={`Album art for ${data?.album?.["#text"] ?? "album"}`}
+            alt={`Album art for ${data.album["#text"]}`}
             width={64}
             height={64}
             className={"h-16 w-16 rounded-full"}

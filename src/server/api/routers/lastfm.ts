@@ -76,4 +76,30 @@ export const lastfmRouter = createTRPCRouter({
       const data: unknown = await response.json();
       return getRecentTracksSchema.parse(data).recenttracks.track[0];
     }),
+  subscribeToLatestTrack: publicProcedure
+    .input(z.object({ user: z.string() }))
+    .subscription(async function* ({ input }) {
+      // Keep subscription alive indefinitely
+      while (true) {
+        const response = await fetch(
+          "https://ws.audioscrobbler.com/2.0/?" +
+            "format=json" +
+            "&method=user.getrecenttracks" +
+            `&user=${input.user}` +
+            `&api_key=${env.LASTFM_API_KEY}` +
+            "&limit=1",
+          {
+            cache: "no-store", // Disable caching for real-time updates
+          },
+        );
+
+        const data: unknown = await response.json();
+        const track = getRecentTracksSchema.parse(data).recenttracks.track[0];
+
+        yield track;
+
+        // Wait for 1 second before next update
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+      }
+    }),
 });

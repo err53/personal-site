@@ -135,8 +135,12 @@ export const lastfmRouter = createTRPCRouter({
           // Wait before next poll
           await new Promise((resolve) => setTimeout(resolve, POLL_INTERVAL_MS));
         }
-      } finally {
-        console.log(`Last.fm subscription for user ${input.user} ended`);
+      } catch (error) {
+        console.error(
+          `Last.fm subscription for user ${input.user} ended:`,
+          error,
+        );
+        throw error; // Re-throw to trigger client reconnection
       }
     }),
 });

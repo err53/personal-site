@@ -48,7 +48,7 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
     };
   },
   sse: {
-    maxDurationMs: 60_00,
+    maxDurationMs: 60_000,
     ping: {
       // Enable periodic ping messages to keep connection alive
       enabled: true,

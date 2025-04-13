@@ -83,8 +83,6 @@ export const LastFM = ({ user }: { user: string }) => {
     extraLarge: data.image.find((img) => img.size === "extralarge")?.["#text"],
   };
 
-  console.log(imageSizes);
-
   const srcImage =
     imageSizes.extraLarge ??
     imageSizes.large ??

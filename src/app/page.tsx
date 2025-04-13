@@ -4,8 +4,6 @@ import { Socials } from "./_components/Socials";
 import { Resume } from "./_components/Resume";
 import { Projects } from "./_components/Projects";
 
-export const dynamic = "force-static";
-
 export default async function Home() {
   const lastfmUser = "err53";
 

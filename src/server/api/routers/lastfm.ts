@@ -84,6 +84,9 @@ export const lastfmRouter = createTRPCRouter({
       const POLL_INTERVAL_MS = 1000;
       const API_URL = "https://ws.audioscrobbler.com/2.0/";
 
+      // Track the last seen hash locally
+      let lastSeenHash = input.lastEventId;
+
       try {
         // Keep subscription alive indefinitely
         while (true) {
@@ -119,8 +122,9 @@ export const lastfmRouter = createTRPCRouter({
               .update(JSON.stringify(track))
               .digest("hex");
 
-            // Only yield if the track has changed
-            if (trackHash !== input.lastEventId) {
+            // Only yield if the track has changed from our last seen hash
+            if (trackHash !== lastSeenHash) {
+              lastSeenHash = trackHash; // Update our local tracking
               yield tracked(trackHash, track);
             }
           } catch (error) {

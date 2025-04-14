@@ -10,6 +10,7 @@ import {
 import { useEffect, useCallback } from "react";
 import Image from "next/image";
 import { api } from "~/trpc/react";
+import { usePostHogEvent } from "../../_components/utils/usePostHogEvent";
 
 import { LastFMLoading } from "./LastFMLoading";
 import { LastFMError } from "./LastFMError";
@@ -25,6 +26,18 @@ export const LastFM = ({ user }: { user: string }) => {
   const [scope, animate] = useAnimate();
   const rotate = useMotionValue(0);
   const willChange = useWillChange();
+
+  // Get track and artist early to use in the event tracking
+  const trackName = data?.name ?? "";
+  const artistName = data?.artist?.["#text"] ?? "";
+  const isNowPlaying = Boolean(
+    data && "@attr" in data && data["@attr"]?.nowplaying,
+  );
+
+  const trackProfileClick = usePostHogEvent("lastfm_profile_clicked", {
+    track: trackName,
+    artist: artistName,
+  });
 
   const recordAnimation = useCallback(
     async (s: AnimationScope<unknown>, isNowPlaying: boolean) => {
@@ -58,10 +71,9 @@ export const LastFM = ({ user }: { user: string }) => {
 
   useEffect(() => {
     if (data) {
-      const isNowPlaying = "@attr" in data && data["@attr"]?.nowplaying;
-      void recordAnimation(scope, Boolean(isNowPlaying));
+      void recordAnimation(scope, isNowPlaying);
     }
-  }, [data, recordAnimation, scope]);
+  }, [data, recordAnimation, scope, isNowPlaying]);
 
   if (isLoading) {
     return <LastFMLoading user={user} />;
@@ -90,19 +102,13 @@ export const LastFM = ({ user }: { user: string }) => {
     imageSizes.small ??
     "";
 
-  // Get track and artist
-  const trackName = data.name;
-  const artistName = data.artist["#text"];
-
-  // Check if track is now playing
-  const isNowPlaying = data && "@attr" in data && data["@attr"].nowplaying;
-
   return (
     <div>
       <h2 className="pb-3 text-3xl font-semibold">LastFM</h2>
       <a
         href={`https://www.last.fm/user/${user}`}
         aria-label="Last.fm Profile"
+        onClick={trackProfileClick}
         className="hover:bg-accent hover:text-accent-foreground flex h-full flex-row gap-2 border p-2 shadow-md transition-all duration-300 active:shadow-none"
       >
         <motion.div

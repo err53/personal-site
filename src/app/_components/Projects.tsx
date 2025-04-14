@@ -15,7 +15,7 @@ export const Projects = () => (
   <div className="col-span-full">
     <h2 className="pb-3 text-3xl font-semibold">Projects</h2>
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-      <Card href="https://meetingbot.tech/">
+      <Card href="https://meetingbot.tech/" type="project" label="meetingbot">
         <CardHeader>
           <h3 className="text-2xl">meetingbot</h3>
           <p>An open-source meeting bot API deployed on AWS</p>
@@ -33,7 +33,11 @@ export const Projects = () => (
         />
       </Card>
 
-      <Card href="https://github.com/Krish120003/dash">
+      <Card
+        href="https://github.com/Krish120003/dash"
+        type="project"
+        label="Dash"
+      >
         <CardHeader>
           <h3 className="text-2xl">Dash</h3>
           <p>A personalizable new-tab dashboard</p>
@@ -50,7 +54,11 @@ export const Projects = () => (
         />
       </Card>
 
-      <Card href="https://github.com/deltahacks/portal">
+      <Card
+        href="https://github.com/deltahacks/portal"
+        type="project"
+        label="DeltaHacks Portal"
+      >
         <CardHeader>
           <h3 className="text-2xl">DeltaHacks Portal</h3>
           <p>A hackathon registration and management system</p>
@@ -67,7 +75,7 @@ export const Projects = () => (
         />
       </Card>
 
-      <Card href="https://www.salesbop.io">
+      <Card href="https://www.salesbop.io" type="project" label="SalesBop">
         <CardHeader>
           <h3 className="text-2xl">SalesBop</h3>
           <p>
@@ -87,7 +95,11 @@ export const Projects = () => (
         />
       </Card>
 
-      <Card href="https://github.com/err53/personal-site">
+      <Card
+        href="https://github.com/err53/personal-site"
+        type="project"
+        label="Personal Site"
+      >
         <CardHeader>
           <h3 className="text-2xl">Personal Site</h3>
           <p>You&apos;re looking at it right now!</p>
@@ -104,7 +116,11 @@ export const Projects = () => (
         />
       </Card>
 
-      <Card href="https://beta.wiki.egirls.dev/s/public">
+      <Card
+        href="https://beta.wiki.egirls.dev/s/public"
+        type="project"
+        label="McMaster CS Wiki"
+      >
         <CardHeader>
           <h3 className="text-2xl">McMaster CS Wiki</h3>
           <p>
@@ -126,7 +142,11 @@ export const Projects = () => (
         />
       </Card>
 
-      <Card href="https://github.com/mac-egirls/oscs">
+      <Card
+        href="https://github.com/mac-egirls/oscs"
+        type="project"
+        label="Open Source Cheat Sheets"
+      >
         <CardHeader>
           <h3 className="text-2xl">Open Source Cheat Sheets</h3>
           <p>

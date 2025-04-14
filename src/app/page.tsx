@@ -1,4 +1,4 @@
-import { LastFM } from "./_components/lastfm";
+import { LastFM } from "./_components/lastfm/LastFM";
 import { Hero } from "./_components/Hero";
 import { Socials } from "./_components/Socials";
 import { Resume } from "./_components/Resume";

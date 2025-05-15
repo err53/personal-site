@@ -14,7 +14,6 @@ import { usePostHogEvent } from "../../_components/utils/usePostHogEvent";
 
 import { LastFMLoading } from "./LastFMLoading";
 import { LastFMError } from "./LastFMError";
-import { late } from "zod";
 
 export const LastFM = ({ user }: { user: string }) => {
   const latestTrack = api.lastfm.getLatestTrack.useQuery(

@@ -49,7 +49,7 @@ async function getCachedMoodAnalysis(
           {
             role: "user",
             content: [
-              "Based on the following recent tracks, what mood do you think I am in?",
+              "Based on the following recent tracks, what mood do you think Jason is in?",
               ...tracksWithTags.map(
                 (track) =>
                   `- ${track.artist} - ${track.name} (${track.tags.join(", ")})`,

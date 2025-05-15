@@ -14,24 +14,27 @@ import { usePostHogEvent } from "../../_components/utils/usePostHogEvent";
 
 import { LastFMLoading } from "./LastFMLoading";
 import { LastFMError } from "./LastFMError";
+import { late } from "zod";
 
 export const LastFM = ({ user }: { user: string }) => {
-  const { data, isLoading, isError, error } =
-    api.lastfm.getLatestTrack.useQuery(
-      { user },
-      {
-        refetchInterval: 1 * 1000, // 5s
-      },
-    );
+  const latestTrack = api.lastfm.getLatestTrack.useQuery(
+    { user },
+    {
+      refetchInterval: 1 * 1000, // 5s
+    },
+  );
+  const mood = api.lastfm.getRecentMood.useQuery({ user });
   const [scope, animate] = useAnimate();
   const rotate = useMotionValue(0);
   const willChange = useWillChange();
 
   // Get track and artist early to use in the event tracking
-  const trackName = data?.name ?? "";
-  const artistName = data?.artist?.["#text"] ?? "";
+  const trackName = latestTrack.data?.name ?? "";
+  const artistName = latestTrack.data?.artist?.["#text"] ?? "";
   const isNowPlaying = Boolean(
-    data && "@attr" in data && data["@attr"]?.nowplaying,
+    latestTrack.data &&
+      "@attr" in latestTrack.data &&
+      latestTrack.data["@attr"]?.nowplaying,
   );
 
   const trackProfileClick = usePostHogEvent("lastfm_profile_clicked", {
@@ -70,29 +73,37 @@ export const LastFM = ({ user }: { user: string }) => {
   );
 
   useEffect(() => {
-    if (data) {
+    if (latestTrack.data) {
       void recordAnimation(scope, isNowPlaying);
     }
-  }, [data, recordAnimation, scope, isNowPlaying]);
+  }, [latestTrack.data, recordAnimation, scope, isNowPlaying]);
 
-  if (isLoading) {
+  if (latestTrack.isLoading) {
     return <LastFMLoading user={user} />;
   }
 
-  if (isError) {
-    return <LastFMError user={user} message={error.message} />;
+  if (latestTrack.isError) {
+    return <LastFMError user={user} message={latestTrack.error.message} />;
   }
 
-  if (!data) {
+  if (!latestTrack.data) {
     return <LastFMError user={user} message="No data" />;
   }
 
   // Get album image
   const imageSizes = {
-    small: data.image.find((img) => img.size === "small")?.["#text"],
-    medium: data.image.find((img) => img.size === "medium")?.["#text"],
-    large: data.image.find((img) => img.size === "large")?.["#text"],
-    extraLarge: data.image.find((img) => img.size === "extralarge")?.["#text"],
+    small: latestTrack.data.image.find((img) => img.size === "small")?.[
+      "#text"
+    ],
+    medium: latestTrack.data.image.find((img) => img.size === "medium")?.[
+      "#text"
+    ],
+    large: latestTrack.data.image.find((img) => img.size === "large")?.[
+      "#text"
+    ],
+    extraLarge: latestTrack.data.image.find(
+      (img) => img.size === "extralarge",
+    )?.["#text"],
   };
 
   const srcImage =
@@ -105,6 +116,13 @@ export const LastFM = ({ user }: { user: string }) => {
   return (
     <div>
       <h2 className="pb-3 text-3xl font-semibold">LastFM</h2>
+      {mood.isLoading ? (
+        <p className="text-muted-foreground pb-3 text-sm">Loading mood...</p>
+      ) : (
+        <p className="text-muted-foreground pb-3 text-sm">
+          Current mood: {mood.data}
+        </p>
+      )}
       <a
         href={`https://www.last.fm/user/${user}`}
         aria-label="Last.fm Profile"
@@ -117,7 +135,7 @@ export const LastFM = ({ user }: { user: string }) => {
         >
           <Image
             src={srcImage}
-            alt={`Album art for ${data?.album?.["#text"] ?? "album"}`}
+            alt={`Album art for ${latestTrack.data?.album?.["#text"] ?? "album"}`}
             width={64}
             height={64}
             className={"h-16 w-16 rounded-full"}

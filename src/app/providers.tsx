@@ -12,13 +12,15 @@ import { env } from "~/env";
 
 export function PostHogProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
-    posthog.init(env.NEXT_PUBLIC_POSTHOG_KEY ?? "", {
-      api_host: "/ingest",
-      ui_host: "https://us.posthog.com",
-      person_profiles: "always", // or 'always' to create profiles for anonymous users as well
-      capture_pageview: false,
-      capture_pageleave: true,
-    });
+    if (env.NEXT_PUBLIC_POSTHOG_KEY) {
+      posthog.init(env.NEXT_PUBLIC_POSTHOG_KEY, {
+        api_host: "/ingest",
+        ui_host: "https://us.posthog.com",
+        person_profiles: "always", // or 'always' to create profiles for anonymous users as well
+        capture_pageview: false,
+        capture_pageleave: true,
+      });
+    }
   }, []);
 
   return (

@@ -34,3 +34,13 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Environment Variables
+
+Create a `.env` file in the project root (or copy `.env.example`) and set the following variables:
+
+```bash
+LASTFM_API_KEY=<your Last.fm API key>
+OPENROUTER_API_KEY=<your OpenRouter API key>
+NEXT_PUBLIC_POSTHOG_KEY=<optional PostHog key>
+```

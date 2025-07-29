@@ -4,8 +4,8 @@ export const Hero = () => (
     <p>AKA: err53, error53, json, jhthenerd</p>
     <ul className="pt-4 text-xl">
       <li>Full-Stack Developer</li>
-      <li>Uni Student</li>
       <li>Open-Knowledge Advocate</li>
+      <li>React, NodeJS, Python, C++</li>
     </ul>
   </div>
 );

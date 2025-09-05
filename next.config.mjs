@@ -7,6 +7,7 @@ import "./src/env.js";
 /** @type {import('next').NextConfig} */
 const config = {
   images: {
+    qualities: [25, 50, 75],
     remotePatterns: [
       {
         protocol: "https",

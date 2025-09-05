@@ -19,6 +19,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@posthog/ai": "^6.3.2",
     "@t3-oss/env-nextjs": "^0.12.0",
     "@tanstack/react-query": "^5.69.0",
     "@trpc/client": "^11.0.0",
@@ -32,6 +33,7 @@
     "next": "15.5.2",
     "openai": "^4.98.0",
     "posthog-js": "^1.235.0",
+    "posthog-node": "^5.8.2",
     "react": "19.1.1",
     "react-dom": "19.1.1",
     "react-error-boundary": "^5.0.0",

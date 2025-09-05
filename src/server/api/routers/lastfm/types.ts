@@ -65,5 +65,5 @@ export const trackGetTopTagsSchema = z.object({
       mbid: z.string().optional(),
       track: z.string(),
     }),
-  }),
+  }).optional(),
 });

@@ -2,20 +2,12 @@ import crypto from "crypto";
 
 import { z } from "zod";
 import { env } from "~/env";
-import OpenAI from "openai";
+import { OpenAI } from '@posthog/ai'
+import { PostHog } from "posthog-node";
 import { unstable_cache } from "next/cache";
 
 import { userGetRecentTracksSchema, trackGetTopTagsSchema } from "./types";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-
-const openai = new OpenAI({
-  baseURL: "https://openrouter.ai/api/v1",
-  apiKey: env.OPENROUTER_API_KEY,
-  defaultHeaders: {
-    "HTTP-Referer": env.VERCEL_URL ? `https://${env.VERCEL_URL}` : undefined,
-    "X-Title": "Jason's Personal Site",
-  },
-});
 
 // Helper function to create a hash from track data
 function createTrackHash(
@@ -35,6 +27,21 @@ function createTrackHash(
 async function getCachedMoodAnalysis(
   tracksWithTags: Array<{ artist: string; name: string; tags: string[] }>,
 ) {
+  const phClient = new PostHog(
+    env.NEXT_PUBLIC_POSTHOG_KEY,
+    { host: 'https://us.i.posthog.com' }
+  );
+
+  const openai = new OpenAI({
+    baseURL: "https://openrouter.ai/api/v1",
+    apiKey: env.OPENROUTER_API_KEY,
+    defaultHeaders: {
+      "HTTP-Referer": env.VERCEL_URL ? `https://${env.VERCEL_URL}` : undefined,
+      "X-Title": "Jason's Personal Site",
+    },
+    posthog: phClient
+  });
+
   const trackHash = createTrackHash(tracksWithTags);
 
   console.log("Track hash", trackHash);
@@ -48,17 +55,13 @@ async function getCachedMoodAnalysis(
         messages: [
           {
             role: "user",
-            content: [
-              "Based on the following recent tracks, what mood do you think Jason is in?",
-              ...tracksWithTags.map(
-                (track) =>
-                  `- ${track.artist} - ${track.name} (${track.tags.join(", ")})`,
-              ),
-              "Please respond with a single word or short phrase. Do not use markdown.",
-            ].join("\n"),
+            content: `Analyze mood from these songs:
+${tracksWithTags.map((track) => `${track.artist} - ${track.name} [${track.tags.join(", ")}]`).join("\n")}
+
+Return one word: energetic, melancholic, chill, upbeat, contemplative, or nostalgic.`,
           },
         ],
-        model: "google/gemini-2.0-flash-001",
+        model: "openai/gpt-4.1-nano",
       });
 
       console.log("Mood: ", completion.choices[0]?.message?.content?.trim());
@@ -68,6 +71,8 @@ async function getCachedMoodAnalysis(
     [`lastfm-mood-analysis-${trackHash}`],
     { revalidate: 5 * 60 }, // Cache for 5 minutes
   );
+
+  phClient.shutdown();
 
   return getMoodForSpecificTracks();
 }
@@ -95,7 +100,8 @@ async function getTrackTags(
       );
 
       const data: unknown = await response.json();
-      const tags = trackGetTopTagsSchema.parse(data).toptags.tag.slice(0, 5);
+      const parsed = trackGetTopTagsSchema.parse(data);
+      const tags = parsed.toptags?.tag?.slice(0, 5) ?? [];
 
       return tags.map((tag) => tag.name);
     },

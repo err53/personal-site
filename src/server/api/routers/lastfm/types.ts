@@ -51,6 +51,50 @@ export const userGetRecentTracksSchema = z.object({
   }),
 });
 
+export const trackGetInfoSchema = z.object({
+  track: z.object({
+    name: z.string(),
+    mbid: z.string().optional(),
+    url: z.string().url(),
+    duration: z.string().optional(),
+    streamable: z.object({
+      "#text": z.string(),
+      fulltrack: z.string(),
+    }),
+    listeners: z.string(),
+    playcount: z.string(),
+    artist: z.object({
+      name: z.string(),
+      mbid: z.string().optional(),
+      url: z.string().url(),
+    }),
+    album: z.object({
+      artist: z.string(),
+      title: z.string(),
+      url: z.string().url(),
+      image: z.array(
+        z.object({
+          "#text": z.string().url(),
+          size: z.enum(["small", "medium", "large", "extralarge"]),
+        }),
+      ),
+    }).optional(),
+    toptags: z.object({
+      tag: z.array(
+        z.object({
+          name: z.string(),
+          url: z.string().url(),
+        }),
+      ),
+    }).optional(),
+    wiki: z.object({
+      published: z.string(),
+      summary: z.string(),
+      content: z.string(),
+    }).optional(),
+  }),
+})
+
 export const trackGetTopTagsSchema = z.object({
   toptags: z.object({
     tag: z.array(

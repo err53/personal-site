@@ -2,7 +2,6 @@ import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { getRecentTracks, getTrackInfo } from "./api";
 import { nowPlayingTrackSchema, trackSchema } from "./types";
-import { promises as fs } from 'fs';
 
 import { openrouter } from "~/server/openrouter";
 

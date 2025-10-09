@@ -75,6 +75,6 @@ ${JSON.stringify(detailedTracks, null, 2)}
         ]
       })
 
-      return completion.choices[0]?.message.content;
+      return completion.choices[0]?.message.content ?? "Unable to analyze recent tracks.";
     }),
 });

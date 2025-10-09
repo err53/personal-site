@@ -46,7 +46,7 @@ export const lastfmRouter = createTRPCRouter({
       // run analysis
 
       const completion = await openrouter.chat.completions.create({
-        model: "openrouter/auto",
+        model: "google/gemini-2.5-flash",
         messages: [
           {
             role: "system",

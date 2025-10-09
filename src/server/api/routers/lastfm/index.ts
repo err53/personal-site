@@ -7,6 +7,7 @@ import { nowPlayingTrackSchema, trackSchema } from "./types";
 import { openrouter } from "~/server/openrouter";
 
 import { systemPrompt, userPrompt } from "./prompts";
+import { env } from "~/env";
 
 const analyzeRecentMood = unstable_cache(
   async (user: string) => {
@@ -58,7 +59,7 @@ const analyzeRecentMood = unstable_cache(
     );
   },
   ["lastfm", "recent-mood-analysis"],
-  { revalidate: 60 * 15 },
+  { revalidate: env.NODE_ENV === "development" ? 1 : 60 * 15 },
 );
 
 export const lastfmRouter = createTRPCRouter({

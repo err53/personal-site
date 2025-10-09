@@ -6,7 +6,7 @@ import { promises as fs } from 'fs';
 
 import { openrouter } from "~/server/openrouter";
 
-const systemPrompt = await fs.readFile(process.cwd() + '/src/server/api/routers/lastfm/system_prompt.txt', 'utf8');
+import { systemPrompt, userPrompt } from "./prompts";
 
 export const lastfmRouter = createTRPCRouter({
   getLatestTrack: publicProcedure
@@ -63,12 +63,7 @@ export const lastfmRouter = createTRPCRouter({
             content: [
               {
                 type: "text",
-                text: `Analyze the following 10 recently played tracks and return **one sentence** describing the user's current mood.
-**Tracks JSON (verbatim):**
-
-\`\`\`
-${JSON.stringify(detailedTracks, null, 2)}
-\`\`\``
+                text: userPrompt(JSON.stringify(detailedTracks, null, 2))
               }
             ]
           }

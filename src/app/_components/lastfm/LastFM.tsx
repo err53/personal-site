@@ -119,7 +119,7 @@ export const LastFM = ({ user }: { user: string }) => {
         <p className="text-muted-foreground pb-3 text-sm">Loading mood...</p>
       ) : (
         <p className="text-muted-foreground pb-3 text-sm">
-          Current mood: {mood.data}
+          Mood: {mood.data}
         </p>
       )}
       <a

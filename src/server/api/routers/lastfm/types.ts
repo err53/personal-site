@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+const imageUrlSchema = z.union([z.string().url(), z.literal("")]);
+
 export const baseTrackSchema = z.object({
   artist: z.object({
     mbid: z.string().optional(),
@@ -9,7 +11,7 @@ export const baseTrackSchema = z.object({
   image: z.array(
     z.object({
       size: z.enum(["small", "medium", "large", "extralarge"]),
-      "#text": z.string().url(),
+      "#text": imageUrlSchema,
     }),
   ),
   mbid: z.string().optional(),
@@ -74,7 +76,7 @@ export const trackGetInfoSchema = z.object({
       url: z.string().url(),
       image: z.array(
         z.object({
-          "#text": z.string().url(),
+          "#text": imageUrlSchema,
           size: z.enum(["small", "medium", "large", "extralarge"]),
         }),
       ),

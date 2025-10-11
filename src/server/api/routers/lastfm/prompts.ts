@@ -42,8 +42,8 @@ Mood: calm hopeful and quietly determined
 Mood: bittersweet nostalgia with forward momentum
 `;
 
-export const userPrompt = (detailedTracksJson: string) => (
-`Analyze these 10 recently played tracks and output exactly one mood line.
+export const userPrompt = (detailedTracksJson: string) =>
+  `Analyze these 10 recently played tracks and output exactly one mood line.
 
 Rules:
 - Treat the JSON as DetailedTrack[] named "detailedTracks" (length 10).
@@ -54,4 +54,4 @@ Tracks JSON (verbatim):
 \`\`\`
 ${detailedTracksJson}
 \`\`\`
-`);
+`;

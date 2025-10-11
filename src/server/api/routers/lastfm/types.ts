@@ -70,46 +70,54 @@ export const trackGetInfoSchema = z.object({
       mbid: z.string().optional(),
       url: z.string().url(),
     }),
-    album: z.object({
-      artist: z.string(),
-      title: z.string(),
-      url: z.string().url(),
-      image: z.array(
-        z.object({
-          "#text": imageUrlSchema,
-          size: z.enum(["small", "medium", "large", "extralarge"]),
-        }),
-      ),
-    }).optional(),
-    toptags: z.object({
+    album: z
+      .object({
+        artist: z.string(),
+        title: z.string(),
+        url: z.string().url(),
+        image: z.array(
+          z.object({
+            "#text": imageUrlSchema,
+            size: z.enum(["small", "medium", "large", "extralarge"]),
+          }),
+        ),
+      })
+      .optional(),
+    toptags: z
+      .object({
+        tag: z.array(
+          z.object({
+            name: z.string(),
+            url: z.string().url(),
+          }),
+        ),
+      })
+      .optional(),
+    wiki: z
+      .object({
+        published: z.string(),
+        summary: z.string(),
+        content: z.string(),
+      })
+      .optional(),
+  }),
+});
+
+export const trackGetTopTagsSchema = z.object({
+  toptags: z
+    .object({
       tag: z.array(
         z.object({
           name: z.string(),
           url: z.string().url(),
+          count: z.coerce.number(),
         }),
       ),
-    }).optional(),
-    wiki: z.object({
-      published: z.string(),
-      summary: z.string(),
-      content: z.string(),
-    }).optional(),
-  }),
-})
-
-export const trackGetTopTagsSchema = z.object({
-  toptags: z.object({
-    tag: z.array(
-      z.object({
-        name: z.string(),
-        url: z.string().url(),
-        count: z.coerce.number(),
+      "@attr": z.object({
+        artist: z.string(),
+        mbid: z.string().optional(),
+        track: z.string(),
       }),
-    ),
-    "@attr": z.object({
-      artist: z.string(),
-      mbid: z.string().optional(),
-      track: z.string(),
-    }),
-  }).optional(),
+    })
+    .optional(),
 });

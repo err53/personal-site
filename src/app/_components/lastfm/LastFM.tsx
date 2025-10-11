@@ -118,9 +118,7 @@ export const LastFM = ({ user }: { user: string }) => {
       {mood.isLoading ? (
         <p className="text-muted-foreground pb-3 text-sm">Loading mood...</p>
       ) : (
-        <p className="text-muted-foreground pb-3 text-sm">
-          {mood.data}
-        </p>
+        <p className="text-muted-foreground pb-3 text-sm">{mood.data}</p>
       )}
       <a
         href={`https://www.last.fm/user/${user}`}

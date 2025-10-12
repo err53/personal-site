@@ -11,7 +11,7 @@ export const Resume = () => (
       >
         <CardHeader>
           <h3 className="text-2xl">PDF</h3>
-          <p>Written in LaTeX and compiled via GH Actions</p>
+          <p>Written in Typst and compiled via GH Actions</p>
         </CardHeader>
       </Card>
     </div>

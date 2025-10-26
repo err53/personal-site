@@ -14,7 +14,7 @@ export const Socials = () => (
       <Button label="Twitter" href="https://twitter.com/err_53">
         <FaXTwitter className="size-10" />
       </Button>
-      <Button label="LinkedIn" href="https://www.linkedin.com/in/jasonhuang03/">
+      <Button label="LinkedIn" href="https://www.linkedin.com/in/jhuang03/">
         <FaLinkedinIn className="size-10" />
       </Button>
       <Button label="Instagram" href="https://www.instagram.com/the.err53/">

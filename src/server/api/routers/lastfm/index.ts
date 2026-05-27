@@ -20,7 +20,7 @@ const analyzeRecentMood = unstable_cache(
       return "No recent tracks found.";
     }
 
-    const detailedTracks = await Promise.all(
+    const detailedTracks = await Promise.allSettled(
       recentTracks.map(async (track) =>
         getTrackInfo({
           artist: track.artist["#text"],
@@ -28,6 +28,38 @@ const analyzeRecentMood = unstable_cache(
         }),
       ),
     );
+
+    const compactTracks = detailedTracks
+      .map((trackResult, index) => {
+        const fallbackTrack = recentTracks[index];
+
+        if (trackResult.status === "rejected") {
+          return {
+            name: fallbackTrack?.name ?? "",
+            artist: fallbackTrack?.artist?.["#text"] ?? "",
+            album: fallbackTrack?.album?.["#text"] ?? "",
+            tags: [] as string[],
+            wikiSummary: "",
+          };
+        }
+
+        const detailedTrack = trackResult.value;
+
+        return {
+          name: detailedTrack.name,
+          artist: detailedTrack.artist.name,
+          album: detailedTrack.album?.title ?? "",
+          tags: (detailedTrack.toptags?.tag ?? [])
+            .map((tag) => tag.name)
+            .filter(Boolean)
+            .slice(0, 8),
+          wikiSummary: detailedTrack.wiki?.summary
+            ?.replace(/<[^>]*>/g, "")
+            .trim()
+            .slice(0, 280),
+        };
+      })
+      .filter((track) => track.name && track.artist);
 
     const completion = await openrouter.chat.completions.create({
       model: "google/gemini-2.5-flash",
@@ -46,7 +78,7 @@ const analyzeRecentMood = unstable_cache(
           content: [
             {
               type: "text",
-              text: userPrompt(JSON.stringify(detailedTracks, null, 2)),
+              text: userPrompt(JSON.stringify(compactTracks, null, 2)),
             },
           ],
         },
@@ -59,7 +91,10 @@ const analyzeRecentMood = unstable_cache(
     );
   },
   ["lastfm", "recent-mood-analysis"],
-  { revalidate: env.NODE_ENV === "development" ? 1 : 60 * 15 },
+  {
+    revalidate: env.NODE_ENV === "development" ? 1 : 60 * 15,
+    tags: ["lastfm", "recent-mood-analysis"],
+  },
 );
 
 export const lastfmRouter = createTRPCRouter({
@@ -77,5 +112,5 @@ export const lastfmRouter = createTRPCRouter({
   getRecentMood: publicProcedure
     .input(z.object({ user: z.string() }))
     .output(z.string())
-    .query(async ({ input }) => analyzeRecentMood(input.user)),
+    .query(async ({ input }) => analyzeRecentMood(input.user, input.user)),
 });

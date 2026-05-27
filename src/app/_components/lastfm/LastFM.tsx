@@ -19,7 +19,7 @@ export const LastFM = ({ user }: { user: string }) => {
   const latestTrack = api.lastfm.getLatestTrack.useQuery(
     { user },
     {
-      refetchInterval: 1 * 1000, // 5s
+      refetchInterval: 5 * 1000,
     },
   );
   const mood = api.lastfm.getRecentMood.useQuery({ user });

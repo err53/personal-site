@@ -112,5 +112,5 @@ export const lastfmRouter = createTRPCRouter({
   getRecentMood: publicProcedure
     .input(z.object({ user: z.string() }))
     .output(z.string())
-    .query(async ({ input }) => analyzeRecentMood(input.user, input.user)),
+    .query(async ({ input }) => analyzeRecentMood(input.user)),
 });

@@ -16,7 +16,9 @@
     "lint:fix": "next lint --fix",
     "preview": "next build && next start",
     "start": "next start",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "eval:lastfm-mood": "node scripts/evals/lastfm-mood-eval.mjs",
+    "ci:checks": "pnpm eval:lastfm-mood && pnpm typecheck"
   },
   "dependencies": {
     "@posthog/ai": "^6.3.2",

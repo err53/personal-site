@@ -9,6 +9,7 @@ import {
 } from "framer-motion";
 import { useEffect, useCallback } from "react";
 import Image from "next/image";
+import type { ElementOrSelector } from "framer-motion";
 import { api } from "~/trpc/react";
 import { usePostHogEvent } from "../../_components/utils/usePostHogEvent";
 
@@ -32,8 +33,8 @@ export const LastFM = ({ user }: { user: string }) => {
   const artistName = latestTrack.data?.artist?.["#text"] ?? "";
   const isNowPlaying = Boolean(
     latestTrack.data &&
-      "@attr" in latestTrack.data &&
-      latestTrack.data["@attr"]?.nowplaying,
+    "@attr" in latestTrack.data &&
+    latestTrack.data["@attr"]?.nowplaying,
   );
 
   const trackProfileClick = usePostHogEvent("lastfm_profile_clicked", {
@@ -43,11 +44,13 @@ export const LastFM = ({ user }: { user: string }) => {
 
   const recordAnimation = useCallback(
     async (s: AnimationScope<unknown>, isNowPlaying: boolean) => {
+      const recordElement = s.current as ElementOrSelector;
+
       if (isNowPlaying) {
         // spin up the record
         rotate.set(-360);
         await animate(
-          s.current,
+          recordElement,
           { rotate: 0 },
           { ease: "easeIn", duration: 3 },
         );
@@ -55,14 +58,14 @@ export const LastFM = ({ user }: { user: string }) => {
         // continue spinning the record
         rotate.set(-360);
         await animate(
-          s.current,
+          recordElement,
           { rotate: 0 },
           { ease: "linear", duration: 1.8, repeat: Infinity },
         );
       } else {
         // spin down the record
         animate(
-          s.current,
+          recordElement,
           { rotate: 0 },
           { type: "spring", duration: 7, bounce: 0 },
         );

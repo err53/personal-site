@@ -8,20 +8,24 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro check && astro build",
+    "test": "vitest run",
     "preview": "astro preview",
     "astro": "astro",
     "postinstall": "patch-package"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.10",
+    "@astrojs/vercel": "^11.0.6",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.2.3",
     "simple-icons-astro": "^16.1.0",
     "tailwindcss": "^4.3.3",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
-    "patch-package": "^8.0.1"
+    "patch-package": "^8.0.1",
+    "vitest": "^4.1.11"
   },
   "allowScripts": {
     "esbuild@0.28.2": true,

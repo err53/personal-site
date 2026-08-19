@@ -1,0 +1,193 @@
+---
+const profileUrl = "https://www.last.fm/user/err53";
+---
+
+<section data-lastfm data-endpoint="/api/lastfm.json">
+  <h2 class="pb-3 text-3xl font-semibold">LastFM</h2>
+  <a
+    data-card
+    href={profileUrl}
+    class="flex min-h-20 flex-row items-center gap-3 border border-neutral-200 p-2 shadow-md transition-all duration-300 hover:bg-neutral-100 hover:text-neutral-900 active:shadow-none"
+  >
+    <div class="size-16 shrink-0" data-artwork>
+      <img
+        data-image
+        class="hidden size-16 rounded-full object-cover"
+        width="64"
+        height="64"
+        alt=""
+      />
+      <div
+        data-placeholder
+        class="lastfm-record flex size-16 items-center justify-center rounded-full bg-neutral-800"
+        aria-hidden="true"
+      >
+        <span class="size-5 rounded-full border-4 border-neutral-300 bg-neutral-100"></span>
+      </div>
+    </div>
+    <div class="min-w-0" aria-live="polite">
+      <p data-status class="text-sm text-neutral-500">Checking Last.fm...</p>
+      <p data-track class="truncate font-medium">Loading recent track...</p>
+      <p data-artist class="hidden truncate text-sm text-neutral-600"></p>
+      <p data-refresh-error class="hidden text-xs text-neutral-500">
+        Latest refresh failed; showing previous track.
+      </p>
+    </div>
+  </a>
+</section>
+
+<script>
+  type LatestTrack = {
+    name: string;
+    artist: string;
+    album: string;
+    imageUrl: string | null;
+    profileUrl: string;
+    nowPlaying: boolean;
+  };
+
+  type LastFmResponse = {
+    track: LatestTrack | null;
+  };
+
+  const POLL_INTERVAL_MS = 10_000;
+
+  document.querySelectorAll<HTMLElement>("[data-lastfm]").forEach((root) => {
+    if (root.dataset.initialized === "true") return;
+    root.dataset.initialized = "true";
+
+    const endpoint = root.dataset.endpoint;
+    const card = root.querySelector<HTMLAnchorElement>("[data-card]");
+    const image = root.querySelector<HTMLImageElement>("[data-image]");
+    const placeholder = root.querySelector<HTMLElement>("[data-placeholder]");
+    const status = root.querySelector<HTMLElement>("[data-status]");
+    const trackName = root.querySelector<HTMLElement>("[data-track]");
+    const artist = root.querySelector<HTMLElement>("[data-artist]");
+    const refreshError = root.querySelector<HTMLElement>("[data-refresh-error]");
+
+    if (
+      !endpoint ||
+      !card ||
+      !image ||
+      !placeholder ||
+      !status ||
+      !trackName ||
+      !artist ||
+      !refreshError
+    ) return;
+
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    let controller: AbortController | undefined;
+    let hasTrack = false;
+
+    const showTrack = (track: LatestTrack) => {
+      hasTrack = true;
+      root.dataset.playing = String(track.nowPlaying);
+      card.href = track.profileUrl;
+      status.textContent = track.nowPlaying ? "Listening to:" : "Last listened to:";
+      trackName.textContent = track.name;
+      artist.textContent = `by ${track.artist}`;
+      artist.classList.remove("hidden");
+      refreshError.classList.add("hidden");
+
+      if (track.imageUrl) {
+        image.src = track.imageUrl;
+        image.alt = track.album
+          ? `${track.album} album cover`
+          : `${track.name} album cover`;
+        image.classList.remove("hidden");
+        placeholder.classList.add("hidden");
+      } else {
+        image.removeAttribute("src");
+        image.classList.add("hidden");
+        placeholder.classList.remove("hidden");
+      }
+    };
+
+    const showEmpty = () => {
+      hasTrack = false;
+      root.dataset.playing = "false";
+      status.textContent = "No recent tracks found.";
+      trackName.textContent = "Visit my Last.fm profile";
+      artist.classList.add("hidden");
+      refreshError.classList.add("hidden");
+      image.classList.add("hidden");
+      placeholder.classList.remove("hidden");
+    };
+
+    const showError = () => {
+      if (hasTrack) {
+        refreshError.classList.remove("hidden");
+        return;
+      }
+
+      root.dataset.playing = "false";
+      status.textContent = "Last.fm is unavailable.";
+      trackName.textContent = "Visit my Last.fm profile";
+      artist.classList.add("hidden");
+    };
+
+    const scheduleNext = () => {
+      window.clearTimeout(timer);
+      if (!document.hidden) timer = window.setTimeout(refresh, POLL_INTERVAL_MS);
+    };
+
+    const refresh = async () => {
+      controller?.abort();
+      controller = new AbortController();
+
+      try {
+        const response = await fetch(endpoint, {
+          headers: { Accept: "application/json" },
+          signal: controller.signal,
+        });
+        if (!response.ok) throw new Error(`Request failed with ${response.status}`);
+
+        const data = (await response.json()) as LastFmResponse;
+        if (data.track) showTrack(data.track);
+        else showEmpty();
+      } catch (error) {
+        if (!(error instanceof DOMException && error.name === "AbortError")) {
+          showError();
+        }
+      } finally {
+        scheduleNext();
+      }
+    };
+
+    document.addEventListener("visibilitychange", () => {
+      window.clearTimeout(timer);
+      if (document.hidden) controller?.abort();
+      else void refresh();
+    });
+
+    void refresh();
+  });
+</script>
+
+<style>
+  [data-playing="true"] [data-artwork] {
+    animation: lastfm-spin 1.8s linear infinite;
+  }
+
+  .lastfm-record {
+    background-image: repeating-radial-gradient(
+      circle,
+      transparent 0,
+      transparent 5px,
+      rgb(64 64 64) 6px
+    );
+  }
+
+  @keyframes lastfm-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-playing="true"] [data-artwork] {
+      animation: none;
+    }
+  }
+</style>

@@ -1,17 +1,13 @@
 ---
-
+import Layout from "../layouts/main.astro"
+import Button from "../components/ui/Button.astro"
+import Hero from "../components/Hero.astro"
+import Socials from "../components/Socials.astro"
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout>
+  <main class="container mx-auto grid max-w-6xl grid-cols-1 items-baseline gap-4 px-4 md:grid-cols-2">
+    <Hero />
+    <Socials />
+  </main>
+</Layout>

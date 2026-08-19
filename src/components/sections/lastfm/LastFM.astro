@@ -1,48 +1,19 @@
 ---
+import LastFMIsland from "./LastFMIsland";
+
 const profileUrl = "https://www.last.fm/user/err53";
 ---
 
-<section data-lastfm data-endpoint="/api/lastfm.json">
+<section>
   <h2 class="pb-3 text-3xl font-semibold">LastFM</h2>
-  <a
-    data-card
-    href={profileUrl}
-    class="flex min-h-20 flex-row items-center gap-3 border border-neutral-200 p-2 shadow-md transition-all duration-300 hover:bg-neutral-100 hover:text-neutral-900 active:shadow-none"
-  >
-    <div class="size-16 shrink-0" data-artwork>
-      <img
-        data-image
-        class="hidden size-16 rounded-full object-cover"
-        width="64"
-        height="64"
-        alt=""
-      />
-      <div
-        data-placeholder
-        class="lastfm-record flex size-16 items-center justify-center rounded-full bg-neutral-800"
-        aria-hidden="true"
-      >
-        <span class="size-5 rounded-full border-4 border-neutral-300 bg-neutral-100"></span>
-      </div>
-    </div>
-    <div class="min-w-0" aria-live="polite">
-      <p data-status class="text-sm text-neutral-500">Checking Last.fm...</p>
-      <p data-track class="truncate font-medium">Loading recent track...</p>
-      <p data-artist class="hidden truncate text-sm text-neutral-600"></p>
-      <p data-refresh-error class="hidden text-xs text-neutral-500">
-        Latest refresh failed; showing previous track.
-      </p>
-    </div>
-  </a>
+  <LastFMIsland
+    client:idle
+    endpoint="/api/lastfm.json"
+    profileUrl={profileUrl}
+  />
 </section>
 
-<script>
-  import { initializeLastFm } from "../../../lib/lastfm/browser";
-
-  initializeLastFm();
-</script>
-
-<style>
+<style is:global>
   [data-playing="true"] [data-artwork] {
     animation: lastfm-spin 1.8s linear infinite;
   }

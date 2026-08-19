@@ -1,0 +1,18 @@
+---
+import Layout from "../layouts/main.astro"
+import Hero from "../components/sections/Hero.astro"
+import Socials from "../components/sections/Socials.astro"
+import Resume from "../components/sections/Resume.astro"
+import Projects from "../components/sections/projects/Projects.astro"
+import LastFM from "../components/sections/lastfm/LastFM.astro"
+---
+
+<Layout>
+  <main class="container mx-auto grid max-w-6xl grid-cols-1 items-baseline gap-4 px-4 md:grid-cols-2">
+    <Hero />
+    <Socials />
+    <Resume />
+    <Projects />
+    <LastFM />
+  </main>
+</Layout>

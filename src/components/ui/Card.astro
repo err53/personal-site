@@ -1,0 +1,20 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+type Props = HTMLAttributes<"a">;
+
+const { class: className, ...attrs } = Astro.props;
+---
+
+<a
+  class:list={[
+    "flex h-full flex-col justify-between border border-neutral-200 shadow-md transition-all duration-300 hover:bg-neutral-100 hover:text-neutral-900 active:shadow-none",
+    className,
+  ]}
+  {...attrs}
+>
+  <div class="m-6">
+    <slot name="summary" />
+  </div>
+  <slot />
+</a>

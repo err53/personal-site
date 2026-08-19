@@ -1,0 +1,74 @@
+---
+import ProjectCard from "./ProjectCard.astro";
+
+import meetingbot from "../../../assets/meetingbot.png";
+import dashBanner from "../../../assets/dash_banner.png";
+import deltaHacksPortal from "../../../assets/dh_portal.png";
+import salesbop from "../../../assets/salesbop.png";
+import personalSite from "../../../assets/personal_site.png";
+import csWiki from "../../../assets/cs_wiki.png";
+import oscs from "../../../assets/oscs.png";
+
+const projects = [
+  {
+    href: "https://meetingbot.tech/",
+    title: "meetingbot",
+    description: "An open-source meeting bot API deployed on AWS",
+    image: meetingbot,
+    imageAlt: "A screenshot of meetingbot.",
+    priority: true,
+  },
+  {
+    href: "https://github.com/Krish120003/dash",
+    title: "Dash",
+    description: "A personalizable new-tab dashboard",
+    image: dashBanner,
+    imageAlt: "A screenshot of Dash.",
+  },
+  {
+    href: "https://github.com/deltahacks/portal",
+    title: "DeltaHacks Portal",
+    description: "A hackathon registration and management system",
+    image: deltaHacksPortal,
+    imageAlt: "A screenshot of the DeltaHacks portal.",
+  },
+  {
+    href: "https://www.salesbop.io",
+    title: "SalesBop",
+    description:
+      "A comprehensive, customizable sales coaching platform with natural language feedback",
+    image: salesbop,
+    imageAlt: "A screenshot of the SalesBop landing page.",
+  },
+  {
+    href: "https://github.com/err53/personal-site",
+    title: "Personal Site",
+    description: "You're looking at it right now!",
+    image: personalSite,
+    imageAlt: "A screenshot of this website.",
+  },
+  {
+    href: "https://beta.wiki.egirls.dev/s/public",
+    title: "McMaster CS Wiki",
+    description:
+      "A repository of course knowledge, notes, and resources. Currently in the middle of a migration off of Wiki.JS, so things might be a little broken...",
+    image: csWiki,
+    imageAlt: "A screenshot of the McMaster CS Wiki.",
+  },
+  {
+    href: "https://github.com/mac-egirls/oscs",
+    title: "Open Source Cheat Sheets",
+    description:
+      "A collection of community-built, freely modifiable course cheat sheets",
+    image: oscs,
+    imageAlt: "A screenshot of the Open Source Cheat Sheets preview page.",
+  },
+];
+---
+
+<div class="col-span-full">
+  <h2 class="pb-3 text-3xl font-semibold">Projects</h2>
+  <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+    {projects.map((project) => <ProjectCard {...project} />)}
+  </div>
+</div>

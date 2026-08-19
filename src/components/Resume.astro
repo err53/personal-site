@@ -1,16 +1,15 @@
 ---
 import Card from "./ui/Card.astro";
-import CardHeader from "./ui/CardHeader.astro";
 ---
 
 <div>
   <h2 class="pb-3 text-3xl font-semibold">Resume</h2>
   <div>
-    <Card href="https://err53.github.io/resume/resume.pdf" type="resume">
-      <CardHeader>
+    <Card href="https://err53.github.io/resume/resume.pdf">
+      <Fragment slot="summary">
         <h3 class="text-2xl">PDF</h3>
         <p>Written in Typst and compiled via GH Actions</p>
-      </CardHeader>
+      </Fragment>
     </Card>
   </div>
 </div>

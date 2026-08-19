@@ -1,16 +1,16 @@
 ---
-interface Props {
-  label: string;
-  href: string;
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"a"> {
+  children: any;
 }
 
-const { label, href } = Astro.props;
+const { ...attrs } = Astro.props;
 ---
 
 <a
-  aria-label={label}
-  href={href}
-  class="hover:bg-accent hover:text-accent-foreground border p-3 shadow-md transition-all duration-300 active:shadow-none"
+  class="border border-neutral-200 p-3 shadow-md transition-all duration-300 hover:bg-neutral-100 hover:text-neutral-900 active:shadow-none"
+  {...attrs}
 >
   <slot />
 </a>

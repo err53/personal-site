@@ -1,20 +1,17 @@
 ---
-interface Props {
-  label?: string;
-  href: string;
-  className?: string;
-}
+import type { HTMLAttributes } from 'astro/types';
 
-const { label, href, className } = Astro.props;
+type Props = HTMLAttributes<"a">;
+
+const { class: className, ...attrs } = Astro.props;
 ---
 
 <a
-  aria-label={label}
-  href={href}
   class:list={[
-    "hover:bg-accent hover:text-accent-foreground flex h-full flex-col justify-between border shadow-md transition-all duration-300 active:shadow-none",
+    "flex h-full flex-col justify-between border border-neutral-200 shadow-md transition-all duration-300 hover:bg-neutral-100 hover:text-neutral-900 active:shadow-none",
     className,
   ]}
+  {...attrs}
 >
   <slot />
 </a>

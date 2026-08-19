@@ -20,6 +20,7 @@
     "@nanostores/preact": "^1.1.0",
     "@nanostores/query": "^0.3.4",
     "@tailwindcss/vite": "^4.3.3",
+    "@vercel/speed-insights": "^2.0.0",
     "astro": "^7.2.3",
     "nanostores": "^1.5.1",
     "preact": "^10.29.8",

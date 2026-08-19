@@ -12,6 +12,10 @@ export default defineConfig({
     },
   }),
   integrations: [preact()],
+  build: {
+    // Re-evaluate this if we add more pages, since repeated inline CSS cannot be cached separately.
+    inlineStylesheets: "always",
+  },
   env: {
     schema: {
       LASTFM_API_KEY: envField.string({ context: "server", access: "secret" }),

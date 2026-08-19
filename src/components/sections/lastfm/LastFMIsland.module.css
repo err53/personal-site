@@ -1,0 +1,24 @@
+.spinning {
+  animation: spin 1.8s linear infinite;
+}
+
+.record {
+  background-image: repeating-radial-gradient(
+    circle,
+    transparent 0,
+    transparent 5px,
+    rgb(64 64 64) 6px
+  );
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinning {
+    animation: none;
+  }
+}

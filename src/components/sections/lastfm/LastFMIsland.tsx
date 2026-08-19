@@ -5,6 +5,7 @@ import {
 } from "@tanstack/preact-query";
 
 import type { LatestTrack } from "../../../lib/lastfm/schema";
+import styles from "./LastFMIsland.module.css";
 
 type Props = {
   endpoint: string;
@@ -45,10 +46,11 @@ function LastFMCard({ endpoint, profileUrl }: Props) {
   return (
     <a
       href={track?.profileUrl ?? profileUrl}
-      data-playing={track?.nowPlaying ?? false}
       class="flex min-h-20 flex-row items-center gap-3 border border-neutral-200 p-2 shadow-md transition-all duration-300 hover:bg-neutral-100 hover:text-neutral-900 active:shadow-none"
     >
-      <div class="size-16 shrink-0" data-artwork>
+      <div
+        class={`size-16 shrink-0 ${track?.nowPlaying ? styles.spinning : ""}`}
+      >
         {track?.imageUrl ? (
           <img
             class="size-16 rounded-full object-cover"
@@ -60,10 +62,11 @@ function LastFMCard({ endpoint, profileUrl }: Props) {
                 ? `${track.album} album cover`
                 : `${track.name} album cover`
             }
+            loading="lazy"
           />
         ) : (
           <div
-            class="lastfm-record flex size-16 items-center justify-center rounded-full bg-neutral-800"
+            class={`${styles.record} flex size-16 items-center justify-center rounded-full bg-neutral-800`}
             aria-hidden="true"
           >
             <span class="size-5 rounded-full border-4 border-neutral-300 bg-neutral-100" />

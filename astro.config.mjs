@@ -1,22 +1,26 @@
 // @ts-check
-import vercel from '@astrojs/vercel';
-import preact from '@astrojs/preact';
-import { defineConfig, envField } from 'astro/config';
-import tailwindcss from '@tailwindcss/vite';
+import vercel from "@astrojs/vercel";
+import preact from "@astrojs/preact";
+import { defineConfig, envField } from "astro/config";
+import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
-    adapter: vercel(),
-    integrations: [preact()],
-    env: {
-        schema: {
-            LASTFM_API_KEY: envField.string({ context: "server", access: "secret" })
-        }
+  adapter: vercel({
+    webAnalytics: {
+      enabled: true, // set to false when using @vercel/analytics@1.4.0
     },
-    vite: {
-        plugins: [tailwindcss()]
+  }),
+  integrations: [preact()],
+  env: {
+    schema: {
+      LASTFM_API_KEY: envField.string({ context: "server", access: "secret" }),
     },
-    image: {
-        layout: "constrained"
-    }
+  },
+  vite: {
+    plugins: [tailwindcss()],
+  },
+  image: {
+    layout: "constrained",
+  },
 });

@@ -1,14 +1,10 @@
-import {
-  QueryClient,
-  QueryClientProvider,
-  useQuery,
-} from "@tanstack/preact-query";
+import { useStore } from "@nanostores/preact";
+import { nanoquery, type FetcherValue } from "@nanostores/query";
 
 import type { LatestTrack } from "../../../lib/lastfm/schema";
 import styles from "./LastFMIsland.module.css";
 
 type Props = {
-  endpoint: string;
   profileUrl: string;
 };
 
@@ -17,30 +13,22 @@ type LastFmResponse = {
 };
 
 const POLL_INTERVAL_MS = 10_000;
-const queryClient = new QueryClient();
+const [createFetcherStore] = nanoquery();
+const $latestTrack = createFetcherStore<LastFmResponse>("/api/lastfm.json", {
+  fetcher: async (endpoint) => {
+    const response = await fetch(String(endpoint), {
+      headers: { Accept: "application/json" },
+    });
+    if (!response.ok) throw new Error(`Request failed with ${response.status}`);
+    return response.json() as Promise<LastFmResponse>;
+  },
+  revalidateInterval: POLL_INTERVAL_MS,
+  revalidateOnFocus: true,
+  revalidateOnReconnect: true,
+});
 
-export default function LastFMIsland(props: Props) {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <LastFMCard {...props} />
-    </QueryClientProvider>
-  );
-}
-
-function LastFMCard({ endpoint, profileUrl }: Props) {
-  const query = useQuery<LastFmResponse>({
-    queryKey: ["lastfm", "latest", endpoint],
-    queryFn: async ({ signal }) => {
-      const response = await fetch(endpoint, {
-        headers: { Accept: "application/json" },
-        signal,
-      });
-      if (!response.ok) throw new Error(`Request failed with ${response.status}`);
-      return response.json();
-    },
-    refetchInterval: POLL_INTERVAL_MS,
-  });
-
+export default function LastFMIsland({ profileUrl }: Props) {
+  const query = useStore($latestTrack, { ssr: "initial" });
   const track = query.data?.track ?? null;
 
   return (
@@ -74,14 +62,14 @@ function LastFMCard({ endpoint, profileUrl }: Props) {
         )}
       </div>
       <div class="min-w-0" aria-live="polite">
-        <p class="text-sm text-neutral-500">{getStatusText(query, track)}</p>
+        <p class="text-sm text-neutral-500">{getStatusText(query)}</p>
         <p class="truncate font-medium">
-          {track?.name ?? getFallbackText(query.isPending)}
+          {track?.name ?? getFallbackText(query)}
         </p>
         {track && (
           <p class="truncate text-sm text-neutral-600">by {track.artist}</p>
         )}
-        {track && query.isRefetchError && (
+        {track && query.error && (
           <p class="text-xs text-neutral-500">
             Latest refresh failed; showing previous track.
           </p>
@@ -91,18 +79,17 @@ function LastFMCard({ endpoint, profileUrl }: Props) {
   );
 }
 
-function getStatusText(
-  query: { isPending: boolean; isError: boolean },
-  track: LatestTrack | null,
-) {
-  if (query.isPending) return "Checking Last.fm...";
-  if (query.isError && !track) return "Last.fm is unavailable.";
+function getStatusText(state: FetcherValue<LastFmResponse>) {
+  const track = state.data?.track ?? null;
+
+  if (!state.data && !state.error) return "Checking Last.fm...";
+  if (state.error && !track) return "Last.fm is unavailable.";
   if (!track) return "No recent tracks found.";
   return track.nowPlaying ? "Listening to:" : "Last listened to:";
 }
 
-function getFallbackText(isPending: boolean) {
-  return isPending
+function getFallbackText(state: FetcherValue<LastFmResponse>) {
+  return !state.data && !state.error
     ? "Loading recent track..."
     : "Visit my Last.fm profile";
 }

@@ -1,72 +1,46 @@
 ---
 import ProjectCard from "./ProjectCard.astro";
 
-import meetingbot from "../../../assets/meetingbot.png";
-import dashBanner from "../../../assets/dash_banner.png";
-import deltaHacksPortal from "../../../assets/dh_portal.png";
 import salesbop from "../../../assets/salesbop.png";
-import personalSite from "../../../assets/personal_site.png";
-import csWiki from "../../../assets/cs_wiki.png";
+import meetingbot from "../../../assets/meetingbot.png";
+import deltaHacksPortal from "../../../assets/dh_portal.png";
 import oscs from "../../../assets/oscs.png";
 
 const projects = [
   {
+    href: "https://www.salesbop.io",
+    title: "SalesBop",
+    description:
+      "Co-founded an LLM-powered sales coaching platform acquired by FliteHouse.",
+    image: salesbop,
+    imageAlt:
+      "SalesBop landing page introducing an AI sales coach over faded coaching metrics and customer portraits.",
+    priority: true,
+  },
+  {
     href: "https://meetingbot.tech/",
     title: "meetingbot",
-    description: "An open-source meeting bot API deployed on AWS",
+    description:
+      "Co-built a self-hosted meeting bot API and grew its open-source developer community.",
     image: meetingbot,
     imageAlt:
       "Diagram connecting Zoom, Microsoft Teams, and Google Meet to recording, transcript, and event outputs.",
     priority: true,
   },
   {
-    href: "https://github.com/Krish120003/dash",
-    title: "Dash",
-    description: "A personalizable new-tab dashboard",
-    image: dashBanner,
-    imageAlt:
-      "Blue and purple new-tab dashboard showing weather, notifications, and a large digital clock.",
-    priority: true,
-  },
-  {
     href: "https://github.com/deltahacks/portal",
-    title: "DeltaHacks Portal",
-    description: "A hackathon registration and management system",
+    title: "DeltaHacks Platform",
+    description:
+      "Led the platform used to manage and review 1,000+ hackathon applications.",
     image: deltaHacksPortal,
     imageAlt:
       "Dark DeltaHacks IX login screen with Google, GitHub, Discord, and LinkedIn sign-in options.",
   },
   {
-    href: "https://www.salesbop.io",
-    title: "SalesBop",
-    description:
-      "A comprehensive, customizable sales coaching platform with natural language feedback",
-    image: salesbop,
-    imageAlt:
-      "SalesBop landing page introducing an AI sales coach over faded coaching metrics and customer portraits.",
-  },
-  {
-    href: "https://github.com/err53/personal-site",
-    title: "Personal Site",
-    description: "You're looking at it right now!",
-    image: personalSite,
-    imageAlt:
-      "Earlier version of this portfolio with social links, a resume, and project cards.",
-  },
-  {
-    href: "https://beta.wiki.egirls.dev/s/public",
-    title: "McMaster CS Wiki",
-    description:
-      "A repository of course knowledge, notes, and resources. Currently in the middle of a migration off of Wiki.JS, so things might be a little broken...",
-    image: csWiki,
-    imageAlt:
-      "McMaster CS Wiki home page with course lists, professor resources, contributors, and a navigation sidebar.",
-  },
-  {
     href: "https://github.com/mac-egirls/oscs",
     title: "Open Source Cheat Sheets",
     description:
-      "A collection of community-built, freely modifiable course cheat sheets",
+      "Community-maintained course references built for open reuse and contribution.",
     image: oscs,
     imageAlt:
       "Cheat sheet browser listing course PDFs beside a multi-page algorithms reference preview.",

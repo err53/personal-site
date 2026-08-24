@@ -4,8 +4,8 @@ import LastFMIsland from "./LastFMIsland";
 const profileUrl = "https://www.last.fm/user/err53";
 ---
 
-<section>
-  <h2 class="pb-3 text-3xl font-semibold">LastFM</h2>
+<section aria-labelledby="lastfm-heading">
+  <h2 id="lastfm-heading" class="pb-3 text-3xl font-semibold">LastFM</h2>
   <LastFMIsland
     client:visible={{ rootMargin: "200px" }}
     profileUrl={profileUrl}

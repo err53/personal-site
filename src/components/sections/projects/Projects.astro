@@ -74,9 +74,9 @@ const projects = [
 ];
 ---
 
-<div class="col-span-full">
-  <h2 class="pb-3 text-3xl font-semibold">Projects</h2>
+<section class="col-span-full" aria-labelledby="projects-heading">
+  <h2 id="projects-heading" class="pb-3 text-3xl font-semibold">Projects</h2>
   <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
     {projects.map((project) => <ProjectCard {...project} />)}
   </div>
-</div>
+</section>

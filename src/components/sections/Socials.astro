@@ -3,8 +3,10 @@ import Button from "../ui/Button.astro";
 import { X, LinkedIn, Instagram, Github, Medium } from "simple-icons-astro";
 ---
 
-<div class="md:justify-self-end">
-  <h2 class="pb-3 text-3xl font-semibold md:text-right">Socials</h2>
+<section class="md:justify-self-end" aria-labelledby="socials-heading">
+  <h2 id="socials-heading" class="pb-3 text-3xl font-semibold md:text-right">
+    Socials
+  </h2>
   <div class="flex flex-wrap gap-2 md:justify-end">
     <Button aria-label="Twitter" href="https://twitter.com/err_53">
       <X class="size-10" />
@@ -22,4 +24,4 @@ import { X, LinkedIn, Instagram, Github, Medium } from "simple-icons-astro";
       <Medium class="size-10" />
     </Button>
   </div>
-</div>
+</section>

@@ -2,8 +2,8 @@
 import Card from "../ui/Card.astro";
 ---
 
-<div>
-  <h2 class="pb-3 text-3xl font-semibold">Resume</h2>
+<section aria-labelledby="resume-heading">
+  <h2 id="resume-heading" class="pb-3 text-3xl font-semibold">Resume</h2>
   <div>
     <Card href="/resume.pdf">
       <Fragment slot="summary">
@@ -12,4 +12,4 @@ import Card from "../ui/Card.astro";
       </Fragment>
     </Card>
   </div>
-</div>
+</section>

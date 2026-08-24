@@ -1,1 +1,13 @@
 @import "tailwindcss";
+
+@utility interactive-surface {
+  @apply border border-neutral-200 shadow-md transition-all duration-300;
+
+  @variant hover {
+    @apply bg-neutral-100 text-neutral-900;
+  }
+
+  @variant active {
+    @apply shadow-none;
+  }
+}

@@ -34,7 +34,7 @@ export default function LastFMIsland({ profileUrl }: Props) {
   return (
     <a
       href={track?.profileUrl ?? profileUrl}
-      class="flex min-h-20 flex-row items-center gap-3 border border-neutral-200 p-2 shadow-md transition-all duration-300 hover:bg-neutral-100 hover:text-neutral-900 active:shadow-none"
+      class="interactive-surface flex min-h-20 flex-row items-center gap-3 p-2"
     >
       <div
         class={`size-16 shrink-0 ${track?.nowPlaying ? styles.spinning : ""}`}

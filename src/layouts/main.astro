@@ -4,18 +4,44 @@ import Analytics from "@vercel/analytics/astro";
 import SpeedInsights from "@vercel/speed-insights/astro";
 
 import Footer from "../components/layout/Footer.astro";
+
+const title = "Jason Huang";
+const description =
+  "Jason Huang is a full-stack developer and open-knowledge advocate building with React, Node.js, Python, and C++.";
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site!);
+const socialImageUrl = new URL("/open-graph/home.png", Astro.site!);
+const socialImageAlt =
+  "Jason Huang — Full-Stack Developer and Open-Knowledge Advocate";
 ---
 
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <meta
-      name="description"
-      content="Jason Huang is a full-stack developer and open-knowledge advocate building with React, Node.js, Python, and C++."
-    />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" href="/favicon.ico" />
-    <title>Jason Huang</title>
+    <link rel="icon" href="/logo.svg" type="image/svg+xml" sizes="any" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={title} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={socialImageUrl} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={socialImageAlt} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@err_53" />
+    <meta name="twitter:creator" content="@err_53" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImageUrl} />
+    <meta name="twitter:image:alt" content={socialImageAlt} />
 
     <Analytics />
     <SpeedInsights />

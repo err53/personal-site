@@ -23,6 +23,7 @@
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
     "astro": "^7.2.3",
+    "astro-og-canvas": "^0.13.0",
     "nanostores": "^1.5.1",
     "preact": "^10.29.8",
     "sharp": "^0.35.3",

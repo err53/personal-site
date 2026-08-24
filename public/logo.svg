@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <style>
+    .thin,
+    .thick {
+      fill: none;
+      stroke: #000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .thin { stroke-width: 10px; }
+    .thick { stroke-width: 20px; }
+    @media (prefers-color-scheme: dark) {
+      .thin,
+      .thick { stroke: #fff; }
+    }
+  </style>
+  <g transform="matrix(.13669837 0 0 .13669837 7.774005 9.8619703)">
+    <path class="thin" d="M175.48 5h113.65M61.83 201.85h113.65m-56.83-98.43H232.3M175.48 5l-56.83 98.42m113.65 0-56.82 98.43" />
+    <path class="thick" d="m61.83 5 56.82 98.42M5 103.42l56.83 98.43M61.83 5 5 103.42m0 0h113.65" />
+  </g>
+</svg>

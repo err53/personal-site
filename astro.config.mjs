@@ -13,6 +13,26 @@ export default defineConfig({
     },
   }),
   integrations: [preact()],
+  markdown: {
+    syntaxHighlight: false,
+  },
+  security: {
+    csp: {
+      directives: [
+        "default-src 'self'",
+        "base-uri 'self'",
+        "connect-src 'self'",
+        "font-src 'self'",
+        "form-action 'self'",
+        "frame-src 'none'",
+        "img-src 'self' https://lastfm-img.freetls.fastly.net",
+        "media-src 'none'",
+        "object-src 'none'",
+        "worker-src 'none'",
+        "upgrade-insecure-requests",
+      ],
+    },
+  },
   build: {
     // Re-evaluate this if we add more pages, since repeated inline CSS cannot be cached separately.
     inlineStylesheets: "always",

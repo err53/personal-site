@@ -65,7 +65,7 @@ export function normalizeTrack(track: RecentTrack, user: string): LatestTrack {
   };
 }
 
-export function parseLatestTrack(payload: unknown, user: string): LatestTrack | null {
+export function parseRecentTracks(payload: unknown, user: string): LatestTrack[] {
   const providerError = payload as LastFmErrorResponse;
 
   if (providerError?.error !== undefined) {
@@ -81,6 +81,11 @@ export function parseLatestTrack(payload: unknown, user: string): LatestTrack | 
     throw new Error("Last.fm returned an unexpected response");
   }
 
-  const track = parsed.data.recenttracks.track[0];
-  return track ? normalizeTrack(track, user) : null;
+  return parsed.data.recenttracks.track.map((track) =>
+    normalizeTrack(track, user),
+  );
+}
+
+export function parseLatestTrack(payload: unknown, user: string): LatestTrack | null {
+  return parseRecentTracks(payload, user)[0] ?? null;
 }

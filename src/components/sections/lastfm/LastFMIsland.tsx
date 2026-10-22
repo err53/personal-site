@@ -1,5 +1,6 @@
 import { useStore } from "@nanostores/preact";
 import { nanoquery, type FetcherValue } from "@nanostores/query";
+import { ChevronDown } from "lucide-preact";
 import { atom } from "nanostores";
 import { useId, useState } from "preact/hooks";
 
@@ -113,18 +114,10 @@ export default function LastFMIsland({ profileUrl }: Props) {
             </p>
           )}
         </div>
-        <svg
-          class={`size-5 shrink-0 text-neutral-500 transition-transform duration-300 ${expanded ? "rotate-180" : ""}`}
-          viewBox="0 0 20 20"
-          fill="currentColor"
-          aria-hidden="true"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.17l3.71-3.94a.75.75 0 1 1 1.08 1.04l-4.25 4.5a.75.75 0 0 1-1.08 0l-4.25-4.5a.75.75 0 0 1 .02-1.06Z"
-            clip-rule="evenodd"
-          />
-        </svg>
+        <ChevronDown
+          size={20}
+          class={`shrink-0 text-neutral-500 transition-transform duration-300 ${expanded ? "rotate-180" : ""}`}
+        />
         <span class="sr-only">
           {expanded ? "Hide recently played" : "Show recently played"}
         </span>

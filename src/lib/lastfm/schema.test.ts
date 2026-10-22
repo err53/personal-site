@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import {
   normalizeTrack,
   parseLatestTrack,
+  parseRecentTracks,
   recentTracksResponseSchema,
 } from "./schema";
 
@@ -77,5 +78,26 @@ describe("normalizeTrack", () => {
     expect(
       parseLatestTrack({ recenttracks: { track: [] } }, "err53"),
     ).toBeNull();
+  });
+});
+
+describe("parseRecentTracks", () => {
+  it("normalizes every track in order", () => {
+    const tracks = parseRecentTracks(
+      {
+        recenttracks: {
+          track: [
+            { ...baseTrack, "@attr": { nowplaying: "true" }, date: undefined },
+            { ...baseTrack, name: "Angel" },
+          ],
+        },
+      },
+      "err53",
+    );
+
+    expect(tracks.map(({ name, nowPlaying }) => ({ name, nowPlaying }))).toEqual([
+      { name: "Teardrop", nowPlaying: true },
+      { name: "Angel", nowPlaying: false },
+    ]);
   });
 });

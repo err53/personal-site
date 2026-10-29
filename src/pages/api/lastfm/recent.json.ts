@@ -4,18 +4,19 @@ import { getRecentTracks } from "../../../lib/lastfm/client";
 
 export const prerender = false;
 
-// The current track plus 10 more; the card already shows the current one, so drop it.
-const TRACK_LIMIT = 11;
+// Enough for 10 rows after the client removes the current track and its possible duplicate.
+const TRACK_LIMIT = 12;
 
 const responseHeaders = {
   // History changes less often than the current track, so it can be cached longer.
-  "Cache-Control": "public, max-age=0, s-maxage=30, stale-while-revalidate=300",
+  // Keep the stale window short so the client's 30s refresh gets recent data.
+  "Cache-Control": "public, max-age=0, s-maxage=30, stale-while-revalidate=60",
   "Content-Type": "application/json; charset=utf-8",
 };
 
 export const GET = (async () => {
   try {
-    const [, ...tracks] = await getRecentTracks(TRACK_LIMIT);
+    const tracks = await getRecentTracks(TRACK_LIMIT);
 
     return new Response(JSON.stringify({ tracks }), {
       headers: responseHeaders,

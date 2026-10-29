@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
 
 import {
+  getPlayHistory,
+  type LatestTrack,
   normalizeTrack,
   parseLatestTrack,
   parseRecentTracks,
@@ -31,6 +33,7 @@ describe("normalizeTrack", () => {
       artist: "Massive Attack",
       album: "Mezzanine",
       imageUrl: "https://example.com/xl.jpg",
+      thumbnailUrl: "https://example.com/large.jpg",
       trackUrl: "https://www.last.fm/music/Massive+Attack/_/Teardrop",
       profileUrl: "https://www.last.fm/user/err53",
       nowPlaying: false,
@@ -99,5 +102,48 @@ describe("parseRecentTracks", () => {
       { name: "Teardrop", nowPlaying: true },
       { name: "Angel", nowPlaying: false },
     ]);
+  });
+});
+
+describe("getPlayHistory", () => {
+  const play = (
+    name: string,
+    playedAt: string | null,
+    nowPlaying = false,
+  ): LatestTrack => ({
+    name,
+    artist: "Artist",
+    album: "",
+    imageUrl: null,
+    thumbnailUrl: null,
+    trackUrl: `https://www.last.fm/music/Artist/_/${name}`,
+    profileUrl: "https://www.last.fm/user/err53",
+    nowPlaying,
+    playedAt,
+  });
+
+  const a = play("A", "2024-08-19T20:10:00.000Z");
+  const b = play("B", "2024-08-19T20:05:00.000Z");
+  const c = play("C", "2024-08-19T20:00:00.000Z");
+
+  it("removes the play the card is showing, wherever it is", () => {
+    expect(getPlayHistory([b, a, c], a)).toEqual([b, c]);
+  });
+
+  it("keeps every finished play when the card shows something not in the list", () => {
+    expect(getPlayHistory([a, b, c], play("D", "2024-08-19T20:15:00.000Z"))).toEqual([
+      a,
+      b,
+      c,
+    ]);
+  });
+
+  it("drops the now-playing entry and its early scrobble", () => {
+    const playing = play("A", null, true);
+    expect(getPlayHistory([playing, a, b, c], playing)).toEqual([b, c]);
+  });
+
+  it("drops a now-playing entry even before the card has loaded", () => {
+    expect(getPlayHistory([play("A", null, true), b, c], null)).toEqual([b, c]);
   });
 });

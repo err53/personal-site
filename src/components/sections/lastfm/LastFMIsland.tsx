@@ -4,7 +4,10 @@ import { ChevronDown } from "lucide-preact";
 import { atom } from "nanostores";
 import { useId, useState } from "preact/hooks";
 
-import type { LatestTrack } from "../../../lib/lastfm/schema";
+import {
+  getPlayHistory,
+  type LatestTrack,
+} from "../../../lib/lastfm/schema";
 import styles from "./LastFMIsland.module.css";
 
 type Props = {
@@ -20,8 +23,9 @@ type RecentTracksResponse = {
 };
 
 const POLL_INTERVAL_MS = 10_000;
+const HISTORY_ROWS = 10;
 const RECENT_ENDPOINT = "/api/lastfm/recent.json";
-// Matches the edge cache on the recent route, so refetching sooner gains nothing.
+// Matches s-maxage on the recent route, so refetching sooner gains nothing.
 const RECENT_MAX_AGE_MS = 30_000;
 
 async function fetchJson(endpoint: unknown) {
@@ -77,7 +81,10 @@ export default function LastFMIsland({ profileUrl }: Props) {
   const [expanded, setExpanded] = useState(false);
   const panelId = useId();
   const track = query.data?.track ?? null;
-  const recent = recentQuery.data?.tracks ?? [];
+  const recent = getPlayHistory(recentQuery.data?.tracks ?? [], track).slice(
+    0,
+    HISTORY_ROWS,
+  );
 
   function toggle() {
     if (!expanded) refreshRecentTracksIfStale();
@@ -98,7 +105,7 @@ export default function LastFMIsland({ profileUrl }: Props) {
         <div
           class={`size-16 shrink-0 ${track?.nowPlaying ? styles.spinning : ""}`}
         >
-          <Artwork track={track} size={64} />
+          <Artwork track={track} size="lg" />
         </div>
         <div class="min-w-0 flex-1" aria-live="polite">
           <p class="text-sm text-neutral-500">{getStatusText(query)}</p>
@@ -139,7 +146,7 @@ export default function LastFMIsland({ profileUrl }: Props) {
                       href={item.trackUrl}
                       class="flex items-center gap-3 rounded p-1 transition-colors hover:bg-neutral-200"
                     >
-                      <Artwork track={item} size={40} square />
+                      <Artwork track={item} size="sm" square />
                       <div class="min-w-0 flex-1">
                         <p class="truncate text-sm font-medium">{item.name}</p>
                         <p class="truncate text-xs text-neutral-600">
@@ -176,27 +183,37 @@ export default function LastFMIsland({ profileUrl }: Props) {
   );
 }
 
+// Inline styles are blocked by the site's CSP, so sizes must come from classes.
+const artworkSizes = {
+  lg: { px: 64, box: "size-16", hole: "size-5 border-4" },
+  sm: { px: 40, box: "size-10", hole: "size-3 border-2" },
+};
+
 function Artwork({
   track,
   size,
   square = false,
 }: {
   track: LatestTrack | null;
-  size: number;
+  size: keyof typeof artworkSizes;
   square?: boolean;
 }) {
+  const { px, box, hole } = artworkSizes[size];
   const shape = square ? "rounded" : "rounded-full";
+  // List rows already name the track, so their thumbnails are decorative.
+  const src = size === "sm" ? track?.thumbnailUrl : track?.imageUrl;
 
-  if (track?.imageUrl) {
+  if (track && src) {
     return (
       <img
-        class={`shrink-0 object-cover ${shape}`}
-        style={{ width: size, height: size }}
-        src={track.imageUrl}
-        width={size}
-        height={size}
+        class={`${box} shrink-0 object-cover ${shape}`}
+        src={src}
+        width={px}
+        height={px}
         alt={
-          track.album ? `${track.album} album cover` : `${track.name} album cover`
+          size === "sm"
+            ? ""
+            : `${track.album || track.name} album cover`
         }
         loading="lazy"
       />
@@ -205,14 +222,10 @@ function Artwork({
 
   return (
     <div
-      class={`${styles.record} flex shrink-0 items-center justify-center bg-neutral-800 ${shape}`}
-      style={{ width: size, height: size }}
+      class={`${styles.record} ${box} flex shrink-0 items-center justify-center bg-neutral-800 ${shape}`}
       aria-hidden="true"
     >
-      <span
-        class="rounded-full border-neutral-300 bg-neutral-100"
-        style={{ width: size / 3.2, height: size / 3.2, borderWidth: size / 16 }}
-      />
+      <span class={`${hole} rounded-full border-neutral-300 bg-neutral-100`} />
     </div>
   );
 }

@@ -5,9 +5,19 @@ import SpeedInsights from "@vercel/speed-insights/astro";
 
 import Footer from "../components/layout/Footer.astro";
 
-const title = "Jason Huang";
-const description =
-  "Jason Huang is a full-stack developer and open-knowledge advocate building with React, Node.js, Python, and C++.";
+interface Props {
+  title?: string;
+  description?: string;
+  /** Hide the page from search engines and omit its canonical URL. */
+  noindex?: boolean;
+}
+
+const siteName = "Jason Huang";
+const {
+  title = siteName,
+  description = "Jason Huang is a full-stack developer and open-knowledge advocate building with React, Node.js, Python, and C++.",
+  noindex = false,
+} = Astro.props;
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site!);
 const socialImageUrl = new URL("/open-graph/home.png", Astro.site!);
 const socialImageAlt =
@@ -20,15 +30,16 @@ const socialImageAlt =
     <meta name="viewport" content="width=device-width" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonicalUrl} />
+    {noindex && <meta name="robots" content="noindex" />}
+    {!noindex && <link rel="canonical" href={canonicalUrl} />}
     <link rel="icon" href="/favicon.ico" />
     <link rel="icon" href="/logo.svg" type="image/svg+xml" sizes="any" />
 
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content={title} />
+    <meta property="og:site_name" content={siteName} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonicalUrl} />
+    {!noindex && <meta property="og:url" content={canonicalUrl} />}
     <meta property="og:image" content={socialImageUrl} />
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />

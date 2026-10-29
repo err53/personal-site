@@ -1,0 +1,22 @@
+---
+import Layout from "../layouts/main.astro";
+---
+
+<Layout
+  title="Page not found · Jason Huang"
+  description="The page you were looking for doesn't exist on jhuang.dev."
+  noindex
+>
+  <main class="container mx-auto max-w-6xl px-4">
+    <section class="mt-8" aria-labelledby="not-found-heading">
+      <p class="text-xl">404</p>
+      <h1 id="not-found-heading" class="pb-3 text-5xl font-bold">
+        Page not found
+      </h1>
+      <p>The page you were looking for doesn't exist or has moved.</p>
+      <a class="interactive-surface mt-6 inline-block p-3" href="/">
+        ← Back to home
+      </a>
+    </section>
+  </main>
+</Layout>

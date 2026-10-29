@@ -30,6 +30,8 @@ export type LatestTrack = {
   artist: string;
   album: string;
   imageUrl: string | null;
+  // Smaller cover for list rows; "large" is 174px, enough for 40px on high-DPI screens.
+  thumbnailUrl: string | null;
   trackUrl: string;
   profileUrl: string;
   nowPlaying: boolean;
@@ -42,19 +44,25 @@ type LastFmErrorResponse = {
 };
 
 const preferredImageSizes = ["extralarge", "large", "medium", "small"];
+const preferredThumbnailSizes = ["large", "medium", "extralarge", "small"];
+
+function pickImage(images: RecentTrack["image"], sizes: string[]) {
+  return (
+    sizes
+      .map((size) => images?.find((image) => image.size === size)?.["#text"])
+      .find((url) => Boolean(url)) ?? null
+  );
+}
 
 export function normalizeTrack(track: RecentTrack, user: string): LatestTrack {
-  const images = track.image ?? [];
-  const imageUrl = preferredImageSizes
-    .map((size) => images.find((image) => image.size === size)?.["#text"])
-    .find((url) => Boolean(url)) ?? null;
   const playedAtSeconds = Number(track.date?.uts);
 
   return {
     name: track.name,
     artist: track.artist["#text"],
     album: track.album?.["#text"] ?? "",
-    imageUrl,
+    imageUrl: pickImage(track.image, preferredImageSizes),
+    thumbnailUrl: pickImage(track.image, preferredThumbnailSizes),
     trackUrl: track.url,
     profileUrl: `https://www.last.fm/user/${encodeURIComponent(user)}`,
     nowPlaying: track["@attr"]?.nowplaying === "true",
@@ -65,7 +73,7 @@ export function normalizeTrack(track: RecentTrack, user: string): LatestTrack {
   };
 }
 
-export function parseLatestTrack(payload: unknown, user: string): LatestTrack | null {
+export function parseRecentTracks(payload: unknown, user: string): LatestTrack[] {
   const providerError = payload as LastFmErrorResponse;
 
   if (providerError?.error !== undefined) {
@@ -81,6 +89,38 @@ export function parseLatestTrack(payload: unknown, user: string): LatestTrack | 
     throw new Error("Last.fm returned an unexpected response");
   }
 
-  const track = parsed.data.recenttracks.track[0];
-  return track ? normalizeTrack(track, user) : null;
+  return parsed.data.recenttracks.track.map((track) =>
+    normalizeTrack(track, user),
+  );
+}
+
+export function parseLatestTrack(payload: unknown, user: string): LatestTrack | null {
+  return parseRecentTracks(payload, user)[0] ?? null;
+}
+
+/**
+ * Turns the raw recent-tracks list into play history, minus whatever the card is showing.
+ * The two endpoints are cached separately, so this matches by play instead of position.
+ */
+export function getPlayHistory(
+  tracks: LatestTrack[],
+  current: LatestTrack | null,
+): LatestTrack[] {
+  const history = tracks.filter(
+    (track) =>
+      !track.nowPlaying &&
+      !(
+        current &&
+        track.trackUrl === current.trackUrl &&
+        track.playedAt === current.playedAt
+      ),
+  );
+
+  // Last.fm logs a play about halfway through a song, so the song still playing
+  // can already appear as the newest finished play.
+  if (current?.nowPlaying && history[0]?.trackUrl === current.trackUrl) {
+    history.shift();
+  }
+
+  return history;
 }

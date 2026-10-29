@@ -7,11 +7,7 @@ import tailwindcss from "@tailwindcss/vite";
 // https://astro.build/config
 export default defineConfig({
   site: "https://www.jhuang.dev",
-  adapter: vercel({
-    webAnalytics: {
-      enabled: true, // set to false when using @vercel/analytics@1.4.0
-    },
-  }),
+  adapter: vercel(),
   integrations: [preact()],
   markdown: {
     syntaxHighlight: false,

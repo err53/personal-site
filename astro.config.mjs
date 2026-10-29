@@ -1,6 +1,7 @@
 // @ts-check
 import vercel from "@astrojs/vercel";
 import preact from "@astrojs/preact";
+import sitemap from "@astrojs/sitemap";
 import { defineConfig, envField } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 
@@ -8,7 +9,13 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   site: "https://www.jhuang.dev",
   adapter: vercel(),
-  integrations: [preact()],
+  integrations: [
+    preact(),
+    sitemap({
+      filter: (page) =>
+        !/\/(api|open-graph)\/|\/resume\.pdf$|\/404\/?$/.test(new URL(page).pathname),
+    }),
+  ],
   markdown: {
     syntaxHighlight: false,
   },

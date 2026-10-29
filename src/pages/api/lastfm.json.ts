@@ -1,6 +1,6 @@
 import type { APIRoute } from "astro";
 
-import { getLatestTrack } from "../../lib/lastfm/client";
+import { getRecentTracks } from "../../lib/lastfm/client";
 
 export const prerender = false;
 
@@ -11,7 +11,9 @@ const responseHeaders = {
 
 export const GET = (async () => {
   try {
-    return new Response(JSON.stringify({ track: await getLatestTrack() }), {
+    const [track = null] = await getRecentTracks(1);
+
+    return new Response(JSON.stringify({ track }), {
       headers: responseHeaders,
     });
   } catch (error) {

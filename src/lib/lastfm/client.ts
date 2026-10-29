@@ -1,22 +1,19 @@
 import { LASTFM_API_KEY } from "astro:env/server";
 
-import {
-  parseLatestTrack,
-  type LatestTrack,
-} from "./schema";
+import { parseRecentTracks, type LatestTrack } from "./schema";
 
 const LASTFM_API_URL = "https://ws.audioscrobbler.com/2.0/";
 const LASTFM_USER = "err53";
 const REQUEST_TIMEOUT_MS = 5_000;
 
-export async function getLatestTrack(): Promise<LatestTrack | null> {
+export async function getRecentTracks(limit: number): Promise<LatestTrack[]> {
   const url = new URL(LASTFM_API_URL);
   url.search = new URLSearchParams({
     method: "user.getrecenttracks",
     user: LASTFM_USER,
     api_key: LASTFM_API_KEY,
     format: "json",
-    limit: "1",
+    limit: String(limit),
   }).toString();
 
   const response = await fetch(url, {
@@ -29,5 +26,6 @@ export async function getLatestTrack(): Promise<LatestTrack | null> {
   }
 
   const payload: unknown = await response.json();
-  return parseLatestTrack(payload, LASTFM_USER);
+  // Last.fm adds the now-playing track on top of `limit`, so trim the extra.
+  return parseRecentTracks(payload, LASTFM_USER).slice(0, limit);
 }

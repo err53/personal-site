@@ -1,0 +1,30 @@
+{
+  "$schema": "https://t3.codes/schema/t3.json",
+  "iconPath": "public/logo.svg",
+  "defaultThreadEnvMode": "worktree",
+  "scripts": [
+    {
+      "name": "Setup Worktree",
+      "command": "npm ci --no-audit --no-fund && main=\"$(dirname \"$(git rev-parse --path-format=absolute --git-common-dir)\")\" && { [ -f .env ] || [ ! -f \"$main/.env\" ] || cp \"$main/.env\" .env; }",
+      "icon": "configure",
+      "runOnWorktreeCreate": true,
+      "async": false
+    },
+    {
+      "name": "Dev Server",
+      "command": "npx astro dev",
+      "icon": "play",
+      "previewUrl": "http://localhost:4321"
+    },
+    {
+      "name": "Test",
+      "command": "npm test",
+      "icon": "test"
+    },
+    {
+      "name": "Build",
+      "command": "npm run build",
+      "icon": "build"
+    }
+  ]
+}

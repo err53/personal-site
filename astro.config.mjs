@@ -1,6 +1,7 @@
 // @ts-check
 import vercel from "@astrojs/vercel";
 import preact from "@astrojs/preact";
+import sitemap from "@astrojs/sitemap";
 import { defineConfig, envField } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 
@@ -12,7 +13,13 @@ export default defineConfig({
       enabled: true, // set to false when using @vercel/analytics@1.4.0
     },
   }),
-  integrations: [preact()],
+  integrations: [
+    preact(),
+    sitemap({
+      filter: (page) =>
+        !/\/(api|open-graph)\/|\/resume\.pdf$|\/404\/?$/.test(new URL(page).pathname),
+    }),
+  ],
   markdown: {
     syntaxHighlight: false,
   },

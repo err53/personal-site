@@ -16,6 +16,7 @@
   "dependencies": {
     "@astrojs/check": "^0.9.10",
     "@astrojs/preact": "^6.0.3",
+    "@astrojs/sitemap": "^3.7.4",
     "@astrojs/vercel": "^11.0.6",
     "@nanostores/preact": "^1.1.0",
     "@nanostores/query": "^0.3.4",

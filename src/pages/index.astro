@@ -9,7 +9,7 @@ import { personJsonLd } from "../data/profile"
 ---
 
 <Layout>
-  <script type="application/ld+json" set:html={JSON.stringify(personJsonLd)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(personJsonLd)} />
   <main class="container mx-auto grid max-w-6xl grid-cols-1 items-baseline gap-4 px-4 md:grid-cols-2">
     <Hero />
     <Socials />

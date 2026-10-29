@@ -1,12 +1,23 @@
 ---
 import Button from "../ui/Button.astro";
-import { X, LinkedIn, Instagram, Github, Medium } from "simple-icons-astro";
+import {
+  X,
+  LinkedIn,
+  Instagram,
+  Github,
+  Medium,
+  Lastdotfm,
+} from "simple-icons-astro";
 import { socials, type SocialLabel } from "../../data/profile";
 
-const icons = { X, LinkedIn, Instagram, Github, Medium } satisfies Record<
-  SocialLabel,
-  unknown
->;
+const icons = {
+  X,
+  LinkedIn,
+  Instagram,
+  Github,
+  Medium,
+  "Last.fm": Lastdotfm,
+} satisfies Record<SocialLabel, unknown>;
 ---
 
 <section class="md:justify-self-end" aria-labelledby="socials-heading">

@@ -5,9 +5,11 @@ import Socials from "../components/sections/Socials.astro"
 import Resume from "../components/sections/Resume.astro"
 import Projects from "../components/sections/projects/Projects.astro"
 import LastFM from "../components/sections/lastfm/LastFM.astro"
+import { personJsonLd } from "../data/profile"
 ---
 
 <Layout>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(personJsonLd)} />
   <main class="container mx-auto grid max-w-6xl grid-cols-1 items-baseline gap-4 px-4 md:grid-cols-2">
     <Hero />
     <Socials />

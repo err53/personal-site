@@ -1,6 +1,12 @@
 ---
 import Button from "../ui/Button.astro";
 import { X, LinkedIn, Instagram, Github, Medium } from "simple-icons-astro";
+import { socials, type SocialLabel } from "../../data/profile";
+
+const icons = { X, LinkedIn, Instagram, Github, Medium } satisfies Record<
+  SocialLabel,
+  unknown
+>;
 ---
 
 <section class="md:justify-self-end" aria-labelledby="socials-heading">
@@ -8,20 +14,15 @@ import { X, LinkedIn, Instagram, Github, Medium } from "simple-icons-astro";
     Socials
   </h2>
   <div class="flex flex-wrap gap-2 md:justify-end">
-    <Button aria-label="X" href="https://x.com/err_53">
-      <X class="size-10" />
-    </Button>
-    <Button aria-label="LinkedIn" href="https://www.linkedin.com/in/jhuang03/">
-      <LinkedIn class="size-10" />
-    </Button>
-    <Button aria-label="Instagram" href="https://www.instagram.com/the.err53/">
-      <Instagram class="size-10" />
-    </Button>
-    <Button aria-label="Github" href="https://github.com/err53">
-      <Github class="size-10" />
-    </Button>
-    <Button aria-label="Medium" href="https://err53.medium.com/">
-      <Medium class="size-10" />
-    </Button>
+    {
+      socials.map(({ label, href }) => {
+        const Icon = icons[label];
+        return (
+          <Button aria-label={label} href={href} rel="me">
+            <Icon class="size-10" />
+          </Button>
+        );
+      })
+    }
   </div>
 </section>
